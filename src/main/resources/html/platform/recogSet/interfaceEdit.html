@@ -1,0 +1,41 @@
+<div align="center">
+	<form id="manage_interface_editform"
+		th:action="@{/interface/saveInterface}" th:object="${interface}" method="post">
+		
+			<input type="hidden" name="action" th:attr="value=${action}" />
+			<input type="hidden" name="id" th:field="*{id}"/>
+			
+			<table class="tableForm" width="100%">
+				<tr>
+					<th width="30%">接口名称：</th>
+					<!-- 用th:object定义表单数据提交对象,用th:field定义表单数据属性,用*{}锁定上级定义的对象，{}内填写对象属性，提交表单时自动降属性值封住到对象中 -->
+					<td>
+						<input class="easyui-textbox" name="" th:field="*{interfaceName}"
+								 data-options="required:true,validType:['untable','byteLength[1,64]']"/>
+					</td>
+				</tr>
+				<tr>
+					<th width="30%">接口代码：</th>
+					<td><input class="easyui-textbox" name="interfaceCode" th:field="*{interfaceCode}"
+								 data-options="required:true,validType:['untable','byteLength[1,64]','isCode']" /></td>
+				</tr>
+				<tr>
+					<th width="30%">状态：</th>
+					<td>
+					<input class="easyui-combobox" id="status" name="status"  editable="false" th:field="*{status}"
+            				 	 data-options="required:true,panelHeight:'auto',valueField:'value',textField:'text',
+            				  	data:[{text:'停用',value:'0'},{text:'启用',value:'1'}]" />
+					</td>
+				</tr>
+									
+				<tr>
+					<th width="30%">接口描述：</th>
+					<td>
+						<textarea rows="3" cols="40" name="remark" th:field="*{remark}" class="easyui-validatebox" data-options="validType:['untable','byteLength[1,255]']">
+						</textarea>
+					</td>
+				</tr>
+				
+			</table>
+	</form>
+</div>

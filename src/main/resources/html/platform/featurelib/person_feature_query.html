@@ -1,0 +1,135 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<div data-options="region:'north',border:false" class="formserach"
+		 	style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_person_feature_searchform" onsubmit="return false">
+			<table class="tableForm">
+				<tr>				
+					<td align="left">	
+						&nbsp;&nbsp;&nbsp;证件类型:
+							<input class="easyui-combobox" size="20" id="person_feature_ctftype" editable=false panelHeight="auto"   
+								   	name="ctftype" data-options="valueField:'id',loadFilter:function(data){
+									if(data && data.length > 0) {
+										data.push({id:'',text:'全部'});
+									}
+									return data;
+									
+								},textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+			          </td>
+			          <td align="left">
+			          	证件姓名:
+			          	<input class="easyui-textbox"  size="20" id="person_feature_ctfname" validType="byteLength[1,20]"
+							name="ctfname" />
+					  </td>
+					  <td align="left">
+					  	证件号码:
+					  		<input class="easyui-textbox" size="20" id="person_feature_ctfno" validType="byteLength[1,20]"
+						 			name="ctfno" data-options="required:true" />
+					  </td>
+					  <td>
+					  	<a href="javascript:void(0);" class="easyui-linkbutton"
+						   	iconCls="icon-search" plian="false"  resId="101102101"
+								style="display:none" onclick="$.acooly.framework.searchData('manage_person_feature_searchform','manage_person_feature_datagrid');">查询</a>
+					</td>
+			     </tr>
+			     <tr>
+			        <td align="left">
+			        	核心客户号:
+			        		<input class="easyui-textbox" size="20" id="person_feature_customerId" validType="byteLength[1,20]"
+						 		   	name="customerId" />
+					</td>			     
+			     </tr>
+			</table>
+		</form>
+	</div>
+	<div id="face_discern_detail_datebox" class="easyui-calendar">		
+	</div>
+
+	<div data-options="region:'center',border:false">
+		<table id="manage_person_feature_datagrid" rownumbers="true" fitColumns="true" fit="true" border="false"
+			   	pagination="true" idField="personId" pageSize="20"	pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true"
+					toolbar="#manage_person_feature_toolbar" striped="true">
+			<thead>
+				<tr>	
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.personId }">编号</th>				
+					<th field="ctfno"       halign="center" align="left" width="15%">证件号码</th>
+					<th field="customerId"  halign="center" align="left" width="15%">核心客户号</th>
+					<th field="ctfname"     halign="center" align="left" width="12%">姓名</th>
+					<th field="ctftype"  halign="center" align="left" width="8%">证件类型</th>
+					<th field="property" halign="center" align="left" width="8%">客户属性</th>
+					<th field="orgName"  halign="center" align="left" width="12%">机构名称</th>
+					<th field="status"  halign="center" align="left" width="5%" data-options="formatter:optFormatPfStatus">状态</th>
+					<th field="opt" 	 halign="center" align="center" width="25%" formatter="optFormatterPersonFeature">操作</th>
+				</tr>
+			</thead>
+		</table>
+		<div id="manage_person_feature_action" style="display: none;">
+ 			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-user" plain="true" style="display:none" onclick="selectPersonFeatureByPrimaryKey('{partitionId}','{personId}')" resId="101102101">详情</a>
+	 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-vcard-delete" plain="true" style="display:none" onclick="deletePersonByPrimaryKey('{partitionId}','{personId}');" resId="101102104">删除客户</a>
+	 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-vcard-delete" plain="true" style="display:none" onclick="openDeleteFeatureDlg('{partitionId}','{personId}');" resId="101102105">删除特征</a>
+		</div>
+		
+		<div id="manage_person_feature_toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" title="注册" plain="true" resId="101102102"
+				style="display:none" onclick="showPersonFreatureDialog();">
+				添加
+			</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" title="更新" plain="true" resId="101102103"
+				style="display:none" onclick="editPersonFreatureDialog();">
+				更新
+			</a>
+		</div>			
+				
+	</div>		
+</div>
+
+<!-- 删除算法引擎弹出框 -->
+<div id="dlg_person_feature_version" style="display:none">
+	<div align="center">
+		<form id="remove_person_feature_version" onsubmit="return false">
+			<input type="hidden" id="person_feature_partitionId"/>
+			<input type="hidden" id="person_feature_personId"/>
+			<div id="from_person_feature_version">
+				<table class="tableForm edit">
+					<tr>
+						<td align="left">算法引擎:</td>
+						<td>
+							<select name="engineId_person_feature_delete" id="engineId_person_feature_delete" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="auto" data-options="required:true">
+							</select> 
+						</td>
+					</tr>
+					<tr>
+						<td align="left">算法引擎版本:</td>
+						<td>
+							<select name="engineverId_person_feature_delete" id="engineverId_person_feature_delete" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="auto" data-options="required:true">
+							</select>
+						</td>
+					</tr>
+				</table>	
+			</div>
+		</form>
+	</div>
+	<div class="dialog-button" style="position: relative; top: -1px; width: 100%px;">
+		<a href="javascript:void(0)" class="l-btn l-btn-small" group="" id="" onclick="delete_engine_feature_click();">
+			<span class="l-btn-left l-btn-icon-left">
+				<span class="l-btn-text">删除</span>
+				<span class="l-btn-icon icon-add">&nbsp;</span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="l-btn l-btn-small" group="" id="" onclick="delete_engine_feature_click_close();">
+			<span class="l-btn-left l-btn-icon-left">
+				<span class="l-btn-text">关闭</span>
+				<span class="l-btn-icon icon-cancel">&nbsp;</span>
+			</span>
+		</a>
+	</div>	
+</div>
+
+<!-- 详情弹出框 -->
+<div id="dlg_person_feature_detail"  style="display:none">
+	<div id="dlg_person_feature_detail_accordion">
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/featurelib/person_feature_query.js" charset="utf-8">
+</script>

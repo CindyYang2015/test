@@ -1,0 +1,48 @@
+<div align="center">
+	<form id="manage_engine_editform" 
+		th:action="@{/engine/save}"  th:object="${engine}" 
+		method="post">
+					
+		<input type="hidden" name="action" id="action" th:attr="value=${action}" />
+		<input name="id" id="id" type="hidden" th:field="*{id}"/>	
+							
+		<table class="tableForm edit" width="100%">
+			<tr>
+				<th>算法引擎类型:</th>
+				<td>
+			    	<input id="engineType" class="easyui-combobox" name="engineType"   editable="false" 
+				    	data-options="panelHeight:'auto',required:true,valueField:'dicCode',textField:'meaning',url:'../engine/selectEngineType'"/>
+				</td>
+				<th>算法引擎代码:</th>
+				<td>
+					<input id="engineCode" class="easyui-textbox" name="engineCode" th:field="*{engineCode}"
+						data-options="required:true,validType:['untable','isCode']" />
+				</td>
+			</tr>				
+			<tr>
+				<th >算法引擎名称:</th>
+				<td>
+					<input type="text" id="engineName" name="engineName" th:field="*{engineName}" class="easyui-textbox" 
+						data-options="required:true,validType:'untable'" />
+				</td>
+				<th >厂家名称:</th>
+				<td>
+					<input type="text" id="companyName" th:field="*{companyName}" name="companyName" class="easyui-textbox" 
+						data-options="required:true,validType:'untable'" />					
+				</td>
+			</tr>
+			<tr>
+				<th >状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</th>
+				<td>
+					<input id="status" class="easyui-combobox" name="status"  editable="false" 
+			       		data-options="required:true,valueField:'value',textField:'label',data:[{label:'有效',value:'1'},{label:'无效',value:'0'}]" />
+				</td>
+				<th >备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</th>
+				<td>
+					<input type="text" name="remark" class="easyui-textbox" th:field="*{remark}"  
+						data-options="validType:['untable','byteLength[1,128]']" />
+				</td>					
+			</tr>				
+		</table>
+	</form>
+</div>

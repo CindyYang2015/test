@@ -1,0 +1,20 @@
+﻿<div class="easyui-layout" data-options="fit : true,border : false"> 	
+  	<!-- 列表和工具栏 -->
+	 <div data-options="region:'center',border:false">
+    	<table id="manage_groupAuthority_datagrid" 
+    		   	th:attr="url='../authority/selectAllAuthorities?groupId='+${groupId}" 
+    		   		rownumbers="true" fitColumns="true" fit="true" border="false"
+      		   			idField="authorityId" checkOnSelect="true" selectOnCheck="true" striped="true">
+      		<thead>
+        		<tr>
+        			<th field="showCheckboxWithId" checkbox="true"
+							data-options="formatter:function(value, row, index){ return row.authorityId }">编号</th>
+					<th field="authorityId"   halign="center" align="left"  width="70%">权限ID</th>
+					<th field="authorityName" halign="center" align="left"  width="30%">权限名</th>
+		        </tr>
+      		</thead>
+    	</table>	
+	</div> 
+</div>
+<script type="text/javascript" src="../js/system/setGroupAuthority.js" charset="utf-8"></script>
+

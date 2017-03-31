@@ -1,0 +1,95 @@
+.batch_import_border{
+	width: 60%;
+	height: auto;
+	border: solid 1px blue;
+}
+.context_area{
+	width: 80%;
+	margin-left: 10%;
+}
+.batch_context{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+}
+#templateDownload{
+	margin-left: 20%;
+	width: 10%;
+	float: left;
+}
+#beginDetection{
+	width: 10%;
+	margin-right: 20%;
+	float: right;
+}
+.left30{
+	margin-left:30px;
+}
+.left20{
+	margin-left:20px;
+}
+.left10{
+	margin-left:10px;
+}
+.div_line20{
+	width:100%;
+	height: 20px;
+}
+.div_line5{
+	width:100%;
+	height: 5px;
+}
+.image_query_maintain_border{
+	width: 60%;
+	height: 410px;
+	border: solid 1px blue;
+}
+#imageData{
+	width:600px;
+	height:250px;
+}
+.th20{
+	width: 20%;
+}
+.div_images{
+	width: 100%;
+	height: 320px;
+	border: solid 1px red;
+	overflow:auto;
+}
+.div_imgae{
+	width: 30%;
+	height: 100px;
+	float: left;
+	margin-left: 2.5%;
+	margin-top: 5px;
+}
+.image_auto_div{
+	width: 100%;
+	height: 100%;
+}
+.div_line10{
+	width: 100%;
+	height: 10px;
+}
+#image_query_maintain_close{
+	width: 10%;
+	margin-left: 45%;
+}
+.image_query_context{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.image_query_maintain_border1{
+	width: 80%;
+	height: 410px;
+	border: solid 1px blue;
+}
+.image_query_maintain_area{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+#batch_import_button{
+	float: right;
+}
+

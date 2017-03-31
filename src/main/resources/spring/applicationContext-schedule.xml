@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+      
+	<!-- 每天定时统计计划执行配置列表 -->	
+	<bean id="everyDaySchedule" class="com.cloudwalk.ibis.schedule.CWExecutorService" init-method="initTask">
+		<property name="code" value="everyDayOne" />
+		<property name="name" value="每天凌晨1点执行" />
+		<property name="taskList">
+			<list>
+				<bean class="com.cloudwalk.ibis.schedule.flow.FlowExecutor">
+					<property name="name" value="每天流水数据转移" />
+				</bean>								
+			</list>
+		</property>
+	</bean>	
+	
+	<!-- 定时器配置 -->
+	<bean id="everyDayOneTimes" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="everyDaySchedule" />
+		<property name="targetMethod" value="start" />
+			<property name="concurrent" value="true" />
+	</bean>	
+	
+	<!-- 定义时间间隔触发器 -->
+	<bean id="dayTigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="everyDayOneTimes" />
+		<property name="cronExpression">
+			<value>0 0 1 * * ?</value>
+		</property>
+	</bean>	
+	
+	<!-- 启动定时器 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="dayTigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>

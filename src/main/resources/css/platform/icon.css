@@ -1,0 +1,53 @@
+.icon-chart{ background:url('../images/icons/business/chart.png') repeat; }
+.icon-world{ background:url('../images/icons/business/world.png') no-repeat; }
+.icon-tag{ background:url('../images/icons/business/tag.png') no-repeat; }
+.icon-resource{ background:url('../images/icons/business/resource.png') no-repeat; }
+.icon-menu{ background:url('../images/icons/business/menu.png') no-repeat; }
+.icon-monitor{ background:url('../images/icons/business/monitor.png') no-repeat; }
+
+.icon-bag{ background:url('../images/icons/business/bag.png') no-repeat; }
+.icon-calendar{ background:url('../images/icons/business/calendar.png') no-repeat; }
+.icon-home{ background:url('../images/icons/business/home.png') no-repeat; }
+.icon-option{ background:url('../images/icons/business/option.png') no-repeat; }
+
+.icon-phone{ background:url('../images/icons/business/phone.png') no-repeat; }
+.icon-role{ background:url('../images/icons/business/role.png') no-repeat; }
+.icon-user{ background:url('../images/icons/business/user.png') no-repeat; }
+.icon-setting{ background:url('../images/icons/business/setting.png') no-repeat; }
+.icon-star{ background:url('../images/icons/business/star.png') no-repeat; }
+
+.icon-vcard{ background:url('../images/icons/business/vcard.png') no-repeat; }
+.icon-vcard-delete{ background:url('../images/icons/business/vcard_delete.png') no-repeat; }
+.icon-vcard-edit{ background:url('../images/icons/business/vcard_edit.png') no-repeat; }
+.icon-arrow-undo{ background:url('../images/icons/business/arrow_undo.png') no-repeat; }
+.icon-image{ background:url('../images/icons/business/image.png') no-repeat; }
+
+.icon-import{ background:url('../images/icons/import.png') no-repeat; }
+.icon-export{ background:url('../images/icons/export.png') no-repeat; }
+.icon-nav{ background:url('../images/icons/nav.png') no-repeat; }
+.icon-login{ background:url('../images/icons/login.png') no-repeat; }
+.icon-logout{ background:url('../images/icons/logout.png') no-repeat; }
+.icon-key{ background:url('../images/icons/key.png') no-repeat; }
+
+.icon-detail{ background:url('../images/icons/row_detail.png') no-repeat; }
+
+.icon-department{
+	background:url('../images/icons/man.png') no-repeat center center;
+	width:16px;
+}
+
+.icon-application-edit{ background:url('../images/icons/business/application_edit.png') no-repeat; }
+.icon-monitor{ background:url('../images/icons/business/monitor.png') no-repeat; }
+.icon-application-form-magnify{ background:url('../images/icons/business/application_form_magnify.png') no-repeat; }
+.icon-group{ background:url('../images/icons/business/group.png') no-repeat; }
+.icon-man{ background:url('../images/icons/business/man.png') no-repeat; }
+.icon-locked{ background:url('../images/icons/business/locked.png') no-repeat; }
+.icon-note{ background:url('../images/icons/business/note.png') no-repeat; }
+
+.icon-application{ background:url('../images/icons/business/application.png') no-repeat; }
+.icon-application-blue{ background:url('../images/icons/business/application-blue.png') no-repeat; }
+.icon-chart-curve{ background:url('../images/icons/business/chart_curve.png') no-repeat; }
+.icon-cog{ background:url('../images/icons/business/cog.png') no-repeat; }
+.icon-plugin-disabled{ background:url('../images/icons/business/plugin_disabled.png') no-repeat; }
+
+

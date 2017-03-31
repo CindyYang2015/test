@@ -1,0 +1,102 @@
+<link rel="stylesheet" type="text/css" href="../css/JsonFormat.css" />
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'north',title:'请求报文'" class="layoutLeftWidth" style="height:50%;">
+		<form name="uploadImgBankOcrForm" id="uploadImgBankOcrForm" action="../faceTest/bankCardOcrRecog" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="isencrypt" value="1"></input>
+			<input type="hidden" id="bankCardImgId" name="bankImg" value="1"></input>
+			<table class="tableForm" width="100%" style="float:left;margin-top:0px;border-collapse:separate; border-spacing:10px;">
+        		<tr>
+		         	<td style="width:9%;text-align:right;">银行卡图片:</td>
+		           	<td width="25%">
+		             	<div>
+				             <a href="javascript:;" class="a-upload1" >
+				             <div>
+					             <img src="../images/upload.png" style="width:150px;height:150px;" id="bankCard_show_img" />
+				             </div>				             
+							 <input type="file" id="bankCard_upload_img" data-url="../faceTest/uploadImage" />
+							</a>					 	
+					 	</div>			 	
+					</td> 				 
+	         		<td style="width:60%;text-align:center;">
+            			<table style="width:80%;text-align:center;">
+            				<tr>
+            					<td style="text-align:right;">法人机构代码:</td>
+					 			<td>
+						 			<input class="easyui-textbox" validType="byteLength[1,18]" missingMessage="请输入法人机构代码" id="orgCode" 
+								 				name="orgCode" data-options="required:true"/>
+					 			</td>
+			 					<td style="text-align:right;">交易渠道:</td>
+			 					<td>
+			 						<input class="easyui-combobox"  id="channel" name="channel"  missingMessage="请选择渠道分类"
+												data-options="editable:false,valueField:'id',textField:'text',
+													url:'../dic/selectDicValuesByDicType?dicType=3',required:true"/>
+						 		</td>
+            				</tr>
+		            		<tr>
+		            			<td style="text-align:right;">交易类型:</td>
+					 			<td>
+					 				<input class="easyui-combobox"  id="tradingCode" missingMessage="请输入交易类型"
+												name="tradingCode" data-options="editable:false,valueField:'id',textField:'text',
+													url:'../dic/selectDicValuesByDicType?dicType=6',required:true" />
+								</td>
+								<td style="text-align:right;">交易流水:</td>
+					 			<td>
+					 				<input class="easyui-textbox"  name="tradingFlowNO" validType="byteLength[1,18]"
+											 data-options="required:true"/>
+								</td>
+		            		</tr>
+		            		<tr>
+		            			<td style="text-align:right;">通信协议:</td>
+					 			<td>
+									<input  class="easyui-combobox" id="requestWay" name="requestWay" panelHeight="auto"  
+		              							data-options="editable:false,required:true,valueField:'value',textField:'text',data:[{text:'WEBSERVICE',value:'1'},{text:'SOCKET',value:'2'},{text:'HTTP',value:'3'}]"/>
+								</td>
+		            			<td style="text-align:right;">交易日期:</td>
+					 			<td>
+					 				<input class="easyui-textbox" name="tradingDate" validType="byteLength[1,64]"
+								 		   	data-options="required:false"/>
+								</td>
+		            		</tr>
+		            		<tr>
+		            			<td style="text-align:right;">交易时间:</td>
+					 			<td>
+					 				<input class="easyui-textbox" name="tradingTime" validType="byteLength[1,64]"
+								 		   		data-options="required:false" />
+								</td>
+		            			<td style="text-align:right;">柜员号:</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]" class="easyui-textbox" name="tellerNo"
+								 			data-options="required:false" />
+								</td>
+		            		</tr>
+		            		<tr>
+		            			<td style="text-align:right;">设备号:</td>
+					 			<td>
+					 				<input class="easyui-textbox" name="equipmentNo" validType="byteLength[1,64]"
+												data-options="required:false" />
+								</td>
+		            			<td style="text-align:right;">机构号:</td>
+					 			<td>
+					 				<input class="easyui-textbox" name="organizationNo" validType="byteLength[1,64]"
+											 data-options="required:false" />
+								</td>
+		            		</tr>
+							<tr>						
+								<td style="text-align:center;" colspan="4">				
+		        	 				<a id="bankOcrFormSubmit" class="easyui-linkbutton" resId="102107101" 
+		        	 					style="margin-left:50px;width:80px;" data-options="iconCls:'icon-ok'" href="javascript:void(0)">提交</a>
+					          	</td>
+							</tr>	
+           				</table>
+           			</td>                  
+       			</tr>	          
+       		</table>         
+		</form>	
+	</div>		
+	<div data-options="region:'center',title:'响应报文'">	
+	    <pre id="face_bankCard_result" style="color:#DAC8C8;display:none">
+		</pre>
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/faceTest/bankCardOcrRecog.js"></script>

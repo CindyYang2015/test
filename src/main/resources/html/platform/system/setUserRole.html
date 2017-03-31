@@ -1,0 +1,20 @@
+﻿<div class="easyui-layout" data-options="fit : true,border : false"> 	
+  	<!-- 列表和工具栏 -->
+	 <div data-options="region:'center',border:false">
+    	<table id="manage_userRole_datagrid" class="easyui-datagrid" th:attr="url='../group/selectAllGroup?userId='+${userId}" rownumbers="true" fitColumns="true" fit="true" border="false"
+      	idField="groupId" checkOnSelect="true" selectOnCheck="true" striped="true">
+      		<thead>
+        		<tr>
+        			<th field="showCheckboxWithId" checkbox="true"
+							data-options="formatter:function(value, row, index){ return row.groupId }">编号</th>
+					<th field="groupId"     halign="center" align="left"  width="50%">角色ID</th>
+					<th field="groupCname"  halign="center" align="left"  width="25%">角色中文名</th>
+		          	<th field="groupEname"  halign="center" align="left"   width="25%">角色英文名</th>
+		        </tr>
+      		</thead>
+    	</table>
+    	
+	</div> 
+</div>
+<script type="text/javascript" src="../js/system/setUserRole.js" charset="utf-8"></script>
+

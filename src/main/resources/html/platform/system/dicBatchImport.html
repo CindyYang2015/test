@@ -1,0 +1,38 @@
+<div align="center">
+  <form id="manage_dicValues_editform" enctype="multipart/form-data"
+ action="../dic/batchImportDic" method="post">
+
+      <table class="tableForm edit">
+        <tr>
+
+          <div>
+            <th>Excel文件：</th>
+            <td colspan="3">
+                  <input id="dicTypes" class="easyui-filebox" name="dicType" editable="false"
+                  buttonText="选择文件" panelHeight="120" data-options="required:true,editable:false" />
+            </td>
+          </div>
+        </tr> 
+        <tr><th >文件格式要求：</th></tr>
+        <tr>
+        <th ></th>
+          <td>    
+          (1)Excel文件中有数字的单元格格式必须为文本格式
+          </td>
+        </tr>
+        <tr>
+        <th ></th>
+         <td>
+          (2)表头顺序为：字典类型,字典编码,字典含义,描述,启用标志
+         </td>
+        </tr>
+        <tr>
+        <th ></th>
+         <td>
+          (3)模板下载：<a href="../dic/getDicTemplate">下载</a>
+         </td>
+        </tr>
+        
+      </table>
+  </form>
+</div>

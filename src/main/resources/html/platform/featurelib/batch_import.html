@@ -1,0 +1,121 @@
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'west',width:350" class="layoutLeftWidth">
+		<div style="width: 90%;margin-left: 5%;margin-top: 15px;">
+		     <table style="width: 100%">
+		        <tr>		         	          
+	          		<td>
+					  	<form id="fileUpload_batchImport" action="" enctype="multipart/form-data" method="post">
+							<div style="margin-top: 10px;">
+								<label for="cType">算法引擎:</label>
+								<input name="engineId_batchImport" id="engineId_batchImport" class="easyui-combobox"  editable="false" panelHeight="80" data-options="required:true" />		
+							</div>
+							<div style="margin-top: 10px;">
+								<label for="cType">引擎版本:</label>
+								<input type="hidden" id="engineType_batchImport" name="engineType_batchImport"/>
+								<input name="engineverId_batchImport" id="engineverId_batchImport" class="easyui-combobox"   editable="false" panelHeight="auto" data-options="required:true" />		
+							</div>
+							<div style="margin-top: 10px;">
+								<label for="cType">证件类型:</label> 
+								<input id="batchImport_cType" name="ctftype" class="easyui-combobox" panelHeight="auto"
+									   		data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+							</div>
+							<div style="margin-top: 10px;">
+								<label for="channel">客户属性:</label> 
+								<input id="batchImport_custProperty"  name="property" panelHeight="auto" class="easyui-combobox"
+									   		data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=4'"/>
+							</div>
+							<div id="imgzip" style="margin-top: 10px;">  
+				            	<label for="channel">生物文件:</label> 
+				            	<input class="easyui-filebox" width="100" name="zipFile" id="batchImport_zipFile" buttonText="选择文件" data-options="required:true,validType:'zip'" />  
+				        	</div> 
+						</form>	   
+						<a id="subumit" href="javascript:void(0);" class="easyui-linkbutton" style="margin-top:10px;margin-left:5px;width:80px;" resId="101101102"  style="display:none" onclick="upLoad();">提交</a>   
+						<a id="batchImport_reset" href="javascript:void(0);" class="easyui-linkbutton" style="margin-top:10px;margin-left:20px;width:80px;" onclick="batchImportReset();">重置</a>   	      
+	         		</td>
+	        	</tr>
+		        <tr>
+		          <td align="left" colspan="3" style="display: none">	
+		          	<div id="p_progressbar" class="easyui-progressbar" style="width:360px;"></div>	        
+		          </td>
+		          <td>
+		          	<div id="loadImg" style="display: none">
+		          		<img  src="../images/icons/business/waiting.gif"/>处理中,请耐心等待...
+		          	</div>
+		          </td>
+		        </tr>	        
+	    	</table>
+		</div>
+		<div style="width: 90%;margin-left: 5%;margin-top: 5px;">
+			<ul style="list-style-type:none;line-height: 25px;padding:0;">
+				<li>注意事项:</li>
+				<li>&nbsp;(1)图片命名方式：证件号码_姓名_核心客户号.后缀名。</li>
+				<li>&nbsp;(2)将生物文件统一放在一个文件夹下打包成*.zip文件，上传即可</li>
+				<li>&nbsp;(3)上传需要一定时间，请勿关闭当前窗口。文件越大操作时间越长，请耐心等待...</li>
+			</ul>
+		</div>
+	</div>		
+	<div data-options="region:'center'">
+		<div class="easyui-layout" data-options="fit : true,border : false">
+			<div data-options="region:'north',border:false" class="formserach"
+					style="padding: 5px; overflow: hidden;height:80px;" align="left">
+				<form id="manage_batchImport_searchform" onsubmit="return false">
+					<table class="tableForm" style="width:55%">
+						<tr>				
+						 	<td>导入时间：</td>
+							<td align="left" >
+								<input name="beginDateStr" class="easyui-datebox"  editable=false>	
+							</td>
+							<td style="text-align: center;width:10px;">至&nbsp;&nbsp;</td>
+							<td align="left" >
+								<input name="endDateStr" class="easyui-datebox"     editable=false>
+							</td>
+					 	</tr>
+					 	<tr>
+					 		<td>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:&nbsp;&nbsp;</td>
+						 	<td align="left">	
+									
+									<input  class="easyui-combobox" id="status" name="status"   editable=false  panelHeight="auto"
+	              								data-options="valueField:'value',textField:'text',data:[{text:'全部',value:''},{text:'上传失败',value:'1'},{text:'上传成功',value:'0'}]"/>       	         
+				          	</td>
+				          	<td colspan="2" style="text-align:center">
+								<a href="javascript:void(0);" class="easyui-linkbutton"
+									iconCls="icon-search" plian="false"  resId="101101101"
+										style="display:none" onclick="$.acooly.framework.searchData('manage_batchImport_searchform','manage_batchImport_datagrid');"><span>查询</span></a>
+							</td>
+					 	</tr>
+					 	
+					</table>
+				</form>
+			</div>
+			<div id="face_discern_detail_datebox" class="easyui-calendar">		
+			</div>
+
+			<div data-options="region:'center',border:false">
+				<table id="manage_batchImport_datagrid" class="easyui-datagrid"	toolbar="#manage_batchImport_toolbar"
+					   	url="../batchImport/selectImportFlowByPage" rownumbers="true" fitColumns="true" fit="true" border="false"
+							pagination="true" idField="flowId" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true" striped="true">
+					<thead>
+						<tr>					
+	 						<th field="ctfname" halign="center" align="left"  width="15%">客户姓名</th>
+							<th field="ctftype" halign="center" align="left"  width="10%">证件类型</th>
+							<th field="ctfno" 	halign="center" align="left"  width="18%">证件号码</th>
+							<th field="orgCode" halign="center" align="left"  width="15%">机构名称</th>
+							<th field="deptCode" 	halign="center" align="left"  width="15%">部门名称</th>
+							<th field="customerId" 	halign="center" align="left"  width="12%">核心客户号</th>
+							<th field="engineType" 	halign="center" align="left"  width="10%">算法引擎</th>
+							<th field="engineverCode" halign="center" align="left"  width="10%">引擎版本</th>
+							<th field="status" 		  halign="center" align="left"  width="10%" formatter="flowstatusFormatter">上传状态</th>
+							<th field="reason" 		halign="center" align="left"  width="15%">失败记录原因</th>
+							<th field="creator" 	halign="center" align="left"  width="12%">创建人</th>
+							<th field="createTime" 	halign="center" align="left"  width="18%" formatter="flowCreateTimeFormatter">创建时间</th>
+						</tr>
+					</thead>
+				</table>
+				<div id = "manage_batchImport_toolbar">
+				</div>	
+			</div>	
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/featurelib/batchImport.js"></script>

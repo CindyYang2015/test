@@ -1,0 +1,61 @@
+<div align="center">
+	<form id="manage_user_editform"
+			th:action="@{/user/saveUser}" th:object="${user}" method="post">
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<input type="hidden" name="deptCode" th:field="*{deptCode}"/>
+		<input type="hidden" name="userId" th:field="*{userId}"/>
+		<table class="tableForm edit" width="100%">	
+			<!-- <tr>
+				<span th:text="*{orgName}">
+				</span>
+				&nbsp;&nbsp;&nbsp;
+				<span th:text="*{deptName}">
+				</span>
+			</tr> -->	
+			<tr>							
+				<th>机构：</th>
+				<td>
+					<span th:text="*{orgName}"></span>
+				</td>
+				<th>部门：</th>
+				<td>
+					<span th:text="*{deptName}"></span>
+				</td>
+			</tr>					
+			<tr>							
+				<th>姓名：</th>
+				<td>
+					<input class="easyui-textbox" name="userName" th:field="*{userName}"
+						 	data-options="required:true,validType:['byteLength[1,128]','untable']" />
+				</td>
+				<th>工号：</th>
+				<td>
+				<input class="easyui-textbox" name="workCode" th:field="*{workCode}"
+						 data-options="required:true,validType:['byteLength[1,64]','isCode']" />
+				</td>
+			</tr>				
+			<tr>
+				<th>电话：</th>
+				<td>
+					<input class="easyui-textbox"  name="telephone" th:field="*{telephone}" validType="telephone" />
+				</td>
+				<th >邮件：</th>
+				<td>
+					<input class="easyui-textbox"  name="email" th:field="*{email}" validType="email" />
+				</td>
+			</tr>				
+			<tr>
+				<th >职务：</th>
+				<td>
+				<input class="easyui-textbox"  name="userRank" th:field="*{userRank}"
+					   	data-options="validType:['byteLength[1,64]','untable']" />
+				</td>
+				<th >备注：</th>
+				<td>
+					<input class="easyui-textbox"  name="remark" th:field="*{remark}"
+						   	data-options="validType:['byteLength[1,255]','untable']" />
+				</td>
+			</tr>				
+		</table>
+	</form>
+</div>

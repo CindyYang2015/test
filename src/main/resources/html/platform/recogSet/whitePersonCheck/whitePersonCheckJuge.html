@@ -1,0 +1,25 @@
+	<div align="center">
+	 <form id="manage_whitePersonCheck_editform" th:action="@{/whitePersonCheck/checkSave}" th:object="${whitePersonCheck}"
+		method="post">
+		<table class="tableForm edit" width="80%">
+			<tr>
+				<td align="right"><label for="whiteType">审批结果:</label>
+			    <input type="hidden" name="id"  th:field="*{id}"/>
+				</td>
+				<td align="left">
+			<input type="radio" name="checkResult" checked="checked" value="1">审核通过</input>
+			<input type="radio" name="checkResult" value="0">审核不通过</input>
+				</td>
+				</tr>
+				<tr>
+				<td align="right"><label for="whiteType">备注:</label>
+				</td>
+				<td align="left">
+			<input type="text" size="25" name="remark"
+					value="" class="easyui-textbox" validType="byteLength[1,32]" />
+				</td>
+				</tr>
+			
+		</table>
+		</form>
+	</div>

@@ -1,0 +1,50 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_resource_datagrid" class="easyui-treegrid"
+			url="../resources/selectAllResourcesInfo" rownumbers="true" idField='resourceId' treeField='resourceName'
+			toolbar="#manage_resource_toolbar" fitColumns="true" fit="true"
+			border="false" singleSelect="true">
+			<thead>
+				<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+										data-options="formatter:function(value, row, index){ return row.resourceId }">编号</th>
+					<th field="resourceName" width="20%">名称</th>
+					<th field="resourceType" width="5%"
+						data-options="formatter:getResNameByResType">类型</th>
+					<th field="resourceDesc" width="15%">描述</th>
+					<th field="resourceUrl" width="30%">链接</th>
+					<th field="priority" width="5%">优先级</th>
+					<th field="enabled" width="10"
+						data-options="formatter:getResEnabled">是否可用</th>
+					<th field="issys" width="10%"
+						data-options="formatter:getResIssys">是否超级资源</th>
+					<th field="resourceImage" width="5%" data-options="formatter:setResourceImage">图标</th>					
+				</tr>
+			</thead>
+		</table>
+		<!-- 每行的Action动作模板 -->
+		<div id="manage_resource_action" style="display: none;">
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_resource_toolbar">
+			<a href="javascript:void(0);" onclick="addResInfo();"
+				class="easyui-linkbutton" iconCls="icon-add" title="添加"
+				resId="104106102" style="display:none"
+				plain="true">添加</a>
+				
+			<a href="javascript:void(0);" onclick="editResInfo();"
+				class="easyui-linkbutton" iconCls="icon-edit" title="编辑"
+				resId="104106103" style="display:none"
+				plain="true">编辑</a>
+				
+			<a href="javascript:void(0);" onclick="$.acooly.framework.removeTreeNode('../resources/deleteJson','resourceId','manage_resource_datagrid');"
+				class="easyui-linkbutton" iconCls="icon-remove" title="删除"
+				resId="104106104" style="display:none"
+				plain="true">删除</a>
+			
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/system/resource.js" charset="utf-8"></script>

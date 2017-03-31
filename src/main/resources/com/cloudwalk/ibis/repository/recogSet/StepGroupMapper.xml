@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.StepGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.StepGroup" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="STEPGROUP_NAME" property="stepgroupName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  
+  <sql id="Base_Column_List" >
+    ID, LEGAL_ORG_CODE, STEPGROUP_NAME, STATUS, REMARK, CREATOR, CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+
+  <select id="selectStepGroupByLegalOrgCode" parameterType="string" resultMap="BaseResultMap" resultType="list">
+	SELECT 
+    <include refid="Base_Column_List" /> 
+    FROM CF_STEP_GROUP 
+    WHERE LEGAL_ORG_CODE LIKE CONCAT(#{legalOrgCode},'%') 
+    	AND STATUS=1
+  </select>
+
+  <select id="selectStepGroupPage" parameterType="map" resultMap="BaseResultMap" resultType="list">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_STEP_GROUP 
+    <where>
+    	<if test="obj.legalOrgCode != null and obj.legalOrgCode != ''">
+		  	LEGAL_ORG_CODE LIKE CONCAT(CONCAT('%',#{obj.legalOrgCode,jdbcType=VARCHAR}),'%')
+     	</if> 
+     	<if test="obj.stepgroupName != null and obj.stepgroupName != ''">
+		  	AND STEPGROUP_NAME = #{obj.stepgroupName,jdbcType=VARCHAR}
+     	</if> 
+    </where>         
+  </select>
+	
+  <select id="selectGroupHaveRecogstep" parameterType="string" resultType="int">
+  	SELECT COUNT(1) FROM CF_RECOGSTEP WHERE STEPGROUP_ID=#{groupid,jdbcType=VARCHAR}
+  </select>	
+	
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_STEP_GROUP
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_STEP_GROUP 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.StepGroup" >
+    INSERT INTO CF_STEP_GROUP (
+    	ID, 
+    	LEGAL_ORG_CODE, 
+    	STEPGROUP_NAME, 
+      	STATUS, REMARK, 
+      	CREATOR, 
+      	CREATE_TIME, 
+      	UPDATOR, 
+      	UPDATE_TIME
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{legalOrgCode,jdbcType=VARCHAR}, 
+    	#{stepgroupName,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{creator,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP}, 
+      	#{updator,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=TIMESTAMP}
+      	)
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.StepGroup" >
+    UPDATE CF_STEP_GROUP 
+    SET 
+      	STEPGROUP_NAME = #{stepgroupName,jdbcType=VARCHAR}, 
+      	REMARK = #{remark,jdbcType=VARCHAR}, 
+      	UPDATOR = #{updator,jdbcType=VARCHAR}, 
+      	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP} 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

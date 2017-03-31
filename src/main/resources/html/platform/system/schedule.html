@@ -1,0 +1,44 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formserach"
+			style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_schedule_searchform" onsubmit="return false">
+			<table class="tableForm">
+				<tr>
+					<td align="left">
+						任务编码:
+						<input class="easyui-textbox" name="taskCode" id="taskCode" value="" validType="byteLength[1,64]"/> 
+						&nbsp;任务名称:
+						<input class="easyui-textbox" name="taskName" id="taskName" value=""  validType="byteLength[1,64]"/> 
+						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" style="display:none" plian="false" resId="104109101"
+							onclick="$.acooly.framework.searchData('manage_schedule_searchform','manage_schedule_datagrid');">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+ 
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_schedule_datagrid" class="easyui-datagrid" url="../schedule/selectscheduleByPage"
+				rownumbers="true" fitColumns="true" fit="true" border="false" pagination="true"
+					idField="id" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true" nowrap="false" striped="true">
+			<thead>
+				<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th> 
+					<th field="taskCode" halign="center" align="left"  width="30%">任务代码</th>
+					<th field="taskName" halign="center" align="left"  width="25%">任务名称</th>
+					<th field="taskStatus"  halign="center" align="center"  width="15%" formatter="setTaskStatusName">状态</th>
+					<th field="opt" halign="center" align="center" width="20%" formatter="optFormatterTaskStatus">操作</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<div id="manage_schedule_action" style="display: none;">
+	 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-vcard-edit" style="display:none" plain="true" onclick="openTaskStatusDlg('{taskCode}','{taskStatus}');" resId="104109102">{operName}</a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-detail" style="display:none" plain="true" onclick="openTaskRecord('{taskCode}');" resId="104109103">详情</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/system/schedule.js" charset="utf-8"></script>

@@ -1,0 +1,85 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formserach" style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_recogStep_searchform" onsubmit="return false">
+			<table class="tableForm">
+				 <tr>		
+				 	<td align="left">
+						 识别策略名称:&nbsp;
+						 <input id="recogstepName" class="easyui-textbox" name="recogstepName" />
+					</td>
+						
+					<td align="left">
+						 交易渠道:&nbsp;<input id="channel" class="easyui-combobox" name="channel" editable="false"
+			          			    data-options="panelHeight:'auto',valueField:'dicCode',textField:'meaning',url:'../recogStep/dicList?type=1'
+			          			   	,loadFilter:function(data){
+			          			   	   data.push({dicCode:'',meaning:'全部'});
+				                       return data;
+			          			   	}
+			          			    "	
+			          			    
+			          			 />		
+					</td>		
+					<td align="left">
+						 交易类型:&nbsp;<input id="tradingCode" class="easyui-combobox" name="tradingCode" editable="false"
+			          			    data-options="panelHeight:'auto',valueField:'dicCode',textField:'meaning',url:'../recogStep/dicList?type=0'
+			          			    ,loadFilter:function(data){
+				                        data.push({dicCode:'',meaning:'全部'});
+				                        return data;
+			          			   	}
+			          			    "	
+			          			    
+			          			 />		
+					</td>
+					<td>
+						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="105105101" 
+							style="display:none" onclick="submitSearch();">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_recogStep_datagrid" toolbar="#manage_recogStep_toolbar" class="easyui-datagrid"
+			rownumbers="true" fitColumns="true" fit="true" border="false" singleSelect="true"
+			pagination="true" sortName="id" width="100%" striped="true">
+			<thead>
+				<tr>
+					<th field="id" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th>
+					<th field="recogstepName" halign="center" align="left" width="15%">识别策略名称</th>
+					<th field="bankOrgName"   halign="center" align="left" width="15%">机构名称</th>
+					<th field="channel"       halign="center" align="left" width="15%">交易渠道</th>
+					<th field="tradingCode" halign="center" align="left" width="15%">交易类型</th>
+					<th field="stepgroupId" halign="center" align="left" width="15%">策略组名称</th>
+					<th field="remark"      halign="center" align="left" width="15%" >备注</th>		          	
+				</tr>
+			</thead>
+		</table>
+		<!-- 每行的Action动作模板 -->
+		<div id="manage_recogStep_action" class="hide">
+			
+
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_recogStep_toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" title="添加" plain="true" resId="105105102" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../recogStep/add',entity:'recogStep',width:600,height:200,title:'新增'},{buttonName:'确定'});">
+				添加
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" title="编辑" plain="true" resId="105105103" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../recogStep/edit',entity:'recogStep',width:600,height:200},{buttonName:'确定',isCheckselect:true,param:'id'});">
+				编辑
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" title="删除" plain="true" resId="105105104" 
+				style="display:none" onclick="$.acooly.framework.removes('../recogStep/delete','id','manage_recogStep_datagrid');">
+				删除
+			</a>	
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/recogSet/recogStep.js" charset="utf-8"></script>

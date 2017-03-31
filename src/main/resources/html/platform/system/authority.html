@@ -1,0 +1,76 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" style="padding: 5px; overflow: hidden;"
+		class="formserach" align="left">
+		<form id="manage_authority_searchform" onsubmit="return false">
+		 <span id="legalOrgCode" th:attr="value=${legalOrgCode}" style="display:none"></span>
+			<table class="tableForm">
+				<tr>
+					<td align="left">权限名:
+						<input type="text" size="15" class="easyui-textbox" validType="byteLength[1,255]"
+							   	name="authorityName" value="" />
+					</td>					
+					<td>					
+						<a href="javascript:void(0);" class="easyui-linkbutton"
+							iconCls="icon-search" plian="false" resId="104105101" style="display:none"
+								onclick="$.acooly.framework.searchData('manage_authority_searchform','manage_authority_datagrid');">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_authority_datagrid" class="easyui-datagrid"
+			   	toolbar="#manage_authority_toolbar" rownumbers="true" fitColumns="true"
+			   		fit="true" border="false" pagination="true" idField="authorityId"
+			   			pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]"  singleSelect="true" striped="true">
+			<thead>
+				<tr>				
+					<th field="showCheckboxWithId" checkbox="true"
+							data-options="formatter:function(value, row, index){ return row.authorityId }">编号</th>
+					<th field="authorityName" width="30%" halign="center" align="left"
+					    	data-options="editor:{type:'validatebox',options:{required:true,validType:'byteLength[1,128]'}}">权限名</th>
+					<th field="orgName"    width="50%" halign="center" align="left">所属法人机构</th>					
+				</tr>
+			</thead>
+		</table>
+		<!-- 每行的Action动作模板 -->
+		<div id="manage_authority_action" class="hide">				
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_authority_toolbar">		
+			<a href="javascript:void(0);" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" resId="104105102" style="display:none"
+				onclick="$.acooly.framework.appendRow('manage_authority_datagrid');">添加</a>
+			
+			<a href="javascript:void(0);"
+				onclick="$.acooly.framework.editSelectedRow('manage_authority_datagrid');"
+				class="easyui-linkbutton" iconCls="icon-edit" title="编辑"
+				resId="104105103" style="display:none"
+				plain="true">编辑</a> 
+				
+			<a href="javascript:void(0);"
+				onclick="saveAuthorities();"
+				class="easyui-linkbutton" iconCls="icon-save" title="保存"
+				resId="104105106" style="display:none"
+				plain="true">保存</a>
+				
+			<a href="javascript:void(0);"
+				onclick="setAuthRes();"
+				class="easyui-linkbutton" iconCls="icon-setting" title="设置权限"
+				resId="104105105" style="display:none"
+				plain="true">设置资源</a>  			
+				
+			<a href="javascript:void(0);"
+				onclick="deleteAuthorities();"
+				class="easyui-linkbutton" iconCls="icon-remove" title="删除"
+				resId="104105104" style="display:none"
+				plain="true">删除</a>		
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/system/authority.js" charset="utf-8"></script>
+
+ 

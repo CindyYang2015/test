@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+  
+  <!-- 生物识别服务接口版本管理对象 -->
+  <bean id="recogVerManage" class="com.cloudwalk.ibis.service.base.recog.RecogVerManageService">
+  	<property name="recogMap">
+  		<map>
+  			<entry key="ver001_reg">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogAddService" init-method="init"></bean>
+  			</entry>
+  			<entry key="ver001_checkPerson">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogCheckPersonService" init-method="init"></bean>
+  			</entry>
+  			<entry key="ver001_checkPersonEx">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogCheckPersonExService" init-method="init"></bean>
+  			</entry>
+  			<entry key="ver001_compare">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogCompareService" init-method="init"></bean>
+  			</entry>  
+  			<entry key="ver001_searchByPerson">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogSearchCustService" init-method="init"></bean>
+  			</entry>  
+  			<entry key="ver001_searchByImg">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogSearchFeatureService" init-method="init"></bean>
+  			</entry>  	
+  			<entry key="ver001_ocr">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogOCRService" init-method="init"></bean>
+  			</entry> 
+  			<entry key="ver001_checkLiveness">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogCheckLiveNessService" init-method="init"></bean>
+  			</entry> 
+  			<entry key="ver001_ocrBankCard">
+  				<bean class="com.cloudwalk.ibis.service.base.recog.ver001.RecogBankCardOCRService" init-method="init"></bean>
+  			</entry>		
+  		</map>
+  	</property>  
+  </bean>
+  
+  <!-- 引擎服务接口版本管理对象 -->
+  <bean id="engineVerManage" class="com.cloudwalk.ibis.service.base.engine.EngineVerManageService">
+  	<property name="engineMap">
+  		<map>
+  			<entry key="ver001_cyface">
+  				<bean class="com.cloudwalk.ibis.service.base.engine.ver001.FaceEngineService" init-method="init"></bean>
+  			</entry>  						
+  		</map>
+  	</property>  
+  </bean>
+</beans>

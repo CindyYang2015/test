@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.system.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.system.Department" >
+    <id column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_TEL" property="linkManTel" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_FAX" property="linkManFax" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_NAME" property="linkManName" jdbcType="VARCHAR" />
+    <result column="DEPAT_MANAGE_MAN" property="depatManageMan" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="SelectAll_Where_Clause" >
+    <where >
+       <if test="deptCode != null and deptCode != ''" >
+         DEPT_CODE = #{deptCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="orgCode != null and orgCode != ''" >
+         AND ORG_CODE = #{orgCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="deptName != null and deptName != ''" >
+         AND DEPT_NAME = #{deptName,jdbcType=VARCHAR} 
+      </if>
+      <if test="remark != null and remark != ''" >
+         AND REMARK = #{remark,jdbcType=VARCHAR} 
+      </if>
+      <if test="orgName != null and orgName != ''" >
+         AND ORG_NAME = #{orgName,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManTel != null and linkManTel != ''" >
+         AND LINK_MAN_TEL = #{linkManTel,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManFax != null and linkManFax != ''" >
+         AND LINK_MAN_FAX = #{linkManFax,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManName != null and linkManName != ''" >
+         AND LINK_MAN_NAME = #{linkManName,jdbcType=VARCHAR} 
+      </if>
+      <if test="depatManageMan != null and depatManageMan != ''" >
+         AND DEPAT_MANAGE_MAN = #{depatManageMan,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SelectAllByPage_Where_Clause" >
+    <where >
+       <if test="obj.deptCode != null and obj.deptCode != ''" >
+         DEPT_CODE = #{obj.deptCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.orgCode != null and obj.orgCode != ''" >
+         AND ORG_CODE = #{obj.orgCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.deptName != null and obj.deptName != ''" >
+         AND DEPT_NAME = #{obj.deptName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.remark != null and obj.remark != ''" >
+         AND REMARK = #{obj.remark,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.orgName != null and obj.orgName != ''" >
+         AND ORG_NAME = #{obj.orgName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManTel != null and obj.linkManTel != ''" >
+         AND LINK_MAN_TEL = #{obj.linkManTel,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManFax != null and obj.linkManFax != ''" >
+         AND LINK_MAN_FAX = #{obj.linkManFax,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManName != null and obj.linkManName != ''" >
+         AND LINK_MAN_NAME = #{obj.linkManName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.depatManageMan != null and obj.depatManageMan != ''" >
+         AND DEPAT_MANAGE_MAN = #{obj.depatManageMan,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAll_Where_Clause" >
+    <where >
+      <if test="deptCode != null and deptCode != ''" >
+         DEPT_CODE = #{deptCode,jdbcType=VARCHAR} 
+      </if>      
+      <if test="orgCode != null and orgCode != ''" >
+         AND ORG_CODE LIKE = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null and deptName != ''" >
+         AND DEPT_NAME  LIKE '%'||#{deptName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="remark != null and remark != ''" >
+         AND REMARK LIKE '%'||#{remark,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="orgName != null and orgName != ''" >
+         AND ORG_NAME LIKE '%'||#{orgName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManTel != null and linkManTel != ''" >
+         AND LINK_MAN_TEL LIKE '%'||#{linkManTel,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManFax != null and linkManFax != ''" >
+         AND LINK_MAN_FAX LIKE '%'||#{linkManFax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManName != null and linkManName != ''" >
+         AND LINK_MAN_NAME LIKE '%'||#{linkManName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="depatManageMan != null and depatManageMan != ''" >
+         AND DEPAT_MANAGE_MAN LIKE '%'||#{depatManageMan,jdbcType=VARCHAR}||'%' 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAllByPage_Where_Clause" >
+    <where >
+      <if test="obj.deptCode != null and obj.deptCode != ''" >
+         DEPT_CODE = #{obj.deptCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.orgCode != null and obj.orgCode != ''" >
+         AND ORG_CODE LIKE '${obj.orgCode}%'
+      </if>
+      <if test="obj.deptName != null and obj.deptName != ''" >
+         AND DEPT_NAME = #{obj.deptName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.remark != null and obj.remark != ''" >
+         AND REMARK LIKE '%'||#{obj.remark,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.orgName != null and obj.orgName != ''" >
+         AND ORG_NAME LIKE '%'||#{obj.orgName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManTel != null and obj.linkManTel != ''" >
+         AND LINK_MAN_TEL LIKE '%'||#{obj.linkManTel,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManFax != null and obj.linkManFax != ''" >
+         AND LINK_MAN_FAX LIKE '%'||#{obj.linkManFax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManName != null and obj.linkManName != ''" >
+         AND LINK_MAN_NAME LIKE '%'||#{obj.linkManName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.depatManageMan != null and obj.depatManageMan != ''" >
+         AND DEPAT_MANAGE_MAN LIKE '%'||#{obj.depatManageMan,jdbcType=VARCHAR}||'%' 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    DEPT_CODE AS deptCode, ORG_CODE AS orgCode, DEPT_NAME AS deptName, 
+    REMARK AS remark, ORG_NAME AS orgName, LINK_MAN_TEL AS linkManTel, LINK_MAN_FAX AS linkManFax, 
+    LINK_MAN_NAME AS linkManName, DEPAT_MANAGE_MAN AS depatManageMan
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.cloudwalk.ibis.model.system.Department" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM FND_DEPARTMENT 
+    WHERE DEPT_CODE = #{deptCode,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM FND_DEPARTMENT 
+    WHERE DEPT_CODE = #{deptCode,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.system.Department" >
+    INSERT INTO FND_DEPARTMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deptCode != null" >
+        DEPT_CODE,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="linkManTel != null" >
+        LINK_MAN_TEL,
+      </if>
+      <if test="linkManFax != null" >
+        LINK_MAN_FAX,
+      </if>
+      <if test="linkManName != null" >
+        LINK_MAN_NAME,
+      </if>
+      <if test="depatManageMan != null" >
+        DEPAT_MANAGE_MAN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deptCode != null" >
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManTel != null" >
+        #{linkManTel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManFax != null" >
+        #{linkManFax,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManName != null" >
+        #{linkManName,jdbcType=VARCHAR},
+      </if>
+      <if test="depatManageMan != null" >
+        #{depatManageMan,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.system.Department" >
+    UPDATE FND_DEPARTMENT
+    <set >
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManTel != null" >
+        LINK_MAN_TEL = #{linkManTel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManFax != null" >
+        LINK_MAN_FAX = #{linkManFax,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManName != null" >
+        LINK_MAN_NAME = #{linkManName,jdbcType=VARCHAR},
+      </if>
+      <if test="depatManageMan != null" >
+        DEPAT_MANAGE_MAN = #{depatManageMan,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE DEPT_CODE = #{deptCode,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" parameterType="com.cloudwalk.ibis.model.system.Department" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DEPARTMENT
+    <include refid="SelectAll_Where_Clause" />
+  </select>
+  
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DEPARTMENT
+    <include refid="SelectAllByPage_Where_Clause" />
+  </select>
+  
+  <select id="searchAll" parameterType="com.cloudwalk.ibis.model.system.Department" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DEPARTMENT
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  <select id="searchAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DEPARTMENT
+    <include refid="SearchAllByPage_Where_Clause" />
+  </select>
+  
+  <select id="selectCount" parameterType="com.cloudwalk.ibis.model.system.Department" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM FND_DEPARTMENT
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  
+  <!-- 查询部门下面是否存在人员 -->
+  <select id="isExistsChildUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM FND_USER u 
+    WHERE u.DEPT_CODE = #{deptCode,jdbcType=VARCHAR}      
+  </select>
+ 
+</mapper>

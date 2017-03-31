@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<!-- easyui控件 -->
+<link id="uiTheme" rel="stylesheet" href="../js/lib/jquery-easyui-1.4.2/themes/black/easyui.css" type="text/css"/>
+<link rel="stylesheet" href="../js/lib/jquery-easyui-1.4.2/themes/icon.css" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="../js/lib/jquery-easyui-1.4.2/themes/color.css" />
+ <link rel="stylesheet" type="text/css" href="../js/lib/jquery-easyui-1.4.2/demo/demo.css" />
+ <link rel="stylesheet" type="text/css" href="../css/icon.css" />
+<link rel="stylesheet" type="text/css" href="../css/basic.css" />
+<style type="text/css">
+	.menuitem
+        {background: #fff; border: 1px solid #fff; }
+    .menuitem .submenu
+        {background: #ccc; border: 1px solid #fff; position: absolute; top: 0px; left: -1px; width: 5em;}
+    .menuitem .submenu
+        {display: none;}
+    .menuitem:hover .submenu
+        {display: block;}
+    .submenu:hover {
+    	cursor:pointer;
+    }
+    .submenu div {
+    	margin-bottom:3px;
+    }
+    .submenu div:hover {
+    	color:orange;
+    }
+</style>
+
+</head>
+<div class="menuBar" id="ithDiv" style="height:100px;position:absolute;z-index:10;width:55px;text-align:center;color:#fff">
+    <div class="menuitem">
+        <div>换   肤</div>
+        <div class="submenu">
+            <div value="default" onclick="changeSkin(this);">默认</div>
+            <div value="black" onclick="changeSkin(this);">黑色</div>
+            <div value="gray" onclick="changeSkin(this);">灰色</div>
+            <div value="bootstrap" onclick="changeSkin(this);">经典</div>
+            <div value="metro" onclick="changeSkin(this);">绿色</div>
+            <div value="ui-cupertino" onclick="changeSkin(this);">蓝色</div>
+            <div value="ui-dark-hive" onclick="changeSkin(this);">深黑</div>
+            <div value="ui-pepper-grinder" onclick="changeSkin(this);">黄色</div>
+            <div value="ui-sunny" onclick="changeSkin(this);">褐色</div>
+        </div>
+    </div>
+    <div class="menuend"></div>
+</div>
+
+<body id="mainLayout" class="easyui-layout">
+  <div class="north" data-options="region:'north',border:false,href:'../login/north.html'" ></div>
+  <div class="west" data-options="region:'west',title:'功能导航',collapsible:false,href:'../html/layout/west.html'" ></div>
+  <div class="center" data-options="region:'center',href:'../html/layout/center.html'" ></div>  
+</body>
+<script type="text/javascript" src="../js/lib/jquery/jquery-1.9.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-plugin/jquery.cookie.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/plugins/datagrid-detailview.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/plugins/datagrid-groupview.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-plugin/jquery.form.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-plugin/jquery_image_upload.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/fileupload/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="../js/lib/fileupload/jquery.fileupload.js"></script>
+<script type="text/javascript" src="../js/lib/fileupload/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="../js/lib/fileupload/jquery.fileupload-validate.js"></script>
+<script type="text/javascript" src="../js/lib/fileupload/jquery.xdr-transport.js"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/jquery.easyui.extend.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery.md5.js"></script>
+<script type="text/javascript" src="../js/lib/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/framework.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/main.js" charset="utf-8"></script>
+
+</html>
+
+<script type="text/javascript">
+
+function changeSkin(obj) {
+	var newVal = obj.getAttribute("value");
+	var oldHref = $('#uiTheme').attr('href');
+	var newHref = oldHref.substring(0,oldHref.indexOf('themes')) + 'themes/' + newVal + '/easyui.css';
+	$('#uiTheme').attr('href', newHref);
+	
+	//更换title的背景颜色
+    if(newVal == 'black') {
+ 	   $('#logoDiv').css("background-color","#03141D");
+ 	   $('.menuitem').css("background-color","#03141D");
+	   $('.submenu').css("background","#03141D");
+    } else if(newVal == 'default'){
+ 	   $('#logoDiv').css("background-color","rgb(107, 168, 199)");
+ 	   $('.menuitem').css("background-color","rgb(107, 168, 199)");
+	   $('.submenu').css("background","rgb(107, 168, 199)");
+    } else if(newVal == 'gray') {
+ 	   $('#logoDiv').css("background-color","#848484");
+ 	   $('.menuitem').css("background-color","#848484");
+	   $('.submenu').css("background","#848484");
+    } else if(newVal == 'bootstrap') {
+ 	   $('#logoDiv').css("background-color","rgb(171, 165, 165)");
+ 	   $('.menuitem').css("background-color","rgb(171, 165, 165)");
+	   $('.submenu').css("background","rgb(171, 165, 165)");
+    } else if(newVal == 'metro') {
+ 	   $('#logoDiv').css("background-color","rgb(98, 199, 198)");
+ 	   $('.menuitem').css("background-color","rgb(98, 199, 198)");
+	   $('.submenu').css("background","rgb(98, 199, 198)");
+    } else if(newVal == 'ui-cupertino') {
+ 	   $('#logoDiv').css("background-color","rgb(79, 141, 175)");
+ 	   $('.menuitem').css("background-color","rgb(79, 141, 175)");
+	   $('.submenu').css("background","rgb(79, 141, 175)");
+    } else if(newVal == 'ui-dark-hive') {
+ 	   $('#logoDiv').css("background-color","rgb(56, 56, 56)");
+ 	   $('.menuitem').css("background-color","rgb(56, 56, 56)");
+	   $('.submenu').css("background","rgb(56, 56, 56)");
+    } else if(newVal == 'ui-pepper-grinder') {
+ 	   $('#logoDiv').css("background-color","rgb(220, 177, 61)");
+ 	   $('.menuitem').css("background-color","rgb(220, 177, 61)");
+	   $('.submenu').css("background","rgb(220, 177, 61)");
+    } else if(newVal == 'ui-sunny') {
+ 	   $('#logoDiv').css("background-color","rgb(101, 90, 20)");
+ 	   $('.menuitem').css("background-color","rgb(101, 90, 20)");
+	   $('.submenu').css("background","rgb(101, 90, 20)");
+    }
+    //设置cookie值，并设置7天有效时间
+    $.cookie('themeName', newVal, {
+        expires : 7
+    })
+}
+
+$(function(){
+    var easyuiTheme = "black";
+    var cookieTheme = $.cookie('themeName');
+    if(cookieTheme==null || cookieTheme=="") {
+    	cookieTheme = "black";
+    }
+  	//更换title的背景颜色
+    if(cookieTheme == 'black') {
+ 	   $('.north').css("background-color","#03141D");
+ 	   $('.menuitem').css("background-color","#03141D");
+ 	   $('.submenu').css("background","#03141D");
+    } else if(cookieTheme == 'default'){
+ 	   $('.north').css("background-color","rgb(107, 168, 199)");
+ 	   $('.menuitem').css("background-color","rgb(107, 168, 199)");
+ 	   $('.submenu').css("background","rgb(107, 168, 199)");
+    } else if(cookieTheme == 'gray') {
+ 	   $('.north').css("background-color","#848484");
+ 	   $('.menuitem').css("background-color","#848484");
+	   $('.submenu').css("background","#848484");
+    } else if(cookieTheme == 'bootstrap') {
+ 	   $('.north').css("background-color","rgb(171, 165, 165)");
+ 	   $('.menuitem').css("background-color","rgb(171, 165, 165)");
+	   $('.submenu').css("background","rgb(171, 165, 165)");
+    } else if(cookieTheme == 'metro') {
+ 	   $('.north').css("background-color","rgb(98, 199, 198)");
+ 	   $('.menuitem').css("background-color","rgb(98, 199, 198)");
+	   $('.submenu').css("background","rgb(98, 199, 198)");
+    } else if(cookieTheme == 'ui-cupertino') {
+ 	   $('.north').css("background-color","rgb(79, 141, 175)");
+ 	   $('.menuitem').css("background-color","rgb(79, 141, 175)");
+	   $('.submenu').css("background","rgb(79, 141, 175)");
+    } else if(cookieTheme == 'ui-dark-hive') {
+ 	   $('.north').css("background-color","rgb(56, 56, 56)");
+ 	   $('.menuitem').css("background-color","rgb(56, 56, 56)");
+	   $('.submenu').css("background","rgb(56, 56, 56)");
+    } else if(cookieTheme == 'ui-pepper-grinder') {
+ 	   $('.north').css("background-color","rgb(220, 177, 61)");
+ 	   $('.menuitem').css("background-color","rgb(220, 177, 61)");
+	   $('.submenu').css("background","rgb(220, 177, 61)");
+    } else if(cookieTheme == 'ui-sunny') {
+ 	   $('.north').css("background-color","rgb(101, 90, 20)");
+ 	   $('.menuitem').css("background-color","rgb(101, 90, 20)");
+	   $('.submenu').css("background","rgb(101, 90, 20)");
+    } else {
+       $('.north').css("background-color","#03141D");
+       $('.menuitem').css("background-color","#03141D");
+	   $('.submenu').css("background","#03141D");
+    }
+    var href = $("#uiTheme").attr("href").replace(easyuiTheme, cookieTheme);
+    $("#uiTheme").attr("href", href);
+    
+    //更换主题位置
+    var screenWidth = window.innerWidth;
+    var divWidth = $("#ithDiv").css('width');
+    divWidth=divWidth.replace("px","");
+    var leftWidth = screenWidth - divWidth-10;
+    $('#ithDiv').css("left",leftWidth);
+    $('#ithDiv').css("top",'34px');
+ });
+</script>
+

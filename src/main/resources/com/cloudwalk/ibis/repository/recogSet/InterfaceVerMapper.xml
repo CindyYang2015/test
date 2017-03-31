@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.InterfaceVerMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.InterfaceVer" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="INTERFACE_CODE" property="interfaceCode" jdbcType="VARCHAR" />
+    <result column="VER_CODE" property="verCode" jdbcType="VARCHAR" />
+    <result column="VER_NO" property="verNo" jdbcType="VARCHAR" />
+   	<result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  
+  <!--  版本代码,版本号,下拉框选择接口 -->
+  <sql id="SelectAll_Where_Clause" >
+    <where >
+      <if test="interfaceCode != null and interfaceCode != ''" >
+         INTERFACE_CODE = #{interfaceCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="verCode != null and verCode != ''" >
+         AND VER_CODE = #{verCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="verNo != null and verNo != ''" >
+         AND VER_NO = #{verNo,jdbcType=VARCHAR} 
+      </if>
+      <if test="status != null" >
+         AND STATUS = #{status,jdbcType=SMALLINT} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SelectAllByPage_Where_Clause" >
+    <where >
+       <if test="obj.interfaceCode != null and obj.interfaceCode != ''" >
+         INTERFACE_CODE = #{obj.interfaceCode,jdbcType=VARCHAR} 
+      </if> 
+      <if test="obj.verCode != null and obj.verCode != ''" >
+         AND VER_CODE = #{obj.verCode,jdbcType=VARCHAR} 
+      </if>
+       <if test="obj.verNo != null and obj.verNo != ''" >
+         AND VER_NO = #{obj.verNo,jdbcType=VARCHAR} 
+      </if> 
+    </where>
+  </sql>
+  
+  <sql id="SearchAll_Where_Clause" >
+    <where >
+      <if test="interfaceCode != null and interfaceCode != ''" >
+         INTERFACE_CODE LIKE '%'||#{interfaceCode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="verCode != null and verCode != ''" >
+         AND VER_CODE LIKE '%'||#{verCode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="verNo != null and verNo != ''" >
+         AND VER_NO = #{verNo,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAllByPage_Where_Clause" >
+    <where >
+      <if test="obj.interfaceCode != null and obj.interfaceCode != ''" >
+         INTERFACE_CODE LIKE '%'||#{obj.interfaceCode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.verCode != null and obj.verCode != ''" >
+         AND VER_CODE LIKE '%'||#{obj.verCode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.verNo != null and obj.verNo != ''" >
+         AND VER_NO = #{obj.verNo,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <!--   版本代码，版本号，状态（启用/停止），备注 -->
+  <sql id="Base_Column_List" >
+    ID AS id,VER_CODE AS verCode, VER_NO AS verNo,STATUS AS status,REMARK AS remark,INTERFACE_CODE AS interfaceCode
+  </sql>
+  
+  <!--  根据主键查询 -->
+  <select id="selectByPrimaryKey" resultType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_INTERFACE_VER
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据主键删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_INTERFACE_VER
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 新增 -->
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" >
+    INSERT INTO CF_INTERFACE_VER(
+    	ID, 
+    	INTERFACE_CODE, 
+    	VER_NO, 
+    	VER_CODE, 
+    	STATUS, 
+    	REMARK, 
+    	CREATOR, 
+    	CREATE_TIME, 
+    	UPDATOR, 
+    	UPDATE_TIME
+    	)
+	VALUES(
+		#{id,jdbcType=VARCHAR}, 
+		#{interfaceCode,jdbcType=VARCHAR}, 
+		#{verNo,jdbcType=VARCHAR}, 
+		#{verCode,jdbcType=VARCHAR}, 
+		#{status,jdbcType=SMALLINT}, 
+		#{remark,jdbcType=VARCHAR}, 
+		#{creator,jdbcType=VARCHAR}, 
+		#{createTime,jdbcType=DATE}, 
+		#{updator,jdbcType=VARCHAR}, 
+		#{updateTime,jdbcType=DATE}
+		)
+  </insert>
+  
+  <!--  修改:状态备注 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" >
+    UPDATE CF_INTERFACE_VER
+    <set >
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="remark!= null">
+		REMARK = #{remark,jdbcType=VARCHAR},
+	  </if>
+    </set>
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!--   精确查找 -->
+  <select id="selectAll" parameterType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM CF_INTERFACE_VER
+    <include refid="SelectAll_Where_Clause" />
+  </select>
+  
+  <!--   分页精确查找 -->
+  <select id="selectAllByPage" parameterType="map" resultType="com.cloudwalk.ibis.model.recogSet.vo.InterfaceVerVo">
+    SELECT 
+    	interVer.ID AS id, interVer.VER_CODE AS verCode, interVer.VER_NO AS verNo, interVer.STATUS AS status, 
+    	interVer.REMARK AS remark, interVer.INTERFACE_CODE AS interfaceCode, inter.INTERFACE_NAME AS interfaceName 
+    FROM CF_INTERFACE_VER interVer, CF_INTERFACE inter 
+   	WHERE interVer.INTERFACE_CODE = inter.INTERFACE_CODE
+   	<if test="obj.interfaceCode != null and obj.interfaceCode != ''" >
+         AND interVer.INTERFACE_CODE = #{obj.interfaceCode,jdbcType=VARCHAR} 
+    </if> 
+    <if test="obj.verCode != null and obj.verCode != ''" >
+         AND interVer.VER_CODE = #{obj.verCode,jdbcType=VARCHAR} 
+    </if>
+    <if test="obj.verNo != null and obj.verNo != ''" >
+         AND interVer.VER_NO = #{obj.verNo,jdbcType=VARCHAR} 
+    </if> 
+  </select>
+  
+  <!-- 模糊查询 -->
+  <select id="searchAll" parameterType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM CF_INTERFACE_VER
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  <!--   模糊分页查询 -->
+  <select id="searchAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM CF_INTERFACE_VER
+    <include refid="SearchAllByPage_Where_Clause" />
+  </select>
+  
+  <select id="selectCount" parameterType="com.cloudwalk.ibis.model.recogSet.InterfaceVer" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM CF_INTERFACE_VER
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+</mapper>

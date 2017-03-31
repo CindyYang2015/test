@@ -1,0 +1,68 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+  	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formsearch" style="padding: 5px; overflow: hidden;" align="left">
+	    <form id="manage_dicValues_searchform" onsubmit="return false">
+	    	<table class="tableForm">
+		        <tr>			
+		          <td>
+		          	字典类别:
+			          <input id="dicTypes" class="easyui-combobox" name="dicType" panelHeight="120"    
+		    					data-options="valueField:'id',editable:false,textField:'text',loadFilter:function(data) {
+									return $.extend(data, [{'id':'', 'text':'所有'}]);  						
+		    					},url:'../dic/dicTypes'"></input>
+		          </td>
+				  <td>        
+					<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="104108101" style="display:none"
+						onclick="$.acooly.framework.searchData('manage_dicValues_searchform','manage_dicValues_datagrid');">查询</a> 
+		          </td>
+		        </tr>
+	    	</table>
+		</form>
+	</div>
+
+  	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_dicValues_datagrid" class="easyui-datagrid" toolbar="#manage_dicValues_toolbar"
+			   rownumbers="true" fitColumns="true" fit="true" border="false" singleSelect="true"
+			   	pagination="true" data-options="pageNumber:1,pageSize:10,pageList:[10,20,30,40,50]" striped="true">
+      		<thead>
+        		<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.dicCode }">编号</th>   
+					<th field="dicType"  halign="center" align="center"   width="10">类型代码</th>
+					<th field="descs"    halign="center" align="left"     width="10">类型名称</th>		
+					<th field="dicCode"  halign="center" align="left"     width="10">字典编码</th>
+		          	<th field="meaning"  halign="center" align="left"     width="20">字典含义</th>
+		          	<th field="enabledFlag" halign="center" align="center"  width="10" formatter="statusFormatter">启用标志</th>
+		          	<th field="description" halign="center" align="left"    width="40">备注</th>
+		        </tr>
+      		</thead>
+    	</table>
+    	<!-- 每行的Action动作模板 -->
+		<div id="manage_dicValues_action" class="hide">
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_dicValues_toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" title="添加" plain="true" resId="104108102" style="display:none"
+				onclick="$.acooly.framework.customDialog({reload:true,url:'../dic/create.html',entity:'dicValues',width:500,height:220,title:'新增'},{buttonName:'确定'});">
+				添加
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" title="编辑" plain="true" resId="104108103" style="display:none"
+				onclick="$.acooly.framework.customDialog({reload:true,url:'../dic/edit.html',entity:'dicValues',width:500,height:220},{buttonName:'确定',isCheckselect:true,param:'dicCode,dicType'});">
+				编辑
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" title="删除" plain="true" resId="104108104" style="display:none"
+				onclick="$.acooly.framework.mulParamRemoves('../dic/deleteJson','dicCode,dicType','manage_dicValues_datagrid');">
+				删除
+			</a>
+
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-import" title="批量导入" plain="true" resId="104108105" style="display:none"
+				onclick="$.acooly.framework.customDialog({reload:true,url:'../dic/batchImport.html',entity:'dicValues',width:500,height:220,title:'批量导入'},{buttonName:'确定'});">
+				批量导入
+			</a>
+		</div>	
+	</div>
+</div>
+<script type="text/javascript" src="../js/system/dic.js" charset="utf-8"></script>

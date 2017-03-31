@@ -1,0 +1,72 @@
+<div align="center">
+	<form id="manage_recognizerule_editform" 
+		th:action="@{/recognizerule/save}"  th:object="${vo}" 
+		method="post">
+		<input name="action" id="action" type="hidden" th:attr="value=${action}" />
+		<input name="id" id="id" type="hidden" th:field="*{id}"/>
+		
+		<table class="tableForm edit" width="100%" id="recognizeruleTable">
+			
+			<div th:if="${action == 'edit'}">
+				<div style="display:none">
+					<input name="inputRecogstepId"   th:field="*{inputRecogstepId}"/>
+			    	<input name="inputEngineCode"   th:field="*{inputEngineCode}"/>
+		    	</div>
+		    	<tr>
+				<th >识别策略：</th>
+				<td>
+					<input class="easyui-combobox"  id="inputRecogstepId"  editable="false" th:field="*{inputRecogstepId}"
+				    	data-options="panelHeight:'120',required:true,disabled:true"/>						
+				</td>
+				<th >算法引擎：</th>
+				<td>
+					<input class="easyui-combobox" id="inputEngineCode"  name="inputEngineCode"  editable="false" 
+						data-options="panelHeight:'auto',required:true,disabled:true"
+				    	th:field="*{inputEngineCode}"/>				
+				</td>
+				</tr>
+			</div>
+			<div th:unless="${action == 'edit'}">
+				<tr>
+				<th >识别策略：</th>
+				<td>
+					<input class="easyui-combobox" id="inputRecogstepId"  editable="false" 
+				    	data-options="required:true" th:field="*{inputRecogstepId}"/>						
+					
+				</td>
+				<th >算法引擎：</th>
+				<td>
+					<input class="easyui-combobox"  id="inputEngineCode"   editable="false" 
+						data-options="required:true" th:field="*{inputEngineCode}"/>				
+				</td>
+				</tr>	
+			</div>
+			
+			
+			<tr>
+				<th >状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</th>
+					<td >
+            			<input  class="easyui-combobox" id="inputStatus" name="inputStatus" th:field="*{inputStatus}"  editable="false" 
+             				 data-options="panelHeight:'auto',required:true,valueField:'value',textField:'text',data:[{text:'有效',value:'1'},{text:'无效',value:'0'}]" />
+          			</td>   
+				<th >阈&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值：</th>
+				<td>
+					<input  class="easyui-textbox" id="inputScore" name="inputScore" th:field="*{inputScore}" 
+					data-options="required:true" validType="doubleRange[0,1,'',/^0(\.\d{1,4})?$|^1(\.[0]{1,4})?$/,'只能输入0到1之间的浮点数，最多精确到小数点后4位']"/>			
+				</td>
+			</tr>		
+				
+			<tr>
+				<th>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</th>
+				<td >
+					<input class="easyui-textbox" name="inputRemark" id="inputRemark" th:field="*{inputRemark}" 
+						 data-options="validType:['untable','byteLength[1,128]']" />	
+				</td>
+			</tr>				
+			
+					
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="../js/recogSet/recognizeruleAdd.js" charset="utf-8"></script>
+

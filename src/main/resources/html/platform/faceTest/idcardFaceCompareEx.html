@@ -1,0 +1,214 @@
+<link rel="stylesheet" type="text/css" href="../css/JsonFormat.css" />
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'north',title:'请求报文'" class="layoutLeftWidth" style="height:75%;">
+		<form name="uploadImgTwoCardForm" id="uploadImgTwoCardForm" action="../faceTest/idcardFaceCompareEx" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="isencrypt" value="1"></input>
+			<input type="hidden" id="spotImgId" name="faceImg" value=""></input>
+			<input type="hidden" id="idcardImgId" name="idcardImg" value=""></input>
+			<input type="hidden" id="netCheckImgId" name="netCheckImg" value=""></input>
+			<table class="tableForm" width="100%" style="float:left;margin-top:0px;border-collapse:separate; border-spacing:10px;">
+       			<tr>
+		        	<td style="width:40%;">
+		         		<table width="100%">
+		         			<tr>
+			         			<td style="text-align:right;">现场照片:</td>
+					             <td>	
+					             	<a href="javascript:;" class="a-upload2" >
+						             <div>
+							             <img src="../images/upload.png" style="width:100px;height:100px;" id="face_spot_show_img" />
+						             </div>				             
+									 <input type="file" id="face_spot_upload_img" data-url="../faceTest/uploadImage" />
+									</a>	       	 
+								 </td>
+		         			</tr>
+		         			<tr>
+		         				 <td style="text-align:right;">身份证头像:</td>
+					             <td>
+					             	<a href="javascript:;" class="a-upload2" >
+						             <div>
+							             <img src="../images/upload.png" style="width:100px;height:100px;" id="face_idcardex_show_img" />
+						             </div>				             
+									 <input type="file" id="face_idcardex_upload_img" data-url="../faceTest/uploadImage" />
+									</a>							            
+								 </td>
+		         			</tr> 
+		         			<tr>
+		        				<td style="text-align:right;">联网核查照:</td>
+					            <td>
+					            	<a href="javascript:;" class="a-upload2" >
+						             <div>
+							             <img src="../images/upload.png" style="width:100px;height:100px;" id="face_netcheck_show_img" />
+						             </div>				             
+									 <input type="file" id="face_netcheck_upload_img" data-url="../faceTest/uploadImage" />
+									</a>							            
+								</td>
+		         			</tr>         			
+		         		</table>
+		         	</td>
+    				<td style="width:60%;text-align:center;">
+			 			<table style="width:80%;text-align:center;">
+			 				<tr>
+					 			<td style="text-align:right;width:18%;">
+					 				法人机构代码:
+					 			</td>
+					 			<td style="width:32%;">
+					 				<input class="easyui-textbox" validType="byteLength[1,18]" missingMessage="请输入法人机构代码" id="orgCode"  name="orgCode" data-options="required:true"/>
+					 			</td>
+					 			<td style="text-align:right;width:18%;">
+					 				交易渠道:
+					 			</td>
+					 			<td style="width:32%;">
+					 				<input class="easyui-combobox" id="channel" missingMessage="请选择渠道分类" name="channel" panelHeight="auto"  
+					 						data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=3',required:true"/>
+								 </td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				交易类型:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-combobox" id="tradingCode" name="tradingCode" missingMessage="请输入交易类型" panelHeight="auto"  
+								 		 data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=6',required:true"/>
+								</td>
+								<td style="text-align:right;">
+									客户姓名:
+								</td>
+					 			<td>
+					 				<input class="easyui-textbox" id="ctfname" name="ctfname" validType="byteLength[1,64]" missingMessage="请输入姓名"
+												 data-options="required:true"/>
+					 			</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				证件类型:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-combobox" id="cType" name="ctftype" missingMessage="请选择证件类型" panelHeight="auto"  
+								 			 data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+								</td>
+								<td style="text-align:right;">
+									证件号码:
+								</td>
+					 			<td>
+					 				<input class="easyui-textbox" id="ctfno" name="ctfno" validType="byteLength[1,18]" missingMessage="请输入证件号码"
+								 		  		data-options="required:true"/>
+								</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				客户属性:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-combobox" id="property"  name="property" missingMessage="请选择客户属性" panelHeight="auto"  
+								 			 data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=4'"/>
+								</td>
+			
+					 			<td style="text-align:right;">
+					 				核心客户号:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-textbox" validType="byteLength[1,18]" missingMessage="请输入核心客户号"
+												id="customerId" name="customerId"/>
+					 			</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				通信协议:
+					 			</td>
+					 			<td>
+									 <input  class="easyui-combobox" id="requestWay" name="requestWay" panelHeight="auto"  
+              									data-options="editable:false,required:true,valueField:'value',textField:'text',data:[{text:'WEBSERVICE',value:'1'},{text:'SOCKET',value:'2'},{text:'HTTP',value:'3'}]"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				交易流水:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-textbox" validType="byteLength[1,18]"  name="tradingFlowNO" 
+					 							data-options="required:true"/>
+								</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				交易日期:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-textbox" validType="byteLength[1,64]" name="tradingDate" 
+					 							data-options="required:false"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				交易时间:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-textbox" validType="byteLength[1,64]" name="tradingTime" 
+					 						data-options="required:false" />
+								</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				设备号:
+					 			</td>
+					 			<td>
+						 			<input class="easyui-textbox"  validType="byteLength[1,64]" name="equipmentNo" 
+						 					data-options="required:false" />
+								</td>
+					 			<td style="text-align:right;">
+					 				机构号:
+					 			</td>
+					 			<td>
+					 			<input class="easyui-textbox" validType="byteLength[1,64]" name="organizationNo"
+								  		data-options="required:false" />
+								</td>
+					 		</tr>
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				柜员号:
+					 			</td>
+					 			<td>
+					 				<input class="easyui-textbox" name="tellerNo" validType="byteLength[1,64]"
+								 			data-options="required:false" />
+								</td>
+					 			<td style="text-align:right;">
+					 				银行卡号:
+					 			</td>
+					 			<td>
+						 			<input class="easyui-textbox" name="bankcardNo" validType="byteLength[1,64]"
+									 	   	data-options="required:false" />
+								</td>
+					 		</tr>
+			 				<tr>
+					 			<td style="text-align:right;">联网核查:</td>
+					 			<td>
+						 			<!-- <select name="netCheckStatus" class="easyui-combobox" style="width: 150px;" data-options="editable:false" panelHeight="60">
+										<option value="1" >是</option>
+										<option value="0" >否</option>
+									</select> -->
+									 <input  class="easyui-combobox" name="netCheckStatus"  editable="false" panelHeight="auto"
+              									data-options="valueField:'value',textField:'text',data:[{text:'是',value:'1'},{text:'否',value:'0'}]"/>
+								</td>
+					 			<td style="text-align:right;">核查照类型:</td>
+					 			<td>
+					 				<!-- <select name="netCheckImgType" class="easyui-combobox" style="width: 150px;" data-options="editable:false" panelHeight="60">
+										<option value="1" >高清</option>
+										<option value="2" >水印</option>
+									</select> -->
+									<input  class="easyui-combobox" name="netCheckImgType"  editable="false" panelHeight="auto"
+              									data-options="valueField:'value',textField:'text',data:[{text:'高清',value:'1'},{text:'水印',value:'2'}]"/>
+								</td>	
+			 			  </tr>
+				 		  <tr>						
+							<td style="text-align:center;" colspan="4">					
+	        					<a id="submit_two_face" class="easyui-linkbutton" resId="102106101" style="margin-left:20px;width:80px;display:none;" data-options="iconCls:'icon-ok'" href="javascript:void(0)">提交</a>
+				          	</td>
+						  </tr>
+		 			 </table>			 	
+				 </td>
+       		 	</tr>           
+         	</table>         
+		</form>	
+	</div>		
+	<div data-options="region:'center',title:'响应报文'">	
+	    <pre id="two_idcard_face_similar_result" style="color:#DAC8C8;display:none">
+		</pre>
+	</div>
+</div>
+<script type="text/javascript" src="../js/faceTest/idcardFaceCompareEx.js"></script>

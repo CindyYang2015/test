@@ -1,0 +1,63 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<div data-options="region:'north',border:false"
+			style="padding: 5px; overflow: hidden;" class="formserach"	align="left">
+		<form id="log_manage_searchform" onsubmit="return false">
+			<table class="tableForm">
+				<tr>
+					<td align="left">
+						<label for="ip">IP:</label> 
+						<input name="ip" class="easyui-textbox"  validType="byteLength[1,32]" />
+					</td>
+					<td align="left">
+						端口:
+						<input type="text" name="sort" value="" class="easyui-textbox"
+							   	validType="byteLength[1,32]" />
+					</td>
+					<td>
+						<a href="javascript:void(0);" class="easyui-linkbutton"
+							iconCls="icon-search" plian="false" resId="103103101" style="display:none" 
+								onclick="$.acooly.framework.searchData('log_manage_searchform','log_manage_datagrid');">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div data-options="region:'center',border:false">
+		<table id="log_manage_datagrid" class="easyui-datagrid" rownumbers="true" fitColumns="true" fit="true" border="false"
+					pagination="true" idField="id" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true"
+						url="../logManage/search" striped="true">
+			<thead>
+				<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">序号</th>
+					<th field="ip" class="ip"      halign="center" align="left"  width="20%">IP</th>
+					<th field="sort"  class="sort" halign="center" align="left"  width="10%">端口</th>
+					<th field="path"  class="path" halign="center" align="left"  width="20%">路径</th>
+					<th field="fileName"  class="fileName" halign="center" align="left" width="25%">日志文件名称</th>
+					<th field="operation" width="23%"      halign="center" align="center" data-options="formatter:setOperStatusName">操作</th>
+				</tr>
+			</thead>
+		</table>
+		
+	</div>
+	<div id="manage_log_action" style="display: none;">
+ 			<a href="javascript:void(0);" class="easyui-linkbutton"  plain="true" style="display:none" onclick="downloadLog('{ip}','{port}','{path}','{filename}')" resId="103103102">下载</a>
+	 		
+		</div>
+</div>
+<script type="text/javascript" >
+	function setOperStatusName(value, row, index) {
+		var action = $("#manage_log_action").html();
+		var newPath;
+		action = action.replace(/{ip}/g,row.ip);
+		action = action.replace(/{port}/g,row.sort);
+		action = action.replace(/{filename}/g,row.fileName);
+		if(row.path){
+			newPath	=row.path.replace("\\" , "#" );
+		}
+		action = action.replace(/{path}/g,newPath);
+		return action;
+	}
+	function downloadLog(ip,port,path,filename) {
+	    window.location.href = "../logManage/download?ip="+ip+"&sort="+port+"&path="+path+"&logName="+encodeURI(encodeURI(filename));}
+</script>

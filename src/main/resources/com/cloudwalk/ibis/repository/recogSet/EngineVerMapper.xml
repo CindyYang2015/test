@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.EngineVerMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.EngineVer" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ENGINE_CODE" property="engineCode" jdbcType="VARCHAR" />
+    <result column="VER_CODE" property="verCode" jdbcType="VARCHAR" />
+    <result column="VER_NO" property="verNo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="ENGINE_NAME" property="engineName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    
+  </resultMap>
+	
+  <select id="selectEngineVerPage" resultMap="BaseResultMap" resultType="map" parameterType="map">
+  	SELECT 
+  		c1.ID, c2.ENGINE_NAME ENGINE_NAME,c2.COMPANY_NAME COMPANY_NAME,c1.ENGINE_CODE, 
+  		c1.VER_CODE, c1.VER_NO, c1.STATUS, c1.REMARK FROM CF_ENGINE_VER c1,CF_ENGINE c2 
+  	WHERE c1.ENGINE_CODE=c2.ENGINE_CODE 
+  	
+  	<if test="obj.engineCode != null and obj.engineCode != ''">
+		  	AND c1.ENGINE_CODE = #{obj.engineCode,jdbcType=VARCHAR}
+     </if>   
+     <if test="obj.verCode != null and obj.verCode != ''">
+		  	AND c1.VER_CODE = #{obj.verCode,jdbcType=VARCHAR}
+     </if>
+  	<if test="obj.verNo != null and obj.verNo != ''">
+		  	AND c1.VER_NO = #{obj.verNo,jdbcType=VARCHAR}
+     </if>   
+  	<if test="obj.status != null ">
+		  	AND c1.STATUS = #{obj.status,jdbcType=SMALLINT}
+     </if>        
+     ORDER BY c1.VER_CODE DESC
+  </select>	
+	
+  <sql id="Base_Column_List" >
+    ID, ENGINE_CODE, VER_CODE, VER_NO, STATUS, REMARK
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_ENGINE_VER
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!--  根据算法引擎代码查询出有效的算法版本 -->
+  <select id="selectByCode" resultMap="BaseResultMap" resultType="map" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_ENGINE_VER
+    WHERE ENGINE_CODE = #{code,jdbcType=VARCHAR} AND STATUS=1
+  </select>
+  
+ <select id="selectByEngineVer" resultMap="BaseResultMap" resultType="map" parameterType="map" >
+    SELECT 
+    	*
+    FROM CF_ENGINE_VER
+    WHERE ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}
+	    AND VER_CODE=#{verCode,jdbcType=VARCHAR}
+	    AND VER_NO=#{verNo,jdbcType=VARCHAR}
+  </select>
+	
+  <select id="selectByCodeFromFeature" resultMap="BaseResultMap" resultType="map" parameterType="com.cloudwalk.ibis.model.featurelib.PersonFeature" >
+    SELECT T1.ENGINEVER_CODE AS verCode,T4.VER_NO AS verNo
+    FROM FR_PERSON_FEATURE T1
+    LEFT JOIN CF_ENGINE_VER T4 ON T1.ENGINEVER_CODE = T4.VER_CODE
+    <where>
+    	<if test="partitionId != null and personId != ''" >
+         AND T1.PARTITION_ID = #{partitionId,jdbcType=INTEGER} 
+      	</if>
+    	<if test="personId != null and personId != ''" >
+         AND T1.PERSON_ID = #{personId,jdbcType=VARCHAR} 
+      	</if>
+    	<if test="engineCode != null and engineCode != ''" >
+         AND T1.ENGINE_CODE = #{engineCode,jdbcType=VARCHAR} AND T4.ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}
+      	</if>
+    </where>
+    GROUP BY T1.ENGINEVER_CODE,T4.VER_NO
+  </select>
+  
+  <select id="selectEngineVerHaveStep" parameterType="string" resultType="int">
+  	SELECT  COUNT(1) FROM CF_STEP_ENGINE_REF 
+  	WHERE ENGINEVER_ID=#{engineVerId,jdbcType=VARCHAR}
+  </select>	
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_ENGINE_VER 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.EngineVer" >
+    INSERT INTO CF_ENGINE_VER (
+    	ID, 
+    	ENGINE_CODE, 
+    	VER_CODE, 
+      	VER_NO, 
+      	STATUS, 
+      	REMARK
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{engineCode,jdbcType=VARCHAR}, 
+    	#{verCode,jdbcType=VARCHAR}, 
+      	#{verNo,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{remark,jdbcType=VARCHAR}
+      	)
+  </insert>
+ 
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.EngineVer" >
+    UPDATE CF_ENGINE_VER
+    SET 
+        STATUS = #{status,jdbcType=SMALLINT},
+        REMARK = #{remark,jdbcType=VARCHAR}
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据机构代码，渠道，交易类型，引擎代码获取算法引擎版本信息 -->
+  <select id="selectEngineVer" resultType="com.cloudwalk.ibis.model.recogSet.EngineVer" parameterType="map" >
+    SELECT 
+    	rs.ID AS recogstepId, s.ID AS stepId, rs.LEGAL_ORG_CODE AS orgCode, rs.CHANNEL AS channel, rs.TRADING_CODE AS tradingCode, 
+    	ev.ID AS id, ev.ENGINE_CODE AS engineCode, ev.VER_CODE AS verCode, ev.VER_NO AS verNo,e.ENGINE_TYPE AS engineType 
+    FROM CF_RECOGSTEP rs, CF_STEP_GROUP sg, CF_STEPGROUP_REF sgr, CF_STEP s, CF_STEP_ENGINE_REF ser, CF_ENGINE e, CF_ENGINE_VER ev 
+    WHERE rs.STEPGROUP_ID = sg.ID 
+    	AND sg.ID = sgr.STEPGROUP_ID 
+    	AND sgr.STEP_ID = s.ID 
+    	AND s.ID = ser.STEP_ID 
+	    AND ser.ENGINE_ID = e.ID 
+	    AND ser.ENGINEVER_ID = ev.ID 
+	    AND rs.STATUS = 1 
+	    AND sg.STATUS = 1 
+	    AND s.STATUS = 1 
+	    AND e.STATUS = 1 
+	    AND ev.STATUS = 1 
+    <if test="recogstepId != null and recogstepId != ''">
+		AND rs.ID = #{recogstepId,jdbcType=VARCHAR}
+    </if>
+    <if test="orgCode != null and orgCode != ''">
+		AND rs.LEGAL_ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+    </if>
+    <if test="channel != null and channel != ''">
+		AND rs.CHANNEL = #{channel,jdbcType=VARCHAR}
+    </if>
+    <if test="tradingCode != null and tradingCode != ''">
+		AND rs.TRADING_CODE = #{tradingCode,jdbcType=VARCHAR}
+    </if>
+    <if test="engineCode != null and engineCode != ''">
+		AND ev.ENGINE_CODE = #{engineCode,jdbcType=VARCHAR} 
+    </if>    
+  </select>
+  
+  <!-- 获取所有的算法引擎版本信息 -->
+  <select id="selectAllEngineVer" resultType="com.cloudwalk.ibis.model.recogSet.EngineVer">
+    SELECT 
+    	rs.ID AS recogstepId, rs.LEGAL_ORG_CODE AS orgCode, rs.CHANNEL AS channel, rs.TRADING_CODE AS tradingCode, 
+    	ev.ID AS id, ev.ENGINE_CODE AS engineCode, ev.VER_CODE AS verCode, ev.VER_NO verNo,e.ENGINE_TYPE AS engineType 
+    FROM CF_RECOGSTEP rs, CF_STEP_GROUP sg, CF_STEPGROUP_REF sgr, CF_STEP s, CF_STEP_ENGINE_REF ser, CF_ENGINE e, CF_ENGINE_VER ev 
+    WHERE rs.STEPGROUP_ID = sg.ID 
+	    AND sg.ID = sgr.STEPGROUP_ID 
+	    AND sgr.STEP_ID = s.ID 
+	    AND s.ID = ser.STEP_ID 
+	    AND ser.ENGINE_ID = e.ID 
+	    AND ser.ENGINEVER_ID = ev.ID 
+	    AND rs.STATUS = 1 
+	    AND sg.STATUS = 1 
+	    AND s.STATUS = 1 
+	    AND e.STATUS = 1 
+	    AND ev.STATUS = 1
+  </select>
+   
+</mapper>

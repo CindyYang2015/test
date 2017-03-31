@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.system.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.system.Organization" >
+    <id column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="ORG_CODE_PATH" property="orgCodePath" jdbcType="VARCHAR" />
+    <result column="ORG_LEVEL" property="orgLevel" jdbcType="VARCHAR" />
+    <result column="LEGAL_STATUS" property="legalStatus" jdbcType="SMALLINT" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORG_ANAME" property="orgAname" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="ZIPCODE" property="zipcode" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="FAX" property="fax" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_NAME" property="linkManName" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_DEPT" property="linkManDept" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_POS" property="linkManPos" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_TEL" property="linkManTel" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_FAX" property="linkManFax" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_EMAIL" property="linkManEmail" jdbcType="VARCHAR" />
+    <result column="AREA_ID" property="areaId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="SelectAll_Where_Clause" >
+    <where >
+     <if test="orgCode != null and orgCode != ''" >
+         ORG_CODE = #{orgCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="orgCodePath != null and orgCodePath != ''" >
+         ORG_CODE_PATH LIKE '${orgCodePath}%'
+      </if>
+      <if test="orgName != null and orgName != ''" >
+         AND ORG_NAME = #{orgName,jdbcType=VARCHAR} 
+      </if>
+      <if test="legalStatus != null and legalStatus != ''" >
+         AND LEGAL_STATUS = #{legalStatus,jdbcType=SMALLINT} 
+      </if>
+       <if test="orgAname != null and orgAname != ''" >
+         AND ORG_ANAME = #{orgAname,jdbcType=VARCHAR} 
+      </if>
+      
+      <if test="orgLevel != null and orgLevel != ''" >
+         AND ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR} 
+      </if>
+      <if test="address != null and address != ''" >
+         AND ADDRESS = #{address,jdbcType=VARCHAR} 
+      </if>
+      <if test="zipcode != null and zipcode != ''" >
+         AND ZIPCODE = #{zipcode,jdbcType=VARCHAR} 
+      </if>
+      <if test="telephone != null and telephone != ''" >
+         AND TELEPHONE = #{telephone,jdbcType=VARCHAR} 
+      </if>
+      <if test="fax != null and fax != ''" >
+         AND FAX = #{fax,jdbcType=VARCHAR} 
+      </if>
+      <if test="status != null and status != ''" >
+         AND STATUS = #{status,jdbcType=SMALLINT} 
+      </if>
+      <if test="parentCode != null and parentCode != ''" >
+         AND PARENT_CODE = #{parentCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManName != null and linkManName != ''" >
+         AND LINK_MAN_NAME = #{linkManName,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManDept != null and linkManDept != ''" >
+         AND LINK_MAN_DEPT = #{linkManDept,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManPos != null and linkManPos != ''" >
+         AND LINK_MAN_POS = #{linkManPos,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManTel != null and linkManTel != ''" >
+         AND LINK_MAN_TEL = #{linkManTel,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManFax != null and linkManFax != ''" >
+         AND LINK_MAN_FAX = #{linkManFax,jdbcType=VARCHAR} 
+      </if>
+      <if test="linkManEmail != null and linkManEmail != ''" >
+         AND LINK_MAN_EMAIL = #{linkManEmail,jdbcType=VARCHAR} 
+      </if>
+      <if test="areaId != null and areaId != ''" >
+         AND AREA_ID = #{areaId,jdbcType=VARCHAR} 
+      </if>
+      <if test="remark != null and remark != ''" >
+         AND REMARK = #{remark,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SelectAllByPage_Where_Clause" >
+    <where >
+      <choose>
+    	<when test="obj.parentCode == null or obj.parentCode == ''">
+    		PARENT_CODE is null
+    	</when>    	
+    	<otherwise>
+    		 <if test="obj.parentCode != '-1'" >
+		         PARENT_CODE = #{obj.parentCode,jdbcType=VARCHAR}
+		      </if>    		
+    	</otherwise>    	
+    </choose>
+     <if test="obj.orgCode != null and obj.orgCode != ''" >
+         AND ORG_CODE = #{obj.orgCode,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.orgName != null and obj.orgName != ''" >
+         AND ORG_NAME = #{obj.orgName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.orgLevel != null and obj.orgLevel != ''" >
+         AND ORG_LEVEL = #{obj.orgLevel,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.address != null and obj.address != ''" >
+         AND ADDRESS = #{obj.address,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.zipcode != null and obj.zipcode != ''" >
+         AND ZIPCODE = #{obj.zipcode,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.telephone != null and obj.telephone != ''" >
+         AND TELEPHONE = #{obj.telephone,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.fax != null and obj.fax != ''" >
+         AND FAX = #{obj.fax,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.status != null and obj.status != ''" >
+         AND STATUS = #{obj.status,jdbcType=SMALLINT} 
+      </if>     
+      <if test="obj.linkManName != null and obj.linkManName != ''" >
+         AND LINK_MAN_NAME = #{obj.linkManName,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManDept != null and obj.linkManDept != ''" >
+         AND LINK_MAN_DEPT = #{obj.linkManDept,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManPos != null and obj.linkManPos != ''" >
+         AND LINK_MAN_POS = #{obj.linkManPos,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManTel != null and obj.linkManTel != ''" >
+         AND LINK_MAN_TEL = #{obj.linkManTel,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManFax != null and obj.linkManFax != ''" >
+         AND LINK_MAN_FAX = #{obj.linkManFax,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.linkManEmail != null and obj.linkManEmail != ''" >
+         AND LINK_MAN_EMAIL = #{obj.linkManEmail,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.areaId != null and obj.areaId != ''" >
+         AND AREA_ID = #{obj.areaId,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.remark != null and obj.remark != ''" >
+         AND REMARK = #{obj.remark,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAll_Where_Clause" >
+    <where >
+    <!--  <choose>
+    	<when test="parentCode == null or parentCode == ''">
+    		PARENT_CODE is null
+    	</when>    	
+    	<otherwise>
+    		 <if test="parentCode != '-1'" >
+		         PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+		      </if>    		
+    	</otherwise>    	
+    </choose> -->
+     <if test="parentCode != '-1' and  parentCode != null and  parentCode != ''" >
+		  PARENT_CODE = #{parentCode,jdbcType=VARCHAR}
+	 </if>   
+     <if test="orgCode != null and orgCode != ''" >
+         AND ORG_CODE = #{orgCode,jdbcType=VARCHAR} 
+      </if>
+    <!--   全路径：模糊查询，子节点 -->
+      <if test="orgCodePath != null and orgCodePath != ''" >
+        AND ORG_CODE_PATH LIKE '${orgCodePath}%' 
+      </if>
+      <if test="orgName != null and orgName != ''" >
+         AND ORG_NAME =#{orgName,jdbcType=VARCHAR} 
+      </if>
+      <if test="orgLevel != null and orgLevel != ''" >
+         AND ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR} 
+      </if>
+      <if test="address != null and address != ''" >
+         AND ADDRESS LIKE '%'||#{address,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="zipcode != null and zipcode != ''" >
+         AND ZIPCODE LIKE '%'||#{zipcode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="telephone != null and telephone != ''" >
+         AND TELEPHONE LIKE '%'||#{telephone,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="fax != null and fax != ''" >
+         AND FAX LIKE '%'||#{fax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="status != null and status != ''" >
+         AND STATUS = #{status,jdbcType=SMALLINT} 
+      </if>
+       <if test="legalStatus != null " >
+         AND LEGAL_STATUS = #{legalStatus,jdbcType=SMALLINT} 
+      </if>
+      <if test="linkManName != null and linkManName != ''" >
+         AND LINK_MAN_NAME LIKE '%'||#{linkManName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManDept != null and linkManDept != ''" >
+         AND LINK_MAN_DEPT LIKE '%'||#{linkManDept,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManPos != null and linkManPos != ''" >
+         AND LINK_MAN_POS LIKE '%'||#{linkManPos,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManTel != null and linkManTel != ''" >
+         AND LINK_MAN_TEL LIKE '%'||#{linkManTel,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManFax != null and linkManFax != ''" >
+         AND LINK_MAN_FAX LIKE '%'||#{linkManFax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="linkManEmail != null and linkManEmail != ''" >
+         AND LINK_MAN_EMAIL LIKE '%'||#{linkManEmail,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="areaId != null and areaId != ''" >
+         AND AREA_ID LIKE '%'||#{areaId,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="remark != null and remark != ''" >
+         AND REMARK LIKE '%'||#{remark,jdbcType=VARCHAR}||'%' 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAllByPage_Where_Clause" >
+    <where >
+      <choose>
+    	<when test="obj.parentCode == null or obj.parentCode == ''">
+    		PARENT_CODE is null
+    	</when>    	
+    	<otherwise>
+    		 <if test="obj.parentCode != '-1'" >
+		         PARENT_CODE = #{obj.parentCode,jdbcType=VARCHAR}
+		      </if>    		
+    	</otherwise>    	
+    </choose>
+     <if test="obj.orgCode != null and obj.orgCode != ''" >
+         AND ORG_CODE = #{obj.orgCode,jdbcType=VARCHAR}
+      </if> 
+      <if test="obj.legalStatus != null" >
+         AND LEGAL_STATUS = #{obj.legalStatus,jdbcType=INTEGER}
+      </if>      
+      <if test="obj.orgName != null and obj.orgName != ''" >
+         AND ORG_NAME = #{obj.orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="obj.orgLevel != null and obj.orgLevel != ''" >
+         AND ORG_LEVEL = #{obj.orgLevel,jdbcType=VARCHAR}
+      </if>
+      <if test="obj.address != null and obj.address != ''" >
+         AND ADDRESS LIKE '%'||#{obj.address,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.zipcode != null and obj.zipcode != ''" >
+         AND ZIPCODE LIKE '%'||#{obj.zipcode,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.telephone != null and obj.telephone != ''" >
+         AND TELEPHONE LIKE '%'||#{obj.telephone,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.fax != null and obj.fax != ''" >
+         AND FAX LIKE '%'||#{obj.fax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.status != null and obj.status != ''" >
+         AND STATUS = #{obj.status,jdbcType=SMALLINT} 
+      </if>    
+      <if test="obj.linkManName != null and obj.linkManName != ''" >
+         AND LINK_MAN_NAME LIKE '%'||#{obj.linkManName,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManDept != null and obj.linkManDept != ''" >
+         AND LINK_MAN_DEPT LIKE '%'||#{obj.linkManDept,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManPos != null and obj.linkManPos != ''" >
+         AND LINK_MAN_POS LIKE '%'||#{obj.linkManPos,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManTel != null and obj.linkManTel != ''" >
+         AND LINK_MAN_TEL LIKE '%'||#{obj.linkManTel,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManFax != null and obj.linkManFax != ''" >
+         AND LINK_MAN_FAX LIKE '%'||#{obj.linkManFax,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.linkManEmail != null and obj.linkManEmail != ''" >
+         AND LINK_MAN_EMAIL LIKE '%'||#{obj.linkManEmail,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.areaId != null and obj.areaId != ''" >
+         AND AREA_ID LIKE '%'||#{obj.areaId,jdbcType=VARCHAR}||'%' 
+      </if>
+      <if test="obj.remark != null and obj.remark != ''" >
+         AND REMARK LIKE '%'||#{obj.remark,jdbcType=VARCHAR}||'%' 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    ORG_CODE AS orgCode, ORG_CODE_PATH AS orgCodePath,LEGAL_STATUS AS legalStatus,ORG_ANAME AS orgAname, 
+    ORG_NAME AS orgName, ORG_LEVEL AS orgLevel, ADDRESS AS address, 
+    ZIPCODE AS zipcode, TELEPHONE AS telephone, FAX AS fax, STATUS AS status,PARENT_CODE AS parentCode, 
+    LINK_MAN_NAME AS linkManName, LINK_MAN_DEPT AS linkManDept, LINK_MAN_POS AS linkManPos, 
+    LINK_MAN_TEL AS linkManTel, LINK_MAN_FAX AS linkManFax, LINK_MAN_EMAIL AS linkManEmail, 
+    AREA_ID AS areaId, REMARK AS remark, 
+    CASE WHEN (SELECT COUNT(1) FROM FND_ORGANIZATION o WHERE o.PARENT_CODE = FND_ORGANIZATION.ORG_CODE) > 0 THEN 'closed' ELSE 'open' END state
+  </sql>
+  
+  <sql id="Base_Column_List_AD" >
+    ORG_CODE AS orgCode, ORG_CODE_PATH AS orgCodePath,LEGAL_STATUS AS legalStatus,ORG_ANAME AS orgAname,ORG_NAME AS orgName, 
+    (SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=ORG_LEVEL) AS orgLevel, ADDRESS AS address, 
+    ZIPCODE AS zipcode, TELEPHONE AS telephone, FAX AS fax, STATUS AS status,PARENT_CODE AS parentCode, 
+    LINK_MAN_NAME AS linkManName, LINK_MAN_DEPT AS linkManDept, LINK_MAN_POS AS linkManPos, 
+    LINK_MAN_TEL AS linkManTel, LINK_MAN_FAX AS linkManFax, LINK_MAN_EMAIL AS linkManEmail, 
+    AREA_ID AS areaId, REMARK AS remark, 
+    CASE WHEN (SELECT COUNT(1) FROM FND_ORGANIZATION o WHERE o.PARENT_CODE = FND_ORGANIZATION.ORG_CODE) > 0 THEN 'closed' ELSE 'open' END state
+  </sql>
+  
+  <!--   根据主键查询 -->
+  <select id="selectByPrimaryKey" resultType="com.cloudwalk.ibis.model.system.Organization" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM FND_ORGANIZATION
+    WHERE ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+  </select>
+  
+  <!--   根据机构代码全路径查询 -->
+  <select id="selectByOrgCodePath" resultType="com.cloudwalk.ibis.model.system.Organization" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM FND_ORGANIZATION
+    WHERE ORG_CODE_PATH = #{orgCodePath,jdbcType=VARCHAR}
+  </select>
+  
+  <!--   根据主键删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM FND_ORGANIZATION
+    WHERE ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 增加 -->
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.system.Organization" >
+    INSERT INTO FND_ORGANIZATION(
+    	ORG_CODE, 
+    	ORG_CODE_PATH, 
+    	ORG_LEVEL, 
+    	LEGAL_STATUS, 
+    	ORG_NAME, 
+    	ORG_ANAME, 
+    	ADDRESS, 
+    	ZIPCODE, 
+    	TELEPHONE, 
+    	FAX, 
+    	STATUS, 
+    	PARENT_CODE, 
+    	LINK_MAN_NAME, 
+    	LINK_MAN_DEPT, 
+    	LINK_MAN_POS, 
+    	LINK_MAN_TEL, 
+    	LINK_MAN_FAX, 
+    	LINK_MAN_EMAIL, 
+    	AREA_ID, REMARK
+    	)
+   	VALUES(
+   		#{orgCode,jdbcType=VARCHAR}, 
+   		#{orgCodePath,jdbcType=VARCHAR}, 
+   		#{orgLevel,jdbcType=VARCHAR}, 
+   		#{legalStatus,jdbcType=SMALLINT}, 
+   		#{orgName,jdbcType=VARCHAR}, 
+   		#{orgAname,jdbcType=VARCHAR}, 
+   		#{address,jdbcType=VARCHAR},
+   		#{zipcode,jdbcType=VARCHAR}, 
+   		#{telephone,jdbcType=VARCHAR}, 
+   		#{fax,jdbcType=VARCHAR}, 
+   		#{status,jdbcType=SMALLINT}, 
+   		#{parentCode,jdbcType=VARCHAR}, 
+   		#{linkManName,jdbcType=VARCHAR}, 
+   		#{linkManDept,jdbcType=VARCHAR}, 
+   		#{linkManPos,jdbcType=VARCHAR}, 
+   		#{linkManTel,jdbcType=VARCHAR}, 
+   		#{linkManFax,jdbcType=VARCHAR}, 
+   		#{linkManEmail,jdbcType=VARCHAR}, 
+   		#{areaId,jdbcType=VARCHAR}, 
+   		#{remark,jdbcType=VARCHAR}
+   		)
+  </insert>
+  
+  <!--  修改 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.system.Organization" >
+    UPDATE FND_ORGANIZATION
+    <set >
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAname != null" >
+        ORG_ANAME = #{orgAname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null" >
+        ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="legalStatus != null" >
+        LEGAL_STATUS = #{legalStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        ZIPCODE = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        FAX = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManName != null" >
+        LINK_MAN_NAME = #{linkManName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManDept != null" >
+        LINK_MAN_DEPT = #{linkManDept,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManPos != null" >
+        LINK_MAN_POS = #{linkManPos,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManTel != null" >
+        LINK_MAN_TEL = #{linkManTel,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManFax != null" >
+        LINK_MAN_FAX = #{linkManFax,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManEmail != null" >
+        LINK_MAN_EMAIL = #{linkManEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        AREA_ID = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 详细查询所有 -->
+  <select id="selectAll" parameterType="com.cloudwalk.ibis.model.system.Organization" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_ORGANIZATION
+    <include refid="SelectAll_Where_Clause" />
+  </select>
+  
+  <!--  分页详细查询 -->
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_ORGANIZATION
+    <include refid="SelectAllByPage_Where_Clause" />
+  </select>
+  
+  <!-- 模糊查询 -->
+  <select id="searchAll" parameterType="com.cloudwalk.ibis.model.system.Organization" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List_AD" />
+    FROM FND_ORGANIZATION
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  <!-- 根据条件查询机构并且显示它的父机构数据 -->
+  <select id="selectOrgsByEx" parameterType="com.cloudwalk.ibis.model.system.Organization" resultMap="BaseResultMap" >
+    SELECT DISTINCT 
+		a.ORG_CODE AS orgCode, a.ORG_CODE_PATH AS orgCodePath, a.LEGAL_STATUS AS legalStatus, a.ORG_ANAME AS orgAname, a.ORG_NAME AS orgName, 
+	    (SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=a.ORG_LEVEL) AS orgLevel, 
+	    a.ADDRESS AS address, a.ZIPCODE AS zipcode, a.TELEPHONE AS telephone, a.FAX AS fax, 
+	    a.STATUS AS status,a.PARENT_CODE AS parentCode, a.LINK_MAN_NAME AS linkManName, 
+	    a.LINK_MAN_DEPT AS linkManDept, a.LINK_MAN_POS AS linkManPos, a.LINK_MAN_TEL AS linkManTel, 
+	    a.LINK_MAN_FAX AS linkManFax, a.LINK_MAN_EMAIL AS linkManEmail, 
+	    a.AREA_ID AS areaId, a.REMARK AS remark, 'open' AS state 
+	FROM 
+		FND_ORGANIZATION a, 
+    	(SELECT ORG_CODE_PATH FROM FND_ORGANIZATION 
+    		<include refid="SearchAll_Where_Clause" />
+    	) temp
+    WHERE temp.ORG_CODE_PATH LIKE CONCAT(a.ORG_CODE_PATH,'%')
+  </select>
+  
+  
+  <!--   模糊分页查询 -->
+  <select id="searchAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List_AD" />
+    FROM FND_ORGANIZATION
+    <include refid="SearchAllByPage_Where_Clause" />
+  </select>
+  
+  <!--   总计 -->
+  <select id="selectCount" parameterType="com.cloudwalk.ibis.model.system.Organization" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM FND_ORGANIZATION
+    <include refid="SearchAll_Where_Clause" />
+  </select> 
+ 
+  <!-- 查询用户机构下的列支机构  ？？-->
+  <select id="selectOrganizationOrg" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM FND_ORGANIZATION 
+    WHERE EXISTS(
+        SELECT 1 FROM FND_ORGANIZATION b 
+        WHERE FND_ORGANIZATION.PARENT_CODE=b.PARENT_CODE 
+            AND b.ORG_CODE = #{orgCode,jdbcType=VARCHAR}
+    ) 
+  </select>
+ 
+  <!-- 查询机构下面是否存在子机构 -->
+  <select id="isExistChildOrg" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM FND_ORGANIZATION org WHERE org.parent_code = #{orgCode,jdbcType=VARCHAR}      
+  </select>
+   
+  <!-- 查询机构下面是否存在部门 -->
+  <select id="isExistsChildDept" parameterType="java.lang.String" resultType="java.lang.Integer" >   
+    SELECT COUNT(1) FROM FND_DEPARTMENT dept WHERE dept.org_code = #{orgCode,jdbcType=VARCHAR}   
+  </select>
+  
+  <!--查询当前机构的父级法人机构 -->
+  <select id="selectParentCodes" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT o.ORG_CODE_PATH FROM FND_ORGANIZATION o	
+	where o.LEGAL_STATUS = 1 AND o.ORG_CODE_PATH != #{orgCode,jdbcType=VARCHAR} AND #{orgCode,jdbcType=VARCHAR} like CONCAT(o.ORG_CODE_PATH,'%') 
+	ORDER BY o.ORG_LEVEL DESC
+  </select>
+  
+ </mapper>

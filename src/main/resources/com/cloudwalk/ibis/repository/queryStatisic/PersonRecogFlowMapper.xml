@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.cloudwalk.ibis.repository.queryStatisic.PersonRecogFlowMapper">
+	<resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow">
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="PERSON_ID" property="personId" jdbcType="VARCHAR" />
+		<result column="LEGAL_ORG_CODE" property="legalOrgCode"	jdbcType="VARCHAR" />
+		<result column="BUSCODE" property="busCode" jdbcType="VARCHAR" />
+		<result column="INTERVER_CODE" property="interVerCode" jdbcType="VARCHAR" />
+		<result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+		<result column="CTFTYPE" property="ctftype" jdbcType="VARCHAR" />
+		<result column="CTFNO" property="ctfno" jdbcType="VARCHAR" />
+		<result column="CTFNAME" property="ctfname" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+		<result column="ENGINE_TYPE" property="engineType" jdbcType="VARCHAR" />
+		<result column="ENGINE_CODE" property="engineCode" jdbcType="VARCHAR" />
+		<result column="ENGINEVER_CODE" property="engineVerCode" jdbcType="VARCHAR" />
+		<result column="TRADING_CODE" property="tradingCode" jdbcType="VARCHAR" />
+		<result column="SUCCESS_COUNT" property="sucessCount" jdbcType="VARCHAR" />
+		<result column="FAIL_COUNT" property="failCount" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">		
+		T1.ID AS id, 
+		T1.PERSON_ID AS personId, 
+		T1.LEGAL_ORG_CODE AS legalOrgCode, 
+		T1.CTFTYPE AS ctftype, 
+		T1.CTFNO AS ctfno, 
+		T1.CTFNAME AS ctfname, 
+		T1.CUSTOMER_ID AS customerId, 
+		T1.CHANNEL AS channel, 
+		T2.VER_NO AS interVerCode, 
+		T1.BUSCODE AS busCode,
+		T1.ENGINE_TYPE AS engineType, 
+		T3.ENGINE_NAME AS engineCode, 
+		T4.VER_NO AS engineVerCode, 
+		T1.TRADING_CODE AS tradingCode, 
+		T1.SUCCESS_COUNT AS sucessCount, 
+		T1.FAIL_COUNT AS failCount, 
+		T1.CREATE_TIME AS createTime 
+	</sql>
+	
+	<sql id="Group_Base_Column_List">		
+		T1.PERSON_ID AS personId, 
+		T1.LEGAL_ORG_CODE AS legalOrgCode, 
+		T1.CTFTYPE AS ctftype, 
+		T1.CTFNO AS ctfno, 
+		T1.CTFNAME AS ctfname, 
+		T1.CUSTOMER_ID AS customerId, 
+		T1.CHANNEL AS channel, 
+		T1.TRADING_CODE AS tradingCode, 
+		SUM(T1.SUCCESS_COUNT) AS sucessCount, 
+		SUM(T1.FAIL_COUNT) AS failCount 
+	</sql>
+	
+	<sql id="BaseNo_Column_List">		
+		ID AS id, 
+		PERSON_ID AS personId, 
+		LEGAL_ORG_CODE AS legalOrgCode, 
+		CTFTYPE AS ctftype, 
+		CTFNO AS ctfno, 
+		CTFNAME AS ctfname, 
+		CUSTOMER_ID AS customerId, 
+		CHANNEL AS channel, 
+		INTERVER_CODE AS interVerCode, 
+		BUSCODE AS busCode,
+		ENGINE_TYPE AS engineType, 
+		ENGINE_CODE AS engineCode, 
+		ENGINEVER_CODE AS engineVerCode, 
+		TRADING_CODE AS tradingCode, 
+		SUCCESS_COUNT AS sucessCount,
+		FAIL_COUNT AS failCount, 
+		CREATE_TIME AS createTime 
+	</sql>
+		
+	<sql id="SelectAllByPage_Where_Clause">		
+		<where>
+			T5.STATUS=1 
+			AND T5.PERSON_ID=T1.PERSON_ID 
+			AND T1.INTERVER_CODE = T2.VER_CODE 
+			AND T1.BUSCODE = T2.INTERFACE_CODE 
+			AND T1.ENGINE_CODE = T3.ENGINE_CODE 
+			AND T1.ENGINEVER_CODE = T4.VER_CODE 
+			AND T3.ENGINE_CODE = T4.ENGINE_CODE 
+			<if test="obj.customerId != null and obj.customerId != ''">
+				AND T1.CUSTOMER_ID = #{obj.customerId,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.channel != null and obj.channel != ''">
+				AND T1.CHANNEL = #{obj.channel,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.ctftype != null and obj.ctftype != ''">
+				AND T1.CTFTYPE = #{obj.ctftype,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.ctfno != null and obj.ctfno != ''">
+				AND T1.CTFNO = #{obj.ctfno,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.ctfname != null and obj.ctfname != ''">
+			    AND T1.CTFNAME =#{obj.ctfname,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.legalOrgCode != null and obj.legalOrgCode != ''">
+			    AND T1.LEGAL_ORG_CODE=#{obj.legalOrgCode,jdbcType=VARCHAR}
+			</if>
+			<if test="obj.beginTime != null and obj.beginTime != ''">
+		        <![CDATA[ AND T1.CREATE_TIME >= #{obj.beginTime,jdbcType=TIMESTAMP}]]>
+			</if>
+			<if test="obj.endTime != null and obj.endTime != ''">
+		        <![CDATA[ AND T1.END_TIME <= #{obj.endTime,jdbcType=TIMESTAMP}]]>
+			</if>
+			<if test="obj.tradingCode != null and obj.tradingCode != ''">
+        		AND T1.TRADING_CODE = #{obj.tradingCode,jdbcType=VARCHAR}
+     		</if>
+		</where>
+	
+	</sql>
+	
+	<sql id="SelectAll_Where_Clause">		
+		<where>
+			(T1.INTERVER_CODE = T2.VER_CODE AND T1.BUSCODE = T2.INTERFACE_CODE) 
+			AND T1.ENGINE_CODE = T3.ENGINE_CODE 
+			AND T1.ENGINEVER_CODE = T4.VER_CODE 
+			AND T3.ENGINE_CODE = T4.ENGINE_CODE 
+			<if test="id != null and id != ''">
+				AND T1.ID = #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="channel != null and channel != ''">
+				AND T1.CHANNEL = #{channel,jdbcType=VARCHAR}
+			</if>
+			<if test="customerId != null and customerId != ''">
+				AND T1.CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+			</if>
+			<if test="ctftype != null and ctftype != ''">
+				AND T1.CTFTYPE = #{ctftype,jdbcType=VARCHAR}
+			</if>
+			<if test="ctfno != null and ctfno != ''">
+				AND T1.CTFNO LIKE CONCAT(CONCAT('%\\',#{ctfno,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="ctfname != null and ctfname != ''">
+				AND T1.CTFNAME LIKE CONCAT(CONCAT('%\\',#{ctfname,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="legalOrgCode != null and legalOrgCode != ''">
+				AND T1.LEGAL_ORG_CODE LIKE CONCAT(#{legalOrgCode,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+		        <![CDATA[ AND T1.CREATE_TIME >= #{beginTime,jdbcType=TIMESTAMP}]]>
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[ AND T1.END_TIME <= #{endTime,jdbcType=TIMESTAMP}]]>
+			</if>
+	        <if test="tradingCode != null and tradingCode != ''">
+	            AND T1.TRADING_CODE = #{tradingCode,jdbcType=VARCHAR}
+	        </if>  
+		</where>
+	</sql>
+	
+	<select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap">		
+		SELECT
+		<include refid="Group_Base_Column_List" />
+		FROM SS_PERSON_RECOG_FLOW T1, CF_INTERFACE_VER T2, CF_ENGINE T3, CF_ENGINE_VER T4, FR_PERSON T5
+		<include refid="SelectAllByPage_Where_Clause" />
+		GROUP BY T1.PERSON_ID, T1.LEGAL_ORG_CODE, T1.CTFTYPE, T1.CTFNO, T1.CTFNAME, T1.CUSTOMER_ID, T1.CHANNEL, T1.TRADING_CODE
+      	<if test="obj.failCount != null and obj.failCount != ''">
+        	HAVING  <![CDATA[ SUM(T1.FAIL_COUNT) >= #{obj.failCount,jdbcType=VARCHAR}]]>
+        </if> 
+		<if test="obj.isFail != null and obj.isFail != ''">
+			ORDER BY SUM(T1.SUCCESS_COUNT) DESC,T1.CTFNAME ASC
+		</if>
+		<if test="obj.isFail == null or obj.isFail == ''">
+			ORDER BY SUM(T1.FAIL_COUNT) DESC,T1.CTFNAME ASC
+		</if>
+ 	</select>
+
+	<select id="searchAll"	parameterType="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow" resultMap="BaseResultMap">		
+		SELECT
+		<include refid="Group_Base_Column_List" />
+		FROM SS_PERSON_RECOG_FLOW T1, CF_INTERFACE_VER T2, CF_ENGINE T3, CF_ENGINE_VER T4
+		<include refid="SelectAll_Where_Clause" />
+		GROUP BY T1.PERSON_ID, T1.LEGAL_ORG_CODE, T1.CTFTYPE, T1.CTFNO, T1.CTFNAME, T1.CUSTOMER_ID, T1.CHANNEL, T1.TRADING_CODE
+        <if test="failCount != null and failCount != ''">
+      		HAVING  <![CDATA[ SUM(T1.FAIL_COUNT) >= #{failCount,jdbcType=VARCHAR}]]>
+        </if> 
+	</select>
+	
+	<select id="searchAllByPrimaryKey"	parameterType="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="BaseNo_Column_List" />
+		FROM SS_PERSON_RECOG_FLOW
+		<where>
+			<if test="personId != null and personId != ''">
+				AND PERSON_ID = #{personId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询客户识别流水统计信息 -->
+	<select id="selectPersonRecogFlows"	parameterType="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="BaseNo_Column_List" />
+		FROM SS_PERSON_RECOG_FLOW
+		<where>
+			<if test="personId != null and personId != ''">
+				AND PERSON_ID = #{personId,jdbcType=VARCHAR}
+			</if>
+			<if test="engineCode != null and engineCode != ''">
+				AND ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}
+			</if>
+			<if test="engineVerCode != null and engineVerCode != ''">
+				AND ENGINEVER_CODE = #{engineVerCode,jdbcType=VARCHAR}
+			</if>	
+			<if test="channel != null and channel != ''">
+				AND CHANNEL = #{channel,jdbcType=VARCHAR}
+			</if>
+			<if test="busCode != null and busCode != ''">
+				AND BUSCODE = #{busCode,jdbcType=VARCHAR}
+			</if>
+			<if test="interVerCode != null and interVerCode != ''">
+				AND INTERVER_CODE = #{interVerCode,jdbcType=VARCHAR}
+			</if>
+			<if test="tradingCode != null and tradingCode != ''">
+				AND TRADING_CODE = #{tradingCode,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow">
+		INSERT INTO SS_PERSON_RECOG_FLOW
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="legalOrgCode != null">
+				LEGAL_ORG_CODE,
+			</if>
+			<if test="ctftype != null">
+				CTFTYPE,
+			</if>
+			<if test="ctfno != null">
+				CTFNO,
+			</if>
+			<if test="ctfname != null">
+				CTFNAME,
+			</if>
+			<if test="customerId != null">
+				CUSTOMER_ID,
+			</if>
+			<if test="engineType != null">
+				ENGINE_TYPE,
+			</if>
+			<if test="engineCode != null">
+				ENGINE_CODE,
+			</if>
+			<if test="engineVerCode != null">
+				ENGINEVER_CODE,
+			</if>
+			<if test="tradingCode != null">
+				TRADING_CODE,
+			</if>
+			<if test="sucessCount != null">
+				SUCCESS_COUNT,
+			</if>
+			<if test="failCount != null">
+				FAIL_COUNT,
+			</if>
+			<if test="channel != null">
+				CHANNEL,
+			</if>
+			<if test="busCode != null">
+				BUSCODE,
+			</if>
+			<if test="interVerCode != null">
+				INTERVER_CODE,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="personId != null">
+				#{personId,jdbcType=VARCHAR},
+			</if>
+			<if test="legalOrgCode != null">
+				#{legalOrgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ctftype != null">
+				#{ctftype,jdbcType=VARCHAR},
+			</if>
+			<if test="ctfno != null">
+				#{ctfno,jdbcType=VARCHAR},
+			</if>
+			<if test="ctfname != null">
+				#{ctfname,jdbcType=VARCHAR},
+			</if>
+			<if test="customerId != null">
+				#{customerId,jdbcType=VARCHAR},
+			</if>
+			<if test="engineType != null">
+				#{engineType,jdbcType=VARCHAR},
+			</if>
+			<if test="engineCode != null">
+				#{engineCode,jdbcType=VARCHAR},
+			</if>
+			<if test="engineVerCode != null">
+				#{engineVerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingCode != null">
+				#{tradingCode,jdbcType=VARCHAR},
+			</if>
+			<if test="sucessCount != null">
+				#{sucessCount,jdbcType=VARCHAR},
+			</if>
+			<if test="failCount != null">
+				#{failCount,jdbcType=VARCHAR},
+			</if>
+			<if test="channel != null">
+				#{channel,jdbcType=VARCHAR},
+			</if>
+			<if test="busCode != null">
+				#{busCode,jdbcType=VARCHAR},
+			</if>
+			<if test="interVerCode != null">
+				#{interVerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updatePersonRecogFlowBykey" parameterType="com.cloudwalk.ibis.model.queryStatisic.PersonRecogFlow">
+  		UPDATE SS_PERSON_RECOG_FLOW 
+  		SET 
+	  		SUCCESS_COUNT = #{sucessCount}, 
+	  		FAIL_COUNT = #{failCount} 
+  		WHERE ID = #{id,jdbcType=VARCHAR}
+    </update>
+  
+</mapper>

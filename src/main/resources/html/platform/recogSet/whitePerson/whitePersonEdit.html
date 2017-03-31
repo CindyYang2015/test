@@ -1,0 +1,100 @@
+<div align="center">
+	 <form id="manage_whitePerson_editform" th:action="@{/whitePerson/saveWhitePerson}" th:object="${whitePerson}"
+		method="post">
+		<table class="tableForm edit" width="85%">
+			<tr>
+				<td align="right"><label for="whiteType">白名单类型:</label>
+					<input type="hidden" name="action" id="action" th:attr="value=${action}"/>
+				    <input type="hidden" name="id"  th:field="*{id}"/>
+				    <input type="hidden" name="engineCode" id="engineCode" th:field="*{engineCode}"/>
+				    <input type="hidden" name="engineverCode" id="engineverCode" th:field="*{engineverCode}"/>
+				</td>
+				<td align="left">
+				 <input id="whiteType" panelHeight="auto" missingMessage="请选择白名单类型"
+						class="easyui-combobox" name="whiteType"  th:field="*{whiteType}"
+							data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=9'" />
+				</td>
+				<td align="right">
+					<label for="ctfType">证件类型:</label> 
+				</td>
+				<td align="left">
+					<input	id="ctftype" panelHeight="auto" missingMessage="请选择证件类型" class="easyui-combobox" name="ctftype"  th:field="*{ctftype}"
+								data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="right">
+					证件号码:
+				</td>
+				<td align="left">
+					<input class="easyui-textbox" name="ctfno" th:field="*{ctfno}" 
+						   		data-options="required:true,validType:['byteLength[1,32]','isCode']"/>
+				</td>
+				<td align="right">
+					核心客户号:
+				</td>
+				<td align="left">
+					<input class="easyui-textbox"  th:field="*{customerId}" name="customerId" value="" 
+								data-options="validType:['byteLength[1,32]','isCode']" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="right">
+					姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:
+				</td>
+				<td align="left">
+					<input class="easyui-textbox" name="ctfname" th:field="*{ctfname}"  value=""  
+								data-options="required:true,validType:['untable','byteLength[1,32]']"/>
+				</td>
+				<td align="right">
+					阈&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值:
+				</td>
+				<td align="left">
+					<input class="easyui-textbox" name="score"  th:field="*{score}" data-options="required:true" value="" 
+								 validType="doubleRange[0,1,'',/^0(\.\d{1,4})?$|^1(\.[0]{1,4})?$/,'只能输入0到1之间的浮点数，最多精确到小数点后4位']"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					算法引擎:
+				</td>
+				<td align="left">
+					<input class="easyui-combobox" name="engineId_whitePerson_add" id="engineId_whitePerson_add" editable="false" 
+								panelHeight="auto" data-options="required:true"/>
+				</td>
+				<td align="right">
+					引擎版本:
+				</td>
+				<td align="left">
+					<input  class="easyui-combobox" name="engineverId_whitePerson_add" id="engineverId_whitePerson_add"  editable="false" 
+							panelHeight="auto" data-options="required:true"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					渠道类型: 
+				</td>
+				<td align="left" colspan="3">
+					<div id="inter_tr122"></div>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					交易类型:
+				</td>
+				<td align="left" colspan="3">
+					<div id="inter_tr111"></div>
+				</td>
+			</tr>
+			<tr>
+			<td colspan="4">
+				<div id="inter_tr100"></div>
+			</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript" src="../js/recogSet/whitePersonEdit.js"></script>

@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+    <import resource="classpath:spring/applicationContext-common.xml"/>
+	<import resource="classpath:spring/applicationContext-recog.xml"/>
+	<!-- <import resource="classpath:spring/applicationContext-redis.xml"/> -->
+    <import resource="classpath:spring/webservice.xml"/>
+    <import resource="classpath:spring/webservice-client.xml"/>
+    <!-- 定时任务 -->
+    <import resource="classpath:spring/applicationContext-schedule.xml"/>
+</beans>

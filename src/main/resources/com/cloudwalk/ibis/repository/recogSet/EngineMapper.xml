@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.EngineMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.Engine" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ENGINE_TYPE" property="engineType" jdbcType="VARCHAR" />
+    <result column="ENGINE_CODE" property="engineCode" jdbcType="VARCHAR" />
+    <result column="ENGINE_NAME" property="engineName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, ENGINE_TYPE, ENGINE_CODE, ENGINE_NAME, COMPANY_NAME, STATUS, REMARK, CREATOR, 
+    CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+  
+  <select id="selectEngineByRecogStepId" parameterType="string" resultMap="BaseResultMap" resultType="map">
+	SELECT DISTINCT c4.ENGINE_CODE ENGINE_CODE, c4.ENGINE_NAME ENGINE_NAME  
+  	FROM CF_RECOGSTEP c1, CF_STEPGROUP_REF c2, CF_STEP_ENGINE_REF c3, CF_ENGINE c4 
+  	WHERE c1.STEPGROUP_ID = c2.STEPGROUP_ID 
+	  	AND c2.STEP_ID = c3.STEP_ID 
+	  	AND c3.ENGINE_ID = c4.ID
+	  	AND c1.ID =  #{recogStepId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectEngineRepeatByStepIds" resultType="string"  parameterType="list">
+  SELECT ENGINE_NAME FROM CF_ENGINE WHERE ID IN (
+  	SELECT ENGINE_ID FROM (
+  		SELECT ENGINE_ID FROM CF_STEP_ENGINE_REF WHERE STEP_ID in
+	 	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >  
+	        '${item}'
+	    </foreach>
+	    GROUP BY ENGINE_ID,ENGINEVER_ID
+	    ) temp GROUP BY ENGINE_ID HAVING COUNT(1)>1)
+  </select>
+  
+  
+  <select id="selectEngineHaveStep" parameterType="string" resultType="int">
+  	SELECT COUNT(1) FROM CF_STEP_ENGINE_REF 
+  	WHERE ENGINE_ID=#{engineId,jdbcType=VARCHAR}
+  </select>	
+   
+  <select id="selectEnginePage" resultMap="BaseResultMap" resultType="map" parameterType="map">
+	SELECT 
+		ID, 
+		( SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_TYPE='5' AND DIC_CODE=CF_ENGINE.ENGINE_TYPE ) ENGINE_TYPE, 
+		ENGINE_CODE, 
+		ENGINE_NAME, 
+		COMPANY_NAME, 
+		STATUS, 
+		REMARK, 
+		CREATOR, 
+    	CREATE_TIME, 
+    	UPDATOR, 
+    	UPDATE_TIME 
+    FROM CF_ENGINE WHERE 1=1
+     <if test="obj.engineType != null and obj.engineType != ''">
+		  	AND ENGINE_TYPE = #{obj.engineType,jdbcType=VARCHAR}
+     </if>   
+     <if test="obj.engineCode != null and obj.engineCode != ''">
+		  	AND ENGINE_CODE LIKE CONCAT(CONCAT('%',#{obj.engineCode,jdbcType=VARCHAR}),'%')
+     </if>
+     <if test="obj.engineName != null and obj.engineName != ''">
+		  	AND ENGINE_NAME LIKE CONCAT(CONCAT('%',#{obj.engineName,jdbcType=VARCHAR}),'%')
+     </if>
+     <if test="obj.companyName != null and obj.companyName != ''">
+		  	AND COMPANY_NAME LIKE CONCAT(CONCAT('%',#{obj.companyName,jdbcType=VARCHAR}),'%')
+     </if>          
+    
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_ENGINE
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+     
+  <select id="selectCountByEngineCode" parameterType="java.lang.String" resultType="int">
+  	SELECT COUNT(*) c FROM CF_ENGINE WHERE ENGINE_CODE= #{engineCode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByEngineCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_ENGINE
+    WHERE ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectValidEngineAll" resultMap="BaseResultMap" resultType="map">
+  	SELECT 
+    <include refid="Base_Column_List" /> 
+    FROM CF_ENGINE WHERE STATUS=1
+  </select>
+  
+  <select id="selectValidEngineAllByFeature" resultMap="BaseResultMap"  parameterType="map">
+  	SELECT T1.ENGINE_CODE,T2.ENGINE_NAME 
+  	FROM FR_PERSON_FEATURE T1,CF_ENGINE T2
+    WHERE T1.PARTITION_ID = #{partitionId,jdbcType=INTEGER} 
+    	AND T1.PERSON_ID=#{personId,jdbcType=VARCHAR} AND T1.ENGINE_CODE = T2.ENGINE_CODE
+    GROUP BY T1.ENGINE_CODE,T2.ENGINE_NAME
+  </select>
+  
+  <select id="selectEngineAll" resultMap="BaseResultMap" resultType="map">
+  	SELECT 
+    <include refid="Base_Column_List" /> 
+    FROM CF_ENGINE
+  </select>  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_ENGINE
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.Engine" >
+    INSERT INTO CF_ENGINE (
+    	ID, 
+    	ENGINE_TYPE, 
+    	ENGINE_CODE, 
+      	ENGINE_NAME, 
+      	COMPANY_NAME, 
+      	STATUS, 
+      	REMARK, 
+      	CREATOR, 
+      	CREATE_TIME, 
+      	UPDATOR, 
+      	UPDATE_TIME
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{engineType,jdbcType=VARCHAR}, 
+    	#{engineCode,jdbcType=VARCHAR}, 
+      	#{engineName,jdbcType=VARCHAR}, 
+      	#{companyName,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{creator,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP}, 
+      	#{updator,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=TIMESTAMP}
+      	)
+  </insert>
+ 
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.Engine" >
+    UPDATE CF_ENGINE
+    SET 
+        ENGINE_TYPE = #{engineType,jdbcType=VARCHAR},
+      	ENGINE_NAME = #{engineName,jdbcType=VARCHAR},
+      	COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      	STATUS = #{status,jdbcType=SMALLINT},
+      	REMARK = #{remark,jdbcType=VARCHAR},
+      	UPDATOR = #{updator,jdbcType=VARCHAR},
+      	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

@@ -1,0 +1,74 @@
+<div align="center">
+	<form id="manage_interfaceVer_editform"
+			th:action="@{/interfaceVer/saveInterfaceVer}" th:object="${interfaceVer}" method="post">
+		<!-- 接口代码,版本代码，版本号，状态（启用/停止），备注 -->
+		<!-- 可以修改状态（启用/停止），备注。 -->
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<input type="hidden" name="id" th:field="*{id}"/>
+		
+		<table class="tableForm" width="100%" >
+			<tr>
+				<div th:if="${action == 'edit'}">
+					<th width="30%" >接口名称：</th>
+					<td>
+						<input class="easyui-combobox" th:field="*{interfaceCode}" disabled="disabled" editable="false" panelHeight="120"
+	    						data-options="required:true,editable:false,valueField:'interfaceCode',textField:'interfaceName',url:'../interface/selectInterface'" /></td>
+				</div>
+				<div th:unless="${action == 'edit'}">
+				<th width="30%" >接口名称：</th>
+					<td>
+						<input class="easyui-combobox" th:field="*{interfaceCode}"  editable="false" panelHeight="120"
+	    					data-options="required:true,editable:false,valueField:'interfaceCode',textField:'interfaceName',url:'../interface/selectInterface'" /></td>
+				</div>
+			</tr>
+			<tr>
+			<div th:if="${action == 'edit'}">
+				<th width="30%">版本代码：</th>
+				<td>
+					<input class="easyui-textbox" name="verCode" th:field="*{verCode}"
+							data-options="required:true" validType="byteLength[1,64]"  disabled="disabled"/></td>
+			</div>
+			<div th:unless="${action == 'edit'}">
+				<th width="30%">版本代码：</th>
+				<td>
+					<input class="easyui-textbox" name="verCode" th:field="*{verCode}"
+						data-options="required:true,validType:['untable','byteLength[1,64]','isCode']" />
+				</td>
+			</div>
+			</tr>
+			<tr>
+				<div th:if="${action == 'edit'}">
+					<th width="30%">版本号：</th>
+					<td>
+						<input class="easyui-textbox" name="verNo" th:field="*{verNo}"
+								 data-options="required:true" validType="byteLength[1,64]" disabled="disabled"/>
+					</td>
+				</div>
+				<div th:unless="${action == 'edit'}">
+					<th width="30%">版本号：</th>
+					<td>
+						<input class="easyui-textbox"  name="verNo" th:field="*{verNo}"
+								 data-options="required:true,validType:['untable','byteLength[1,64]','isCode']"/>
+					</td>
+				</div>
+				
+			</tr>
+			<tr>
+				<th width="30%">状态：</th>
+				<td>
+					<input class="easyui-combobox" id="status" name="status" th:field="*{status}"  editable="false" 
+            				 	data-options="panelHeight:'auto',required:true,valueField:'value',textField:'text',data:[{text:'启用',value:'1'},{text:'停用',value:'0'}]"/>
+				</td>
+			</tr>
+								
+			<tr>
+				<th width="30%">版本描述：</th>
+				<td>
+					<textarea rows="3" cols="40" class="easyui-validatebox" name="remark" th:field="*{remark}"  data-options="validType:['untable','byteLength[1,255]']">
+					</textarea>
+				</td>
+			</tr>
+			
+		</table>
+	</form>
+</div>

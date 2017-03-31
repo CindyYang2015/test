@@ -1,0 +1,270 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<div data-options="region:'north',border:false" class="formserach"
+			style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_channelDiscernDetail_searchform" onsubmit="return false">
+			<table class="tableForm">				
+				<tr>
+					<td style="text-align:right;">接口类型:</td>
+					<td>
+						<input class="easyui-combobox" size="20" name="busCode" editable=false panelHeight="120"    id="busCode"
+		    						data-options="valueField:'interfaceCode',textField:'interfaceName',value:'checkPersonEx',loadFilter:function(data){
+									return data;
+								},url:'../interface/selectInterface'" />
+					</td>					
+					<td style="text-align:right;">交易类型:</td>
+					<td>
+						<input class="easyui-combobox" size="20" name="tradingCode" editable=false panelHeight="160"   
+		    					data-options="valueField:'id',textField:'text',loadFilter:function(data){
+									if(data && data.length > 0) {
+										data.push({id:'',text:'全部'});
+									}
+									return data;
+									
+								},url:'../dic/selectDicValuesByDicType?dicType=6'" />
+					</td>
+					<td style="text-align:right;">交易渠道:</td>
+					<td>
+						<input class="easyui-combobox" size="20" name="channel" editable=false panelHeight="160"   
+		    					data-options="valueField:'id',textField:'text',loadFilter:function(data){
+									if(data && data.length > 0) {
+										data.push({id:'',text:'全部'});
+									}
+									return data;
+									
+								},url:'../dic/selectDicValuesByDicType?dicType=3'" />
+					</td>
+					<td align="left">
+						<a href="javascript:void(0);" class="easyui-linkbutton"	iconCls="icon-search" plian="false"
+						 	resId="103101101" style="display:none" 
+						 		onclick="$.acooly.framework.searchData('manage_channelDiscernDetail_searchform','manage_channelDiscernDetail_datagrid');">查询</a>
+					</td>
+				</tr>
+				<tr>	
+					<td style="text-align:right;">证件类型:</td>
+					<td>
+						<input class="easyui-combobox"  size="20" id="ctftype" editable=false panelHeight="140"
+							   	name="ctftype" data-options="valueField:'id',textField:'text',loadFilter:function(data){
+									if(data && data.length > 0) {
+										data.push({id:'',text:'全部'});
+									}
+									return data;
+									
+								},url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+					</td>	
+					<td style="text-align:right;">证件号码:</td>
+					<td>
+						<input class="easyui-textbox" size="20" id="ctfno" validType="byteLength[1,20]"  name="ctfno" />
+					</td>		
+					<td style="text-align:right;">证件姓名:</td>
+					<td>
+						<input class="easyui-textbox" size="20" id="ctfname" validType="byteLength[1,64]" name="ctfname" />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">创建时间:</td>
+					<td>
+						<input id="creationDateLTE" name="beginTime" size="20" class="easyui-datebox"
+							   		data-options="sharedCalendar:'#channel_discern_detail_datebox'">
+					</td>
+					<td style="text-align:center;">至</td>
+					<td>
+						<input id="creationDateGTE" name="endTime" size="20" class="easyui-datebox"
+							   		data-options="sharedCalendar:'#channel_discern_detail_datebox'">
+					</td>					
+					<td style="text-align:right;">交易流水:</td>
+					<td>
+						<input class="easyui-textbox" size="20" id="channelTradingFlowNum" validType="byteLength[1,18]"  name="tradingFlowNo" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="channel_discern_detail_datebox" class="easyui-calendar"></div>
+
+	<div data-options="region:'center',border:false">
+		<table id="manage_channelDiscernDetail_datagrid"
+				toolbar="#manage_channelDiscernDetail_toolbar"	rownumbers="true" fitColumns="true" fit="true" border="false"
+				idField="flowId" pagination="true" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]"  singleSelect="true" striped="true">
+			<thead>
+				<tr>										
+					<!-- <th field="flowId" width="8%">流水号</th> -->
+					<th id="inter_channel_1"    field="interfaceName" halign="center" align="left" width="9%">接口名称</th>
+					<th id="inter_channel_2"    field="interVerCode"  halign="center"  align="left" width="6%">接口版本</th>
+					<th field="legalOrgCode" 	halign="center" align="left"  width="8%">机构名称</th>
+					<th id="person_channel_1"   field="channel" 	halign="center" align="left"  width="7%">交易渠道</th>
+					<th field="tradingCode"     halign="center" align="left" width="5%">交易类型</th>					
+					<th id="inter_channel_3"    field="engineCode"     halign="center" align="left"  width="6%">算法引擎</th>
+					<th id="inter_channel_4"    field="engineVerCode"  halign="center" align="left"  width="7%">引擎版本</th>
+					<th id="person_channel_2"   field="ctftype"  halign="center" align="left"   width="6%">证件类型</th>
+					<th id="person_channel_3"   field="ctfno"    halign="center" align="left"   width="10%">证件号码</th>
+					<th id="person_channel_4"   field="ctfname"  halign="center" align="left"   width="8%">姓名</th>
+					<th id="person_channel_5"   field="customerId"  halign="center" align="left" width="8%">核心客户号</th>	
+					<th field="result" 			halign="center" align="center"   width="7%"   formatter="getResultTypeName">状态</th>									
+					<th field="requestMsg"   	halign="center" align="center"   width="9%" formatter="addChannelFlowReqMsgLink">请求报文</th>
+					<th field="reponseMsg"   	halign="center" align="center"   width="9%" formatter="addChannelFlowResMsgLink">响应报文</th>
+					<th field="tradingFlowNo" 	halign="center" align="left"     width="10%">交易流水</th>
+					<th field="createTime"      halign="center" align="center"   width="11%" formatter="getChannelTime">创建时间</th>					
+					<th field="imgpath"         halign="center" align="center"   width="6%"  formatter="showChannelFlowDetails">详情</th>
+				</tr>
+			</thead>
+		</table>
+		
+		<div id="manage_channelDiscernDetail_toolbar">
+
+			<a href="javascript:void(0);" id="exportCSV" class="easyui-linkbutton" iconCls="icon-redo" plain="true" resId="103101102"
+				style="display:none" onclick="personCheckExportCSV();">
+				导出CSV
+			</a>
+		</div>
+	</div>
+	
+	<div id="msgId" style="display:none">    
+	</div>
+	
+	<div id="imgId" style="display:none">    
+	</div>
+	
+</div>
+
+<div id="channel_discern_detail_dialog"  style="display:none">
+	<table id="flowTableId" class="tableForm" width="100%" style="margin-top:10px;">
+		<tr>
+         	 <td style="width:20%;text-align:right;">接口名称:</td>
+             <td width="30%"><span id="channel_discern_detail_busCode"></span></td>
+             <td style="width:20%;text-align:right;">接口版本:</td>
+             <td width="30%"><span id="channel_discern_detail_interVerCode"></span></td>             
+         </tr>
+         <tr>
+         	 <td style="width:20%;text-align:right;">交易类型:</td>
+             <td width="30%"><span id="channel_discern_detail_tradingCode"></span></td>
+             <td style="width:20%;text-align:right;">交易渠道:</td>
+             <td width="30%"><span id="channel_discern_detail_channel"></span></td>             
+         </tr> 
+         <tr>
+         	 <td style="width:20%;text-align:right;">算法引擎:</td>
+             <td width="30%"><span id="channel_discern_detail_engineCode"></span></td>
+             <td style="width:20%;text-align:right;">引擎版本:</td>
+             <td width="30%"><span id="channel_discern_detail_engineVerCode"></span></td>             
+         </tr>
+         <tr>            
+             <td style="width:20%;text-align:right;">机构名称:</td>
+             <td width="30%"><span id="channel_discern_detail_legalOrgCode"></span></td>
+             <td style="width:20%;text-align:right;">证件类型:</td>
+             <td width="30%"><span id="channel_discern_detail_ctftype"></span></td>
+         </tr>        
+          <tr>           
+             <td style="width:20%;text-align:right;">证件号码:</td>
+             <td width="30%"><span id="channel_discern_detail_ctfno"></span></td> 
+              <td style="width:20%;text-align:right;">客户姓名:</td>
+             <td width="30%"><span id="channel_discern_detail_ctfname"></span></td>           
+         </tr>
+         <tr>
+         	 <td style="width:20%;text-align:right;">核心客户号:</td>
+             <td width="30%"><span id="channel_discern_detail_customerId"></span></td>
+         	 <td style="width:20%;text-align:right;">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</td>
+             <td width="30%"><span id="channel_discern_detail_result"></span></td>
+         </tr>
+         <tr>             
+         	 <td style="width:20%;text-align:right;">交易流水:</td>
+             <td width="30%"><span id="channel_discern_detail_tradingFlowNo"></span></td>          	 
+             <td style="width:20%;text-align:right;">交易时间:</td>
+             <td width="30%"><span id="channel_discern_detail_tradingTime"></span></td>               
+         </tr>
+          <tr>   
+          	 <td style="width:20%;text-align:right;">交易日期:</td>
+             <td width="30%"><span id="channel_discern_detail_tradingDate"></span></td>          
+          	 <td style="width:20%;text-align:right;">设备号:</td>
+             <td width="30%"><span id="channel_discern_detail_equipmentNo"></span></td>
+         </tr>
+          <tr>             
+             <td style="width:20%;text-align:right;">柜员号:</td>
+             <td width="30%"><span id="channel_discern_detail_tellerNo"></span></td>
+             <td style="width:20%;text-align:right;">银行卡号:</td>
+             <td width="30%"><span id="channel_discern_detail_bankcardNo"></span></td> 
+         </tr>        
+         <tr id="mission001" style="height: 120px;">
+        	<td style="width:20%;text-align:right;">注册人脸:</td>
+         	<td colspan="3" style="width:80%;text-align:left;"><img id="regImg001" src="../images/upload.png" width=100 height=100/></td>
+         </tr>
+         <tr id="mission002" style="height: 120px;">
+         	<td colspan="4">
+         		<table style="width:100%">
+         			<tr></tr>
+         			<tr></tr>
+         			<tr>
+         				<td style="text-align:right;">注册文件:</td>
+			         	<td style="text-align:left;"><img id="regImg002" src="../images/upload.png" width=100 height=100/></td>
+			         	<td style="text-align:right;">比对文件:</td>
+			         	<td style="text-align:left;"><img id="cmpImg002" src="../images/upload.png" width=100 height=100/></td>
+			         	<td style="text-align:left;">比对分数:<span id="score0021"></span></td>
+         			</tr>
+         		</table>
+         	</td>         	
+         </tr>
+         <tr id="mission003" style="height: 100px;">
+         	<td colspan="4">
+         		<table style="width:100%">
+         			<tr></tr>
+         			<tr></tr>
+         			<tr>
+         				<td style="text-align:right;">比对文件1:</td>
+         				<td style="text-align:left;"><img id="cmpImg0031" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:right;">比对文件2:</td>
+         				<td style="text-align:left;"><img id="cmpImg0032" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:left;">比对分数:<span id="score0031"></span></td>
+         			</tr>
+         		</table>
+         	</td>         	
+         </tr>
+         <tr id="mission004" style="height: 100px;">
+         	<td colspan="4">
+         		<table style="width:100%">
+         			<tr></tr>
+         			<tr></tr>
+         			<tr>
+         				<td style="text-align:right;">注册文件:</td>
+         				<td style="text-align:left;"><img id="regImg004" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:right;">比对文件1:</td>
+         				<td style="text-align:left;"><img id="cmpImg004" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:left;">比对分数:<span id="score0041"></span></td>
+         			</tr>
+         			<tr>
+         				<td style="text-align:right;">注册文件:</td>
+			         	<td style="text-align:left;"><img id="regImg005" src="../images/upload.png" width=100 height=100/></td>
+			         	<td style="text-align:right;">比对文件2:</td>
+			         	<td style="text-align:left;"><img id="cmpImg005" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:left;">比对分数:<span id="score0051"></span></td>
+         			</tr>
+         		</table>
+         	</td>
+         </tr>
+         <tr id="mission005" style="height: 100px;">
+         	<td colspan="4">
+         		<table style="width:100%">
+         			<tr></tr>
+         			<tr></tr>
+         			<tr>
+         				<td style="text-align:right;">身份证正面:</td>
+         				<td style="text-align:left;"><img id="idcardImg0051" src="../images/upload.png" width=100 height=100/></td>
+         				<td style="text-align:right;">身份证反面:</td>
+         				<td style="text-align:left;"><img id="idcardImg0052" src="../images/upload.png" width=100 height=100/></td>
+         			</tr>
+         		</table>
+         	</td>
+         </tr>
+         <tr id="mission006" style="height: 120px;">
+        	<td style="width:20%;text-align:right;">检索文件:</td>
+         	<td colspan="3" style="width:80%;text-align:left;"><img id="searchImg0061" src="../images/upload.png" width=100 height=100/></td>
+         </tr>
+         <tr id="mission007" style="height: 120px;">
+        	<td style="width:20%;text-align:right;">银行卡图片:</td>
+         	<td colspan="3" style="width:80%;text-align:left;"><img id="bankcardImg0071" src="../images/upload.png" width=100 height=100/></td>
+         </tr>
+         <tr id="mission008" style="height: 120px;">
+        	<td style="width:20%;text-align:right;">最佳人脸:</td>
+         	<td colspan="3" style="width:80%;text-align:left;"><img id="livenessImg0081" src="../images/upload.png" width=100 height=100/></td>
+         </tr>
+        
+     </table>
+</div>
+<script type="text/javascript" src="../js/queryStatisic/channel_discern_detail.js" charset="utf-8"></script>

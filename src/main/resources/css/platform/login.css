@@ -1,0 +1,22 @@
+#user_login_loginDialog{
+	display: none; width: 388px; height: 250px; overflow: hidden;
+}
+
+#system_login{
+	overflow: hidden;
+}
+
+.logo{
+	height:70px;
+}
+
+.logo img{
+	height:70px;
+	margin-left:50px;
+}
+
+#login_center{
+	margin-top: 15px;
+}
+
+.window-mask{background:#95B8E7;}

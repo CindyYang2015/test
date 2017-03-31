@@ -1,0 +1,69 @@
+<div align="center">
+	<form id="manage_dicValues_editform"
+			th:action="@{/dic/saveDic}" th:object="${dicValues}"  method="post">
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<table class="tableForm edit">
+			<tr>
+				<div th:if="${action == 'edit'}">
+				   	<input type="hidden" name="dicType" th:field="*{dicType}" />
+				   	<th>字典类别：</th>
+				   	<td>
+		        		<input class="easyui-textbox" th:field="*{dicType}" disabled="disabled" editable="false" panelHeight="120"
+	    							data-options="required:true,editable:false,valueField:'id',textField:'text',url:'../dic/dicTypes'" />
+					</td>
+				</div>
+				<div th:unless="${action == 'edit'}">
+					<th>字典类别：</th>
+					<td>
+			        	<input id="dicTypes" class="easyui-textbox" name="dicType" th:field="*{dicType}" editable="false" panelHeight="120"
+		    				data-options="required:true,editable:false,valueField:'id',textField:'text',url:'../dic/dicTypes'" />
+					</td>
+				</div>
+				<th >含义：</th>
+				<td>
+					<input type="text" name="meaning" class="easyui-textbox" th:field="*{meaning}"
+					data-options="required:true" validType="byteLength[1,40]"/>					
+				</td>
+			</tr>			
+			<tr>
+				<div th:if="${action == 'edit'}">
+					<input type="hidden" name="dicCode" th:field="*{dicCode}" />
+					<th >字典编码：</th>
+					<td>
+						<input type="text"  class="easyui-textbox" th:field="*{dicCode}" disabled="disabled"
+						data-options="required:true,validType:['byteLength[1,12]','isCode']" />
+					</td>
+				</div>
+				<div th:unless="${action == 'edit'}">
+					<th >字典编码：</th>
+					<td>
+						<input type="text" name="dicCode" class="easyui-textbox" th:field="*{dicCode}"
+									data-options="required:true,validType:['byteLength[1,12]','isCode']" />
+					</td>
+				</div>
+					
+				<th >备注：</th>
+				<td>
+					<input type="text" name="description" class="easyui-textbox" validType="byteLength[1,255]" th:field="*{description}"/>
+				</td>
+			</tr>				
+			<tr>
+				<div th:if="${action == 'edit'}">
+					<input type="hidden" name="enabledFlag" th:field="*{enabledFlag}" />
+					   <th >状态：</th>
+					   <td>
+						<input  class="easyui-combobox" id="enabledFlag" name="enabledFlag" style="width:150px;" th:field="*{enabledFlag}" disabled="disabled"
+				              		data-options="valueField:'value',textField:'text',data:[{text:'启用',value:'1'},{text:'禁用',value:'2'}]"/>
+						</td>
+				</div> 
+				<div  th:unless="${action == 'edit'}">
+					<th >状态：</th>
+					<td>
+						<input  class="easyui-combobox" id="enabledFlag" name="enabledFlag" style="width:150px;"    editable='false'
+					              	panelHeight='auto' required="required" data-options="valueField:'value',textField:'text',data:[{text:'启用',value:'1'},{text:'禁用',value:'2'}]"/>
+					</td>
+				</div>	
+			</tr>
+		</table>
+	</form>
+</div>

@@ -1,0 +1,84 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<div data-options="region:'north',border:false"
+		style="padding: 5px; overflow: hidden;" class="formserach"
+		align="left">
+		<form id="manage_blackPerson_searchform" onsubmit="return false">
+			<table class="tableForm">
+				<tr>
+					<td align="left">
+						<label for="blackType">黑名单类型:</label>
+				    <input missingMessage="请选择黑名单类型" class="easyui-combobox" name="blackType"
+						data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=8',
+							loadFilter:function(data){
+			          			   	   data.push({id:'',text:'全部'});
+				                       return data;
+			          			   	}" />
+					</td>
+					<td align="left">
+						<span>核心客户号:</span>
+						<input class="easyui-textbox" name="customerId" value="" validType="byteLength[1,32]" />
+					</td>
+					<td align="left">
+						<label for="status">状态:</label> 
+						<input class="easyui-combobox" id="status" name="status"  editable="false" 
+            				  data-options="panelHeight:'auto',valueField:'value',textField:'text',
+            				  	data:[{text:'全部',value:''},{text:'通过',value:'1'},{text:'不通过',value:'0'},{text:'待审核',value:'2'}]" />
+					</td>
+					<td>
+						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="105107101"
+						style="display:none" onclick="$.acooly.framework.searchData('manage_blackPerson_searchform','manage_blackPerson_datagrid');">查询</a>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<label for="ctfType">&nbsp;&nbsp;&nbsp;证件类型:</label> 
+						<input panelHeight="120" missingMessage="请选择证件类型" class="easyui-combobox" name="ctftype"
+							data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2',loadFilter:function(data){
+			          			   	   data.push({id:'',text:'全部'});
+				                       return data;
+			          			   	}" />
+					</td>
+					<td align="left">
+						&nbsp;&nbsp;&nbsp;证件号码:
+						<input class="easyui-textbox" name="ctfno" value=""  validType="byteLength[1,32]" />
+					</td>
+
+					<td align="left">
+						姓名:
+						<input class="easyui-textbox" name="ctfname" value=""  validType="byteLength[1,32]" />
+					</td> 
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<!-- 表格的工具栏 -->
+	<div id="manage_blackPerson_toolbar">
+		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" resId="105107102" onclick="createBlackPerson();">添加</a> 
+		<a href="javascript:void(0);" onclick="editBlackPerson();" class="easyui-linkbutton" iconCls="icon-edit" title="编辑" resId="105107103" plain="true">编辑</a> 
+		<a href="javascript:void(0);" onclick="deleteBlackPersonByPrimaryKey();" class="easyui-linkbutton" iconCls="icon-remove" title="删除" resId="105107104" plain="true">删除</a>
+	</div>
+	
+	<div data-options="region:'center',border:false">
+		<table id="manage_blackPerson_datagrid" class="easyui-datagrid" rownumbers="true" fitColumns="true" fit="true" border="false"
+				pagination="true" idField="id" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true"
+					toolbar="#manage_blackPerson_toolbar" url="../blackPerson/allBlackPersons" striped="true">
+			<thead>
+				<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th>
+					<th field="ctftype"   halign="center" align="left" width="8%">证件类型</th>
+					<th field="ctfno"     halign="center" align="left" width="15%">证件号码</th>
+					<th field="ctfname"   halign="center" align="left" width="12%">证件姓名</th>
+					<th field="blackType"  halign="center" align="left" width="10%">黑名单类型</th>
+					<th field="customerId" halign="center" align="left" width="13%">核心客户号</th>
+					<th field="channels"   halign="center" align="left" width="15%">交易渠道</th>
+					<th field="tradingCodes"  halign="center" align="left"  width="15%">交易类型</th>
+					<th field="status"    halign="center" align="center" width="7%" formatter="setOperStatusName">状态</th>
+					<th field="remark"    halign="center" align="left" width="15%">备注</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+<script type="text/javascript" src="../js/recogSet/blackPerson.js"></script>

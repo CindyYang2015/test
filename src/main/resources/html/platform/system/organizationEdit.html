@@ -1,0 +1,109 @@
+<div align="center">
+	<form id="manage_organization_editform"
+		th:action="@{/organization/saveOrganization}" th:object="${organization}"
+		method="post">
+			<input type="hidden" name="action" th:attr="value=${action}" />
+			<input type="hidden" name="parentCode" th:field="*{parentCode}"/>
+			<input type="hidden" name="parentOrgLevel"  th:field="*{parentOrgLevel}"/>
+			<table class="tableForm edit" width="100%">								
+				<tr>
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="orgCode" th:field="*{orgCode}" />
+					   	<th>机构代码：</th>
+					   	<td th:text="*{orgCode}"></td>
+					</div>
+					<div th:unless="${action == 'edit'}">
+					    <th>机构代码：</th>
+						<td>
+							<input class="easyui-textbox" name="orgCode" th:field="*{orgCode}"
+							 	   		data-options="required:true,validType:['byteLength[1,8]','isCode']"/>
+						</td>
+					</div>					
+					<th>机构名称：</th>
+					<td>
+						<input class="easyui-textbox" name="orgName" th:field="*{orgName}" 
+					 		   	data-options="required:true,validType:['byteLength[1,255]','untable']"/>
+					</td>
+				</tr>
+				
+				<tr>
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="orgLevel" th:field="*{orgLevel}" />
+					    <th>机构类型:&nbsp;&nbsp;</th>
+						<td >	
+							<input class="easyui-combobox"  size="20"  panelHeight="140"   disabled="disabled" th:field="*{orgLevel}"
+								 name="orgLevel" data-options="required:true,editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=7'"/>
+					    </td>
+					</div>
+					<div th:unless="${action == 'edit'}">
+					   <th>机构类型:&nbsp;&nbsp;</th>
+						<td >	
+					    	<input name="orgLevel" id="orgLevelAdd" class="easyui-combobox"   editable="false" panelHeight="80" data-options="required:true"/>
+					    </td>
+					</div>
+									 	
+				
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="legalStatus" th:field="*{legalStatus}" />
+						<th >是否法人：</th>
+						<td>
+							<!-- <select name="legalStatus" th:field="*{legalStatus}" style="width: 150px;"
+											panelHeight="auto" class="easyui-combobox"    disabled="disabled">
+								<option value="0" >否</option>
+								<option value="1" >是</option>
+							</select> -->
+							<input  class="easyui-combobox" id="legalStatus" name="legalStatus" th:field="*{legalStatus}"   
+              							disabled="disabled" panelHeight="auto" 
+              								data-options="valueField:'value',textField:'text',data:[{text:'是',value:'1'},{text:'否',value:'0'}]"/>
+						</td>
+					</div> 
+					
+					<div  th:unless="${action == 'edit'}">
+					   <th >是否法人：</th>
+					   <td>
+							<input  class="easyui-combobox" id="legalStatus" name="legalStatus" 
+              							editable="false"  panelHeight="auto" required="required"
+              								data-options="valueField:'value',textField:'text',data:[{text:'是',value:'1'},{text:'否',value:'0'}]"/>
+						</td>
+					</div>
+				</tr>
+								
+				<tr>
+					<th>联系电话：</th>
+					<td>
+						<input class="easyui-textbox" name="telephone" th:field="*{telephone}" validType="telephone" />
+					</td>
+					<th >传真：</th>
+					<td>
+						<input class="easyui-textbox" name="fax" th:field="*{fax}" validType="fax" />
+					</td>
+				</tr>				
+				<tr>
+					<th >地址：</th>
+					<td>
+						<input class="easyui-textbox"  name="address" th:field="*{address}"
+							   	data-options="validType:['byteLength[1,255]','untable']" />
+					</td>
+					<th >联系人：</th>
+					<td>
+						<input class="easyui-textbox"  name="linkManName" th:field="*{linkManName}"
+							   	data-options="validType:['byteLength[1,128]','untable']" /></td>
+				</tr>				
+			</table>
+	</form>
+</div>
+ <script type="text/javascript">
+$(function() {
+	/**
+	 * 加载单位数据
+	 */
+ 	var parentOrgLevel = $("#parentOrgLevel").val();
+    $('#orgLevelAdd').combobox({
+		url:"../organization/selectOrgLevel?dicCode="+parentOrgLevel,
+	       editable:false,
+	       method:"post",
+	       valueField:'dicCode',
+	       textField:'meaning'
+	 });
+});
+</script> 

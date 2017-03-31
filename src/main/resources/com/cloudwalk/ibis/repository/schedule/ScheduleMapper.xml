@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.schedule.ScheduleMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.schedule.ScheduleRecordEntity" >
+   
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TASK_CODE" property="taskCode" jdbcType="VARCHAR" />
+    <result column="SERVER_IP" property="serverIp" jdbcType="VARCHAR" />
+    <result column="TASK_STATUS" property="taskStatus" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />   
+    <result column="HEART_TIME" property="heartTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />   
+  </resultMap>
+  
+  <sql id="Base_Column_List" >    
+    ID,TASK_CODE,SERVER_IP,TASK_STATUS,REMARK,CREATE_TIME
+  </sql>
+  
+  <!-- 根据创建时间查询正在执行的定时任务 -->
+  <select id="selectScheduleRecordByDate" parameterType="map" resultMap="BaseResultMap">   
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM IBIS_SCHEDULE_RECORD 
+    WHERE TASK_STATUS = 1 AND TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+  </select> 
+  
+  <!-- 插入定时任务记录信息 -->
+  <insert id="addScheduleRecord" parameterType="com.cloudwalk.ibis.model.schedule.ScheduleRecordEntity" >
+    INSERT INTO IBIS_SCHEDULE_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+       <if test="taskCode != null" >
+        TASK_CODE,
+      </if>
+      <if test="serverIp != null" >
+        SERVER_IP,
+      </if>
+      <if test="taskStatus != null" >
+        TASK_STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>    
+      <if test="heartTime != null" >
+        HEART_TIME,
+      </if> 
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>        
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCode != null" >
+        #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serverIp != null" >
+        #{serverIp,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null" >
+        #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>  
+      <if test="heartTime != null" >
+        #{heartTime,jdbcType=TIMESTAMP},
+      </if>   
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>      
+    </trim>
+  </insert>
+  
+  <!-- 插入定时任务信息 -->
+  <insert id="addSchedule" parameterType="com.cloudwalk.ibis.model.schedule.ScheduleEntity" >
+    INSERT INTO IBIS_SCHEDULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >      
+       <if test="taskCode != null and taskCode != ''" >
+        TASK_CODE,
+      </if>
+      <if test="taskName != null and taskName != ''" >
+        TASK_NAME,
+      </if>            
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >      
+      <if test="taskCode != null" >
+        #{taskCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>              
+    </trim>
+  </insert>
+  
+  <!-- 分页查询 -->
+  <select id="selectScheduleRecordPage" parameterType="map" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM IBIS_SCHEDULE_RECORD 
+    WHERE TASK_CODE = #{obj.taskCode,jdbcType=VARCHAR}
+    ORDER BY CREATE_TIME DESC
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="selectSchedulePage" parameterType="map" resultType="com.cloudwalk.ibis.model.schedule.ScheduleEntity">
+    SELECT 
+    TASK_CODE as taskCode,TASK_NAME as taskName,TASK_STATUS as taskStatus
+    FROM IBIS_SCHEDULE 
+    <where>
+    	<if test="obj.taskCode != null and obj.taskCode !=''">
+		  	AND TASK_CODE = #{obj.taskCode,jdbcType=VARCHAR}  
+     	</if>  
+     	<if test="obj.taskName != null and obj.taskName !=''">
+		  	AND TASK_NAME = #{obj.taskName,jdbcType=VARCHAR}  
+     	</if>
+    </where>         
+  </select>
+  
+   <!-- 根据任务编码查询 -->
+  <select id="selectScheduleByCode" parameterType="java.lang.String" resultType="com.cloudwalk.ibis.model.schedule.ScheduleEntity">
+    SELECT 
+    TASK_CODE as taskCode,TASK_NAME as taskName,TASK_STATUS as taskStatus
+    FROM IBIS_SCHEDULE 
+    WHERE TASK_CODE = #{taskCode,jdbcType=VARCHAR}        
+  </select>
+  
+  <!-- 更新定时任务状态 -->
+  <update id="updateScheduleStatus" parameterType="com.cloudwalk.ibis.model.schedule.ScheduleEntity" >
+  	update IBIS_SCHEDULE 
+  	<set >
+      <if test="taskStatus != null" >
+        TASK_STATUS = #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="taskName != null and taskName != ''" >
+        TASK_NAME = #{taskName,jdbcType=VARCHAR},
+      </if>
+    </set>
+  	where TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+  </update>
+    
+  <!-- 更新定时任务信息 -->
+  <update id="finishSchedule" parameterType="com.cloudwalk.ibis.model.schedule.ScheduleRecordEntity">
+  	update IBIS_SCHEDULE_RECORD set TASK_STATUS = 2,REMARK = #{remark,jdbcType=VARCHAR}
+  	WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新定时任务信息 -->
+  <update id="updateScheduleRecord" parameterType="com.cloudwalk.ibis.model.schedule.ScheduleRecordEntity">
+  	update IBIS_SCHEDULE_RECORD
+  	<set >
+      <if test="taskStatus != null" >
+        TASK_STATUS = #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="heartTime != null" >
+        HEART_TIME = #{heartTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+  	WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+</mapper>

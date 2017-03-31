@@ -1,0 +1,49 @@
+<div align="center">
+	<form id="manage_recogStep_editform" 
+		th:action="@{/recogStep/save}"  th:object="${vo}" 
+		method="post">
+		
+		<input name="action" id="action" type="hidden" th:attr="value=${action}" />
+		<input name="id" id="id" type="hidden" th:field="*{id}"/>
+		<input name="legalOrgCode" id="legalOrgCode" type="hidden" th:field="*{legalOrgCode}"/>
+		
+		<table class="tableForm edit" id="stepTable" width="100%">
+			<tr>
+				<th >识别策略名称：</th>
+				<td>
+					<input class="easyui-textbox" id="recogstepName" name="recogstepName" th:field="*{recogstepName}"   
+						data-options="required:true,validType:['untable']" />
+				</td>
+				<th >交易类型：</th>
+				<td>
+					<input class="easyui-combobox" id="tradingCode" name="tradingCode"  editable="false" th:field="*{tradingCode}"	
+				    	data-options="panelHeight:'auto',required:true,valueField:'dicCode',textField:'meaning',url:'../recogStep/dicList?type=0'"/>				
+				</td>
+			</tr>	
+			
+			<tr>
+				<th >交易渠道：</th>
+				<td>
+					<input class="easyui-combobox" id="channel" name="channel" editable="false" th:field="*{channel}"
+				    	data-options="panelHeight:'auto',required:true,valueField:'dicCode',textField:'meaning',url:'../recogStep/dicList?type=1'"/>		
+				</td>
+				<th >策略组：</th>
+				<td>
+					<input class="easyui-combobox"  id="stepgroupId"  name="stepgroupId" editable="false" th:field="*{stepgroupId}"	
+				    	data-options="panelHeight:'auto',required:true,valueField:'id',textField:'stepgroupName',url:'../recogStep/stepGroupList'"
+		    			/>					
+				</td>
+			</tr>		
+				
+			<tr>
+				<th>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</th>
+				<td >
+					<input class="easyui-textbox" name="remark" id="remark" th:field="*{remark}" 
+						 data-options="validType:['untable','byteLength[1,128]']" />	
+				</td>
+			</tr>				
+			
+					
+		</table>
+	</form>
+</div>

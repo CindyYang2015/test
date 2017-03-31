@@ -1,0 +1,203 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formserach"
+		style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_personRecogFlow_searchform" onsubmit="return false">
+			<table class="tableForm">
+				<tr>		
+					<td style="text-align:right;">							
+						交易渠道:
+						<input class="easyui-combobox" id="auditNumber_channel" name="channel" editable=false panelHeight="160"   
+	    							data-options="valueField:'id',textField:'text',loadFilter:function(data){
+										if(data && data.length > 0) {
+											data.push({id:'',text:'全部'});
+										}
+										return data;
+										
+									},url:'../dic/selectDicValuesByDicType?dicType=3'" />
+					</td>
+					<td style="text-align:right;">
+						交易类型:
+						<input class="easyui-combobox" id="auditNumber_tradingCode" name="tradingCode" editable=false panelHeight="160"   
+	    							data-options="valueField:'id',textField:'text',loadFilter:function(data){
+										if(data && data.length > 0) {
+											data.push({id:'',text:'全部'});
+										}
+										return data;
+										
+									},url:'../dic/selectDicValuesByDicType?dicType=6'" />
+					</td>
+					<td style="text-align:right;">
+						失败次数:
+						<input type="text" id="failCount" validType="byteLength[1,20]"
+							   		class="easyui-textbox" name="failCount" />
+					</td>
+					<td align="left">
+						<a href="javascript:void(0);" class="easyui-linkbutton"	iconCls="icon-search" plian="false"
+							 resId="103102101"	style="display:none" onclick="$.acooly.framework.searchData('manage_personRecogFlow_searchform','manage_personRecogFlow_datagrid');">查询</a>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right;">
+						证件类型:
+						<input class="easyui-combobox"  id="ctftype" editable=false panelHeight="140"
+							  	 name="ctftype" data-options="valueField:'id',textField:'text',loadFilter:function(data){
+									if(data && data.length > 0) {
+										data.push({id:'',text:'全部'});
+									}
+									return data;
+									
+								},url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+					</td>
+					<td style="text-align:right;">					
+						证件号码:<input class="easyui-textbox" id="ctfno" name="ctfno"  validType="byteLength[1,20]" />
+					</td>				
+				</tr>
+			</table>
+		</form>
+	</div>
+	<!-- 表格 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_personRecogFlow_datagrid" class="easyui-datagrid"
+			   	 toolbar="#manage_bussDiscernDetail_toolbar" rownumbers="true" fitColumns="true" fit="true" border="false"
+					url="../personRecogFlow/selectPersonRecogFlowByPage" idField="id"
+						pagination="true" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]"  singleSelect="true" striped="true">
+			<thead>
+				<tr>				
+					<th field="ctftypeName" halign="center" align="left"  width="8%">证件类型</th>					
+					<th field="ctfno"       halign="center" align="left"  width="18%">证件号码</th>
+					<th field="ctfname"     halign="center" align="left"  width="10%" >姓名</th>									
+					<th field="customerId"  halign="center" align="left"  width="10%" >核心客户号</th>
+					<th field="channelName" halign="center" align="left"  width="10%">交易渠道</th>
+					<th field="tradingCodeName" halign="center" align="left" width="10%" >交易类型</th>
+					<th field="sucessCount" halign="center" align="center" width="6%" >通过数量</th>
+					<th field="failCount"   halign="center" align="center" width="6%" >失败数量</th>
+					<th field="key"         halign="center" align="center"  width="26%" formatter="fmtPersonRecogFlowDataById">操作</th>
+				</tr>
+			</thead>
+		</table>
+		<div id="manage_person_recog_action" style="display: none;">
+	      <!-- 详情弹框直接调用" ../js/featurelib/person_feature_query.js"下的selectPersonFeatureByPrimaryKey方法-->
+	      <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-user" plain="true" style="display:none" onclick="selectPersonFeatureByPrimaryKey('{personId}')" resId="103102101">详情</a>
+		 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-vcard-edit" plain="true" style="display:none" onclick="onPersonRecogFlowWhiteById('{personId}','{channel}','{channelName}','{tradingCode}','{tradingCodeName}','{engineCode}','{engineVerCode}');" resId="103102103">加入白名单</a>
+		 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-vcard-edit" plain="true" style="display:none" onclick="onPersonRecogFlowBlackById('{personId}','{channel}','{channelName}','{tradingCode}','{tradingCodeName}');" resId="103102102">加入黑名单</a>
+		</div>
+	</div>
+	
+   <!-- 详情弹出框 -->
+  <div id="dlg_person_feature_detail" class="easyui-dialog" closed="true" title="客户详情" data-options="iconCls:'icon-user',modal:true" style="width:800px;height:400px;padding:10px">
+	  <div id="dlg_person_feature_detail_accordion"> 
+	  </div>
+  </div>
+  
+  <!-- 拉入黑名单 -->
+  <div id="dlg_person_recog_add_black" class="easyui-dialog" closed="true" title="黑名单信息" data-options="iconCls:'icon-user',modal:true" style="width:400px;height:200px;padding:10px;align:center;">
+	  <input type="hidden" id="person_recog_add_black_personId"/>
+	  <input type="hidden" id="person_recog_add_black_channel"/>
+	  <input type="hidden" id="person_recog_add_black_tradingCode"/>
+      <table id="personRecogTableIdAddBlack" class="tableForm" width="90%" style="margin-top:10px;margin-left:30px;">
+	      <tr>
+	          <td align="left">交易渠道:</td>
+	          <td align="right"><span id="channl001"></span></td>
+	      </tr>
+	      <tr>
+	          <td align="left">交易类型:</td>
+	          <td align="right"><span id="trading001"></span></td>
+	
+	      </tr>
+	      <tr>
+	        <td align="left"><label for="blackType">黑名单类型:</label></td>
+	        <td align="right"> 
+		        <input panelHeight="120" missingMessage="黑名单类型"
+		                 class="easyui-combobox" name="person_recog_blackType"
+		                   data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=8'" />
+	        </td>
+	      </tr>
+   	  </table>
+	    <div class="dialog-button" style="position: relative; top: -1px; width: 100%px;">
+		    <a href="javascript:void(0)" class="l-btn l-btn-small" group="" id=""   onclick="add_black_btn_click();">
+			    <span class="l-btn-left l-btn-icon-left">
+			      	<span class="l-btn-text">确定</span>
+			      	<span class="l-btn-icon icon-add">&nbsp;</span>
+			    </span>
+		    </a>
+		    <a href="javascript:void(0)" class="l-btn l-btn-small" group="" id="" onclick="add_black_btn_click_close();">
+			    <span class="l-btn-left l-btn-icon-left">
+			      	<span class="l-btn-text">关闭</span>
+			      	<span class="l-btn-icon icon-cancel">&nbsp;</span>
+			    </span>
+		    </a>
+	    </div>
+	</div>
+  
+  <!-- 添加白名单 -->
+	<div id="dlg_person_recog_add_white" class="easyui-dialog" closed="true" title="白名单信息" 
+			data-options="iconCls:'icon-user',modal:true" style="width:580px;height:200px;padding:10px;text-align:center">
+		<input type="hidden" id="person_recog_add_white_personId"/>
+		<input type="hidden" id="person_recog_add_white_channel"/>
+    	<input type="hidden" id="person_recog_add_white_tradingCode"/>
+    	<table id="personRecogTableIdAddBlack" class="tableForm" width="95%" style="margin-top:5px;margin-left:20px;">
+	      	<tr>
+		        <td align="right" style="width:15%">
+		        	算法引擎:
+		        </td>
+		        <td align="left" style="width:35%">
+		          <select name="engineId_personRecog_add" id="engineId_personRecog_add" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="60" data-options="required:true">         
+		          </select> 
+		        </td>
+		        <td align="right" style="width:15%">
+		        	引擎版本:
+		        </td>
+		        <td align="left" style="width:30%">
+			        <select name="engineverId_personRecog_add" id="engineverId_personRecog_add" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="auto" data-options="required:true">          
+			        </select>
+		        </td>
+	      	</tr>
+     	    <tr>
+	        	<td align="left">
+	        		白名单类型:
+	        	</td>
+        		<td align="right">
+	        		<input panelHeight="120" missingMessage="白名单类型" style="width: 133.667px;"
+	            			class="easyui-combobox" name="person_recog_blackType_white"
+	           					 data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=9'" />
+       			</td>
+        		<td align="left">
+        			阈值:
+        		</td>
+        		<td align="right">
+        			<input type="text" size="15" name="score" id="score_whitePerson" style="width: 133.667px;"
+         					 value="" class="easyui-textbox" validType="byteLength[1,32]" />
+         		</td>
+      		</tr>
+     		<tr>
+		        <td align="left">
+		        	交易渠道:
+		        </td><td align="right"><span id="channl002"></span></td>
+		        <td align="left">
+		        	交易类型:
+		        </td>
+		        <td align="right">
+		        	<span id="trading002"></span>
+		        </td>
+     		</tr>
+		</table>
+	    <div class="dialog-button" style="position: relative; top: -1px; width: 100%px;">
+	    	<a href="javascript:void(0)" class="l-btn l-btn-small" group="" id="" onclick="add_white_btn_click();">
+		      	<span class="l-btn-left l-btn-icon-left">
+			        <span class="l-btn-text">确定</span>
+			        <span class="l-btn-icon icon-add">&nbsp;</span>
+		     	</span>
+	     	</a>
+	      	<a href="javascript:void(0)" class="l-btn l-btn-small" group="" id="" onclick="add_white_btn_click_close();">
+		      	<span class="l-btn-left l-btn-icon-left">
+			        <span class="l-btn-text">关闭</span>
+			        <span class="l-btn-icon icon-cancel">&nbsp;</span>
+		      	</span>
+	      	</a>
+		</div>
+	</div>
+</div>
+    
+<script type="text/javascript" src="../js/queryStatisic/personRecogFlow.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/featurelib/person_feature_query.js" charset="utf-8"></script>

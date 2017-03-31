@@ -1,0 +1,69 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formserach" style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_recognizerule_searchform" onsubmit="return false">
+			<table class="tableForm">
+				 <tr>					
+					<td>
+			          	识别策略:&nbsp;<input class="easyui-combobox" id="recogstepId" name="recogstepId" editable="false" />
+					</td>
+					<td align="left">
+						算法引擎:&nbsp;
+							<input class="easyui-combobox" id="engineCode" name="engineCode"  editable="false" panelHeight='auto'/>
+					</td>						
+					<td align="left">
+						状态 :
+						<input  class="easyui-combobox" id="status" name="status" editable="false"
+              				data-options="panelHeight:'auto',valueField:'value',textField:'text',data:[{text:'全部',value:''},{text:'有效',value:'1'},{text:'无效',value:'0'}]"/>
+					</td>
+					<td>					
+						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="105106101" 
+						style="display:none" onclick="submitSearch();">查询</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_recognizerule_datagrid" toolbar="#manage_recognizerule_toolbar" class="easyui-datagrid"
+			rownumbers="true" fitColumns="true" fit="true" border="false" singleSelect="true"
+			pagination="true" sortName="id" width="100%" striped="true" data-options="url:'../recognizerule/list'">
+			<thead>
+				<tr>
+					<th field="id" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th>
+					<th field="recogstepId" halign="center" align="left" width="20%">识别策略</th>
+					<th field="engineCode"  halign="center" align="left" width="20%">算法引擎</th>
+		          	<th field="score"  halign="center" align="center" width="20%" formatter="double2Formatter">阈值</th>
+					<th field="status" halign="center" align="center" width="20%" formatter="statusFormatter">状态</th>
+					<th field="remark" halign="center" align="left" width="20%">备注</th>
+				</tr>
+			</thead>
+		</table>
+		<!-- 每行的Action动作模板 -->
+		<div id="manage_recognizerule_action" class="hide">
+			
+
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_recognizerule_toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" title="添加" plain="true" resId="105106102" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../recognizerule/add',entity:'recognizerule',beforeSerialize:submitBeforeValidate,width:500,height:220,title:'新增'},{buttonName:'确定'});">
+				添加
+			</a>
+
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" title="编辑" plain="true" resId="105106103" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../recognizerule/edit',entity:'recognizerule',beforeSerialize:submitBeforeValidate,width:500,height:220},{buttonName:'确定',isCheckselect:true,param:'id'});">
+				编辑
+			</a>				
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" title="删除" plain="true" resId="105106104" 
+				style="display:none" onclick="$.acooly.framework.removes('../recognizerule/delete','id','manage_recognizerule_datagrid');">
+				删除
+			</a>	
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/recogSet/recognizerule.js" charset="utf-8"></script>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.RecogstepMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.Recogstep" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="RECOGSTEP_NAME" property="recogstepName" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+    <result column="TRADING_CODE" property="tradingCode" jdbcType="VARCHAR" />
+    <result column="STEPGROUP_ID" property="stepgroupId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="BANK_ORG_NAME" property="bankOrgName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    ID, LEGAL_ORG_CODE, RECOGSTEP_NAME, CHANNEL, TRADING_CODE, STEPGROUP_ID, STATUS, 
+    REMARK, CREATOR, CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_RECOGSTEP
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectRecogstepPage"  parameterType="map" resultMap="BaseResultMap">
+  	SELECT 
+  		ID, RECOGSTEP_NAME, 
+  		( SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_TYPE='3' AND DIC_CODE=CF_RECOGSTEP.CHANNEL ) CHANNEL, 
+  		( SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_TYPE='6' AND DIC_CODE=CF_RECOGSTEP.TRADING_CODE ) TRADING_CODE, 
+  		( SELECT STEPGROUP_NAME FROM CF_STEP_GROUP WHERE ID = CF_RECOGSTEP.STEPGROUP_ID) STEPGROUP_ID, 
+  		REMARK, 
+  		(SELECT ORG_NAME FROM FND_ORGANIZATION WHERE ORG_CODE_PATH=CF_RECOGSTEP.LEGAL_ORG_CODE) BANK_ORG_NAME 
+  	FROM CF_RECOGSTEP
+  	WHERE  LEGAL_ORG_CODE LIKE CONCAT(#{obj.legalOrgCode,jdbcType=VARCHAR},'%') 
+  		AND STATUS=1   	
+  	<if test="obj.recogstepName != null and obj.recogstepName != ''">
+		AND RECOGSTEP_NAME = #{obj.recogstepName,jdbcType=VARCHAR}
+    </if>  
+  	 
+	<if test="obj.channel != null and obj.channel != ''">
+		AND CHANNEL = #{obj.channel,jdbcType=VARCHAR}
+    </if>  	 
+	<if test="obj.tradingCode != null and obj.tradingCode != ''">
+		AND TRADING_CODE = #{obj.tradingCode,jdbcType=VARCHAR}
+    </if>  	 
+  </select>
+  
+  <select id="selectRecogStepHaveRule" parameterType="string" resultType="int">
+  	SELECT COUNT(1) FROM CF_RECOGNIZERULE 
+  	WHERE RECOGSTEP_ID=#{recogStepId,jdbcType=VARCHAR}
+  </select>	
+  
+  <select id="selectRecogstepAll" parameterType="string" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List" /> 
+  	FROM CF_RECOGSTEP 
+  	WHERE LEGAL_ORG_CODE LIKE CONCAT(#{legalOrgCode,jdbcType=VARCHAR},'%') 
+  		AND STATUS=1 
+  </select>
+  
+  <select id="selectRecogstepByRecogstep" parameterType="com.cloudwalk.ibis.model.recogSet.Recogstep" resultMap="BaseResultMap">
+  	SELECT * 
+  	FROM CF_RECOGSTEP
+  	WHERE LEGAL_ORG_CODE =#{legalOrgCode,jdbcType=VARCHAR} 
+	  	AND CHANNEL=#{channel,jdbcType=VARCHAR}
+	  	AND TRADING_CODE=#{tradingCode,jdbcType=VARCHAR}
+  </select>
+   
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_RECOGSTEP
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.Recogstep" >
+    INSERT INTO CF_RECOGSTEP (
+    	ID, 
+    	LEGAL_ORG_CODE, 
+    	RECOGSTEP_NAME, 
+      	CHANNEL, 
+      	TRADING_CODE, 
+      	STEPGROUP_ID, 
+      	STATUS, 
+      	REMARK, 
+      	CREATOR, 
+      	CREATE_TIME, 
+      	UPDATOR, 
+      	UPDATE_TIME
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{legalOrgCode,jdbcType=VARCHAR}, 
+    	#{recogstepName,jdbcType=VARCHAR}, 
+      	#{channel,jdbcType=VARCHAR}, 
+      	#{tradingCode,jdbcType=VARCHAR}, 
+      	#{stepgroupId,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{creator,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP}, 
+      	#{updator,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=TIMESTAMP}
+      	)
+  </insert>
+ 
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.Recogstep" >
+    UPDATE CF_RECOGSTEP
+    SET 
+      	RECOGSTEP_NAME = #{recogstepName,jdbcType=VARCHAR},
+      	CHANNEL = #{channel,jdbcType=VARCHAR},
+      	TRADING_CODE = #{tradingCode,jdbcType=VARCHAR},
+      	STEPGROUP_ID = #{stepgroupId,jdbcType=VARCHAR},
+      	REMARK = #{remark,jdbcType=VARCHAR},
+      	UPDATOR = #{updator,jdbcType=VARCHAR},
+      	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

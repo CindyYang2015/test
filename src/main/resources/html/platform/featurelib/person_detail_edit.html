@@ -1,0 +1,96 @@
+	<div align="center">
+	 <form id="manage_person_feature_editform"  th:action="@{/person/savePersonFeature}" th:object="${person}" method="post">
+	<div id="from_person_feature_edit">
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<input type="hidden" id="partitionId_person_feature_edit" name="partitionId"  th:field="*{partitionId}"/>
+		<input type="hidden" id="personId_person_feature_edit" name="personId"  th:field="*{personId}"/>
+		<input type="hidden" id="person_feature_file" name="person_feature_file" value="" />
+		<table class="tableForm edit">
+			<tr>				
+				<th align="right">证件类型:</th>
+				<td align="left">	
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="ctftype" id="ctftype" th:field="*{ctftype}"/>
+						<input id="ctftype_person_feature_edit" class="easyui-combobox" name="ctftype" disabled="true" editable="false" panelHeight="140"
+				    	data-options="required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"
+				    	th:field="*{ctftype}" style="width: 133px;"	
+		    			/>
+
+					</div>
+					<div th:unless="${action == 'edit'}">
+						<input panelHeight="80" style="width: 133.667px;" id="ctftype_person_feature_edit" th:field="*{ctftype}"
+						class="easyui-combobox" name="ctftype" data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"
+						/>
+					</div>						
+			    </td>
+			    <th align="right">证件号码:</th>
+				<td align="left">
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="ctfno" id="ctfno" th:field="*{ctfno}"/>
+						<input type="text" readonly="true" style="width: 133.667px;" size="15"  id="ctfno_person_feature_edit" th:field="*{ctfno}"
+						class="easyui-textbox" name="ctfno" disabled="true" data-options="required:true,validType:['byteLength[1,18]','isCode']" />
+					</div>
+					<div th:unless="${action == 'edit'}">
+						<input type="text" style="width: 133.667px;" size="15"  id="ctfno_person_feature_edit" th:field="*{ctfno}"
+						class="easyui-textbox" name="ctfno" data-options="required:true,validType:['byteLength[1,18]','isCode']" />
+					</div>					
+				</td>	
+			</tr>
+			<tr>
+				<th align="right">证件姓名:</th>				
+				<td align="left"><input type="text" style="width: 133.667px;" size="15" validType="byteLength[1,64]" id="ctfname_person_feature_edit" th:field="*{ctfname}"
+					class="easyui-textbox" name="ctfname" data-options="required:true" />
+				</td>
+				<th align="right">客户属性:</th>	
+				<td align="left"><input panelHeight="80" style="width: 133.667px;" id="property_person_feature_edit" th:field="*{property}"
+					class="easyui-combobox" name="property" data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=4'"
+					/>
+				</td>
+			</tr>
+			<tr>
+				<th align="right">核心客户号:</th>	
+				<td align="left">
+					<div th:if="${action == 'edit'}">
+						<input type="hidden" name="customerId" id="customerId" th:field="*{customerId}"/>
+						<input type="text" readonly="true" style="width: 133.667px;" size="15"  id="customerId_person_feature_edit" th:field="*{customerId}"
+						class="easyui-textbox" name="customerId" disabled="true" data-options="validType:['byteLength[1,64]','isCode']"/>
+					</div>
+					<div th:unless="${action == 'edit'}">
+						<input type="text" style="width: 133.667px;" size="15"  id="customerId_person_feature_edit" th:field="*{customerId}"
+						class="easyui-textbox" name="customerId"  data-options="validType:['byteLength[1,64]','isCode']"/>
+					</div>						
+				</td>	
+				<th align="right">算法引擎版本:</th>					
+				<td align="left">
+					<select name="engineVerCode" id="engineverId_person_feature_edit" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="80" data-options="required:true">
+					</select>
+				</td>						
+			</tr>
+			<tr>
+				<th align="right">算法引擎:</th>
+				<td align="left">	
+				<input type="hidden" name="engineType" id="engineType_person_feature_edit"/>
+					<select name="engineCode" id="engineId_person_feature_edit" class="easyui-combobox"  style="width: 133.667px;" editable="false" panelHeight="80" data-options="required:true">
+										
+					</select> 
+			    </td>
+				<th align="right"></th>
+				<td align="left">
+			    </td>	
+			</tr>			
+			<tr>
+				<th align="right">文件选择:</th>
+				<td align="left" colspan="3">							
+					<a href="javascript:;" class="a-upload2" >
+		             <div>
+			             <img src="../images/upload.png" style="width:100px;height:100px;" id="previewImg_person_edit" />
+		             </div>				             
+					 <input type="file" id="person_feature_file_edit" data-url="../faceTest/uploadImage" />
+					</a>				
+				</td>
+			</tr>
+		</table>	
+	</div>
+	</form>
+	</div>
+<script type="text/javascript" src="../js/featurelib/person_detail_edit.js"></script>

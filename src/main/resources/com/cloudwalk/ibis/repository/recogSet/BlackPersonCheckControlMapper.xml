@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.BlackPersonCheckControlMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.BlackPersonCheckControl" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BLACK_ID" property="blackId" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+    <result column="TRADING_CODE" property="tradingCode" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  AND ${criterion.condition} #{criterion.value} AND #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  AND ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  AND ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  AND ${criterion.condition} #{criterion.value} AND #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  AND ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    ID, BLACK_ID, CHANNEL, TRADING_CODE, LEGAL_ORG_CODE
+  </sql>
+  
+  <!-- 查询审核表的渠道信息 -->
+  <select id="selectChannelByCheckBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_TYPE=3 AND  DIC_CODE IN(
+     	SELECT DISTINCT CHANNEL FROM CF_BCHECK_CONTROL WHERE BLACK_ID=#{id,jdbcType=VARCHAR})
+  </select>
+  
+  <!-- 查询已经审核过的渠道信息 -->
+  <select id="selectChannelByBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_TYPE=3 AND  DIC_CODE IN(
+     	SELECT DISTINCT CHANNEL FROM CF_BLACK_CONTROL WHERE BLACK_ID=#{id,jdbcType=VARCHAR})
+  </select>
+  
+  <!-- 查询审核表的交易信息 -->
+  <select id="selectTradingByCheckBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT MEANING 
+     FROM FND_DIC_VALUES 
+     WHERE DIC_TYPE=6 
+     	AND DIC_CODE IN(SELECT DISTINCT TRADING_CODE FROM CF_BCHECK_CONTROL WHERE BLACK_ID=#{id,jdbcType=VARCHAR})
+  </select> 
+  
+  <!-- 查询已审核过的交易信息 -->
+  <select id="selectTradingByBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT MEANING 
+     FROM FND_DIC_VALUES 
+     WHERE DIC_TYPE=6 
+     	AND DIC_CODE IN(SELECT DISTINCT TRADING_CODE FROM CF_BLACK_CONTROL WHERE BLACK_ID=#{id,jdbcType=VARCHAR})
+  </select> 
+  
+  <!-- 查询已审核过的渠道信息 -->
+   <select id="selectChannelCodeByBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT DISTINCT CHANNEL FROM CF_BLACK_CONTROL 
+     WHERE BLACK_ID=#{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询已审核过的交易信息 -->
+  <select id="selectTradingCodeByBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT DISTINCT TRADING_CODE FROM CF_BLACK_CONTROL 
+     WHERE BLACK_ID=#{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询审核表的渠道信息 -->
+   <select id="selectChannelCodeByCheckBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT DISTINCT CHANNEL FROM CF_BCHECK_CONTROL 
+     WHERE BLACK_ID=#{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询审核表的交易信息 -->
+  <select id="selectTradingCodeByCheckBlackId" parameterType="java.lang.String"  resultType="java.lang.String">
+     SELECT DISTINCT TRADING_CODE FROM CF_BCHECK_CONTROL 
+     WHERE BLACK_ID=#{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_BCHECK_CONTROL
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_BCHECK_CONTROL
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 根据审核表的黑名单ID删除控制信息 -->
+  <delete id="deleteByCheckBlackPersonID" parameterType="java.lang.String" >
+    DELETE FROM CF_BCHECK_CONTROL
+    WHERE BLACK_ID= #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheckControl" >
+    INSERT INTO CF_BCHECK_CONTROL (
+    	ID, 
+    	BLACK_ID, 
+    	CHANNEL, 
+    	TRADING_CODE, 
+    	LEGAL_ORG_CODE
+    	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{blackId,jdbcType=VARCHAR}, 
+    	#{channel,jdbcType=VARCHAR}, 
+      	#{tradingCode,jdbcType=VARCHAR}, 
+      	#{legalOrgCode,jdbcType=VARCHAR}
+      	)
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheckControl" >
+    INSERT INTO CF_BCHECK_CONTROL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="blackId != null" >
+        BLACK_ID,
+      </if>
+      <if test="channel != null" >
+        CHANNEL,
+      </if>
+      <if test="tradingCode != null" >
+        TRADING_CODE,
+      </if>
+      <if test="legalOrgCode != null" >
+        LEGAL_ORG_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="blackId != null" >
+        #{blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="tradingCode != null" >
+        #{tradingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalOrgCode != null" >
+        #{legalOrgCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByExampleSelective" parameterType="map" >
+    UPDATE CF_BCHECK_CONTROL
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blackId != null" >
+        BLACK_ID = #{record.blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradingCode != null" >
+        TRADING_CODE = #{record.tradingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalOrgCode != null" >
+        LEGAL_ORG_CODE = #{record.legalOrgCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByExample" parameterType="map" >
+    UPDATE CF_BCHECK_CONTROL
+    SET 
+	    ID = #{record.id,jdbcType=VARCHAR}, 
+	    BLACK_ID = #{record.blackId,jdbcType=VARCHAR}, 
+	    CHANNEL = #{record.channel,jdbcType=VARCHAR}, 
+	    TRADING_CODE = #{record.tradingCode,jdbcType=VARCHAR}, 
+	    LEGAL_ORG_CODE = #{record.legalOrgCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheckControl" >
+    UPDATE CF_BCHECK_CONTROL
+    <set >
+      <if test="blackId != null" >
+        BLACK_ID = #{blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        CHANNEL = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="tradingCode != null" >
+        TRADING_CODE = #{tradingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalOrgCode != null" >
+        LEGAL_ORG_CODE = #{legalOrgCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheckControl" >
+    UPDATE CF_BCHECK_CONTROL
+    SET 
+    	BLACK_ID = #{blackId,jdbcType=VARCHAR},
+	    CHANNEL = #{channel,jdbcType=VARCHAR},
+	    TRADING_CODE = #{tradingCode,jdbcType=VARCHAR},
+	    LEGAL_ORG_CODE = #{legalOrgCode,jdbcType=VARCHAR} 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

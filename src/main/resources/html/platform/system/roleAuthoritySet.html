@@ -1,0 +1,17 @@
+  	<div class="easyui-layout" data-options="fit : true,border : false">
+  	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+    	<table id="manage_roleAuthority_datagrid" class="easyui-datagrid" url="/json/authority.json" method="get" rownumbers="true" fitColumns="true" fit="true" border="false"
+      	idField="id" sortName="id" sortOrder="desc" checkOnSelect="true" selectOnCheck="true">
+      		<thead>      			
+        		<tr>
+        			<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }"></th>	
+					<th field="name" width="60">权限名称</th>
+					<th field="desc" width="200">描述</th>		          
+		        </tr>
+      		</thead>
+    	</table>    	
+	</div>
+</div>
+

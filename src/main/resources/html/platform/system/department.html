@@ -1,0 +1,74 @@
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'west',split:true" class="west1">
+			   <ul id="unit_west_tree"></ul>
+	</div>
+	<div data-options="region:'center'">
+		<div class="easyui-layout" data-options="fit : true,border : false">
+  		<!-- 查询条件 -->
+			<div data-options="region:'north',border:false" class="formserach" style="padding: 5px; overflow: hidden;" align="left">
+	    		<form id="manage_department_searchform" onsubmit="return false">
+	     			<input type="hidden" name="orgCode" id="orgCode"  field="orgCode" th:value="${orgCode}" />
+				      <table class="tableForm">
+				        <tr>	        
+				          <td align="left">	
+				          	部门名称:
+				          		<input class="easyui-textbox" size="15" name="deptName" value=""   validType="byteLength[1,255]" />	       
+				          </td>  
+				          <td align="left">	
+				          	部门代码:
+				          		<input class="easyui-textbox" size="15" name="deptCode" value=""   validType="byteLength[1,32]" />	       
+				          </td>
+				          <td> 
+				          	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="104102101" style="display:none"
+				          			onclick="$.acooly.framework.searchData('manage_department_searchform','manage_department_datagrid');">查询</a> 
+				          </td>
+				        </tr>
+				      </table>
+				</form>
+			</div>
+
+		  	<!-- 列表和工具栏 -->
+			<div data-options="region:'center',border:false">
+		    	<table id="manage_department_datagrid" class="easyui-datagrid" toolbar="#manage_department_toolbar" rownumbers="true" fitColumns="true" fit="true" border="false"
+		      		pagination="true" idField="deptCode" pageSize="20" pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true" striped="true">
+      				<thead>
+		        		<tr>
+		        			<th field="showCheckboxWithId" checkbox="true"
+									data-options="formatter:function(value, row, index){ return row.deptCode }">编号</th>
+							<th field="deptCode" halign="center" align="left" width="40">部门代码</th>
+							<th field="deptName" halign="center" align="left" width="80">部门名称</th>
+				          	<th field="linkManName" halign="center" align="left" width="80">联系人</th>	
+				          	<th field="linkManTel"  halign="center" align="left" width="24">联系电话</th>
+				          	<th field="linkManFax"  halign="center" align="left" width="50">传真</th>
+				          	<th field="depatManageMan" halign="center" align="left" width="50">负责人</th>
+				        </tr>
+      				</thead>
+    			</table>
+    			
+		    	<!-- 每行的Action动作模板 -->
+		    	<div id="manage_department_action" class="hide">
+    			</div>
+    			
+	    		<!-- 表格的工具栏 -->
+				<div id="manage_department_toolbar">
+					<a href="javascript:void(0);" onclick="addDept();" class="easyui-linkbutton" iconCls="icon-add" title="添加"
+						resId="104102102" style="display:none"
+						plain="true">添加</a>
+						
+					<a href="javascript:void(0);" onclick="editDept();"	class="easyui-linkbutton" iconCls="icon-edit" title="编辑"
+						resId="104102103" style="display:none"
+						plain="true">编辑</a>
+						
+						<a href="javascript:void(0);" onclick="$.acooly.framework.removes('../department/deleteJson','deptCode','manage_department_datagrid');"
+						class="easyui-linkbutton" iconCls="icon-remove" title="删除"
+						resId="104102104" style="display:none"
+						plain="true">删除</a> 		
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/system/department.js" charset="utf-8"></script>
+
+

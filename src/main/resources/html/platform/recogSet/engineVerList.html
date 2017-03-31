@@ -1,0 +1,85 @@
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<!-- 查询条件 -->
+	<div data-options="region:'north',border:false" class="formserach" style="padding: 5px; overflow: hidden;" align="left">
+		<form id="manage_engineVer_searchform" onsubmit="return false">
+			<table class="tableForm">
+				 <tr>				
+					<td>
+			          	算法引擎:&nbsp;<input class="easyui-combobox" id="engineCode"  name="engineCode"  editable="false"
+			          			    data-options="panelHeight:'auto',valueField:'engineCode',textField:'engineName',url:'../engineVer/selectEngineCode',
+			          			    loadFilter:function(data){
+			          			   	   data.push({engineCode:'',engineName:'全部'});
+				                       return data;
+			          			   	}"	
+			          			 />							
+							
+					</td>
+					<td align="left">
+						版本代码:&nbsp;<input id="verCode" class="easyui-textbox" name="verCode"/>
+					</td>						
+					<td align="left">
+						版本号:&nbsp;<input id="verNo" class="easyui-textbox" name="verNo"/>
+					</td>
+					<td>					
+						<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="105102101" 
+						style="display:none" onclick="Search();">查询</a>
+					</td>
+				</tr>
+				<tr>
+							
+					<td align="left">
+			         	状  &nbsp;&nbsp;&nbsp;&nbsp;态:&nbsp;
+			            <input  class="easyui-combobox" id="status" name="status"  editable="false" 
+			              data-options="panelHeight:'auto',valueField:'value',textField:'text',
+			              	data:[{text:'全部',value:''},{text:'有效',value:'1'},{text:'无效',value:'0'}]" 
+			            />
+	         	    </td>   
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_engineVer_datagrid" toolbar="#manage_engineVer_toolbar" class="easyui-datagrid"
+			rownumbers="true" fitColumns="true" fit="true" border="false" singleSelect="true"
+			pagination="true" sortName="id" width="100%" striped="true">
+			<thead>
+				<tr >
+					<th field="id" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th>
+					<th field="engineName"  halign="center" align="left"  width="20%">算法引擎</th>
+					<th field="engineCode"  halign="center" align="left"  width="20%">引擎代码</th>
+		          	<th field="companyName" halign="center" align="left"  width="15%">厂家名称</th>
+		          	<th field="verCode" halign="center" align="left"  width="10%" >版本代码</th>
+		          	<th field="verNo"   halign="center" align="left"  width="8%" >版本号</th>
+					<th field="status"  halign="center" align="center"  width="8%" formatter="statusFormatter">状态</th>
+					<th field="remark"  halign="center" align="left" width="15%">备注</th>		          	
+				</tr>
+			</thead>
+		</table>
+		<!-- 每行的Action动作模板 -->
+		<div id="manage_engineVer_action" class="hide">
+			
+
+		</div>
+		<!-- 表格的工具栏 -->
+		<div id="manage_engineVer_toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" title="添加" plain="true" resId="105102102" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../engineVer/add',entity:'engineVer',width:600,height:220,title:'新增'},{buttonName:'确定'});">
+				添加
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-edit" title="编辑" plain="true" resId="105102103" 
+				style="display:none" onclick="$.acooly.framework.customDialog({reload:true,url:'../engineVer/edit',entity:'engineVer',width:600,height:220},{buttonName:'确定',isCheckselect:true,param:'id'});">
+				编辑
+			</a>
+				
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove" title="删除" plain="true" resId="105102104" 
+				style="display:none" onclick="$.acooly.framework.removes('../engineVer/delete','id','manage_engineVer_datagrid');">
+				删除
+			</a>	
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/recogSet/engineVer.js" charset="utf-8"></script>

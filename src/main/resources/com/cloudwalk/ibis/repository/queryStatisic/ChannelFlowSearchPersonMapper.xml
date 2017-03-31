@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.queryStatisic.ChannelFlowSearchPersonMapper" >
+
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.queryStatisic.ChannelFlowSearchPerson" >
+    <id column="FLOW_ID" property="flowId" jdbcType="VARCHAR" />
+    <result column="PERSON_ID" property="personId" jdbcType="VARCHAR" />
+    <result column="FEATURE_ID" property="featureId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    FLOW_ID, PERSON_ID, FEATURE_ID, REMARK 
+  </sql>
+    
+  <!-- 插入按证检索人信息 -->
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.queryStatisic.ChannelFlowSearchPerson" >
+    INSERT INTO SS_CHANNELFLOW_SP 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="flowId != null" >
+			FLOW_ID,
+		</if>
+		<if test="personId != null" >
+			PERSON_ID,
+		</if>
+		<if test="featureId != null" >
+			FEATURE_ID,
+		</if>
+		<if test="remark != null" >
+			REMARK,
+		</if>    
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="flowId != null" >
+			#{flowId,jdbcType=VARCHAR},
+		</if>
+		<if test="personId != null" >
+			#{personId,jdbcType=VARCHAR},
+		</if>
+		<if test="featureId != null" >
+			#{featureId,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null" >
+			#{remark,jdbcType=VARCHAR},
+		</if>  
+    </trim>
+  </insert>
+  <!-- 通过ID查询银行卡OCR分别信息 -->
+  <select id="selectChannelFlowSearchPersonById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM SS_CHANNELFLOW_SP 
+    WHERE FLOW_ID = #{flowId,jdbcType=VARCHAR}
+  </select> 
+  
+  <!-- 删除流水信息 --> 
+  <delete id="deleterFlowsByDate" parameterType="map">  	 
+	 DELETE FROM SS_CHANNELFLOW_SP a 
+     WHERE EXISTS (SELECT 1 FROM SS_CHANNELFLOW b WHERE a.FLOW_ID = b.FLOW_ID and b.CREATE_TIME &lt; #{createTime,jdbcType=TIMESTAMP})
+   </delete>
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+

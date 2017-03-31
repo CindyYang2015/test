@@ -1,0 +1,158 @@
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'north',title:'请求报文'" class="layoutLeftWidth" style="height:50%;">
+		<form name="find_user_card_form" action="../faceTest/searchByPerson" method="post" id="find_user_card_form">		<input type="hidden" name="isencrypt" value="1"></input>
+			<input type="hidden" name="isencrypt" value="1"></input>
+			<table class="tableForm" width="100%" style="float:left;margin-top:10px;">
+         		<tr>  
+         			<td style="width:5%;"></td>
+		        	<td  width="80%" style="text-align:center;text_align:center;">
+					 	<table width="90%" style="text-align:center;text_align:center;">
+					 		 <tr>
+					 			<td style="text-align:right;">
+					 				法人机构代码:
+					 			</td>
+					 			<td>
+					 				<input validType="byteLength[1,18]" missingMessage="请输入法人机构代码"
+										id="orgCode" class="easyui-textbox" type="text" name="orgCode" data-options="required:true"/>
+					 			</td>	
+					 			<td style="text-align:right;">
+					 				客户属性:
+					 			</td>
+					 			<td>
+					 				<input id="property" missingMessage="请选择客户属性"
+											class="easyui-combobox" name="property" data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=4'"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				客户姓名:
+					 			</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]" missingMessage="请输入姓名"
+										class="easyui-textbox" type="text" name="ctfname" data-options="required:true"/>
+					 			</td>		 			
+					 		</tr>				 		
+					 		<tr>			 						 		
+					 			<td style="text-align:right;">
+					 				核心客户号:
+					 			</td>
+					 			<td>
+						 			<input validType="byteLength[1,18]" missingMessage="请输入核心客户号"
+										id="customerId" class="easyui-textbox" type="text" name="customerId" data-options=""/>
+					 			</td>
+					 			<td style="text-align:right;">
+					 				证件类型:
+					 			</td>
+					 			<td>
+						 			<input id="cType" missingMessage="请选择证件类型"
+										class="easyui-combobox" name="ctftype" data-options="editable:false,required:true,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=2'"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				证件号码:
+					 			</td>
+					 			<td>
+						 			<input validType="byteLength[1,18]" missingMessage="请输入证件号码"
+										class="easyui-textbox" type="text" name="ctfno" data-options="required:true"/>
+								</td>	
+					 		</tr>		 		
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				交易渠道:
+					 			</td>
+					 			<td>
+					 				<input id="channel" missingMessage="请选择渠道分类"
+											class="easyui-combobox" name="channel" data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=3',required:true"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				交易类型:
+					 			</td>
+					 			<td>
+					 				<input id="tradingCode" missingMessage="请输入交易类型"
+											class="easyui-combobox" name="tradingCode" data-options="editable:false,valueField:'id',textField:'text',url:'../dic/selectDicValuesByDicType?dicType=6',required:true"/>
+								</td>			 			
+								<td style="text-align:right;">
+					 				交易流水:
+					 			</td>
+					 			<td>
+					 				<input validType="byteLength[1,18]"
+										class="easyui-textbox" type="text" name="tradingFlowNO" data-options="required:true"/>
+								</td>
+					 		</tr>
+					 		<tr>			 			
+								<td style="text-align:right;">
+									通信协议:
+								</td>
+					 			<td>
+					 			<input  class="easyui-combobox" id="requestWay" name="requestWay" panelHeight="auto"  
+              									data-options="editable:false,required:true,valueField:'value',textField:'text',data:[{text:'WEBSERVICE',value:'1'},{text:'SOCKET',value:'2'},{text:'HTTP',value:'3'}]"/>
+					 				<!-- <select name="requestWay" class="easyui-combobox" style="width:150px" panelHeight="70" data-options="editable:false" >
+										<option value="1" >WEBSERVICE</option>
+										<option value="2" >SOCKET</option>
+										<option value="3" >HTTP</option>
+									</select> -->
+								</td>
+								<td style="text-align:right;">
+									交易日期:
+								</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]"
+											class="easyui-textbox" type="text" name="tradingDate" data-options="required:false"/>
+								</td>
+					 			<td style="text-align:right;">
+					 				交易时间:
+					 			</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]"
+										class="easyui-textbox" name="tradingTime" data-options="required:false" />
+								</td>
+					 		</tr>			 		
+					 		<tr>
+					 			<td style="text-align:right;">
+					 				设备号:
+					 			</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]"
+										class="easyui-textbox" name="equipmentNo" data-options="required:false" />
+								</td>			 			
+								<td style="text-align:right;">
+									柜员号:
+								</td>
+					 			<td>
+					 				<input validType="byteLength[1,64]"
+										class="easyui-textbox" name="tellerNo" data-options="required:false" />
+								</td>
+								<td style="text-align:right;">
+					 				显示数量:
+					 			</td>
+								<td>
+									<!-- <select id="number" class="easyui-combobox" name="number" data-options="editable:false" panelHeight="120"
+										style="width: 150px;" >
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select> -->
+									<input  class="easyui-combobox" name="number"  editable="false" panelHeight="auto"
+              									data-options="required:true,valueField:'value',textField:'text',
+              										data:[{text:'1',value:'1'},{text:'2',value:'2'},{text:'3',value:'3'},{text:'4',value:'4'},{text:'5',value:'5'}]"/>
+								</td>
+					 		</tr>	
+					 		<tr>
+					 			<td style="text-align:center;" colspan="6">
+		           					<a id="start_check_person" class="easyui-linkbutton" resId="102103101" 
+		           							style="width:80px;display:none;" 
+		           									data-options="iconCls:'icon-search'" href="javascript:void(0)">检索</a>
+		           				</td>
+					 		</tr>		 		
+					 	</table>			 	
+				   </td>  
+		            
+         		</tr>	              
+         	</table>        
+		</form>	
+	</div>		
+	<div data-options="region:'center',title:'检索结果'">	
+   		<div id="shouPerson" style="margin-top:5px;"></div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/faceTest/searchByPerson.js"></script>

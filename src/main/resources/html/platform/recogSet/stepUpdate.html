@@ -1,0 +1,26 @@
+<div align="center">
+	<form id="manage_step_editform" 
+		th:action="@{/step/save}"  th:object="${vo}" 
+		method="post">
+		
+		<input name="action" id="action" type="hidden" value="update"/>
+		<input name="id" id="id" type="hidden" th:field="*{id}"/>		
+		<input name="engineIds" id="engineIds" type="hidden" th:field="*{engineIds}"/>	
+							
+		<table class="tableForm edit" id="stepTable" width="100%">
+			<tr>
+				<th >策略名称：</th>
+				<td>
+					<input class="easyui-textbox" id="stepName" name="stepName" th:field="*{stepName}" 
+						data-options="required:true" />
+				</td>
+				<th >备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</th>
+				<td>
+					<input class="easyui-textbox" name="remark"  th:field="*{remark}"  validType="byteLength[1,128]" />				
+				</td>
+			</tr>		
+					
+		</table>
+	</form>
+</div>
+<script type="text/javascript" src="../js/recogSet/stepUpdate.js" charset="utf-8"></script>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.system.DicMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.system.DicValues" >
+    <id column="DIC_TYPE" property="dicType" jdbcType="VARCHAR" />
+    <id column="DIC_CODE" property="dicCode" jdbcType="VARCHAR" />
+    <result column="MEANING" property="meaning" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="ENABLED_FLAG" property="enabledFlag" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="SelectAll_Where_Clause" >
+      <where >
+      <if test="meaning != null and meaning != ''" >
+         MEANING = #{meaning,jdbcType=VARCHAR} 
+      </if>
+      <if test="description != null and description != ''" >
+         AND DESCRIPTION = #{description,jdbcType=VARCHAR} 
+      </if>
+      <if test="enabledFlag != null and enabledFlag != ''" >
+         AND ENABLED_FLAG = #{enabledFlag,jdbcType=INTEGER} 
+      </if>
+      <if test="dicType != null and dicType != ''" >
+         AND DIC_TYPE = #{dicType,jdbcType=VARCHAR} 
+      </if>
+      <if test="dicCode != null and dicCode != ''" >
+         AND DIC_CODE = #{dicCode,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SelectAllByPage_Where_Clause" >   
+      <if test="obj.meaning != null and obj.meaning != ''" >
+         AND dicv.MEANING = #{obj.meaning,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.description != null and obj.description != ''" >
+         AND dicv.DESCRIPTION = #{obj.description,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.enabledFlag != null and obj.enabledFlag != ''" >
+         AND dicv.ENABLED_FLAG = #{obj.enabledFlag,jdbcType=INTEGER} 
+      </if>
+      <if test="obj.dicType != null and obj.dicType != ''" >
+         AND dicv.DIC_TYPE = #{obj.dicType,jdbcType=VARCHAR} 
+      </if>
+  </sql>
+  
+  <sql id="SelectAllByPageAndType_Where_Clause" >    
+    <where >
+      <if test="obj.meaning != null and obj.meaning != ''" >
+         MEANING = #{obj.meaning,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.description != null and obj.description != ''" >
+         AND DESCRIPTION = #{obj.description,jdbcType=VARCHAR} 
+      </if>
+      <if test="obj.enabledFlag != null" >
+         AND ENABLED_FLAG = #{obj.enabledFlag,jdbcType=INTEGER} 
+      </if>
+      <if test="obj.dicType != null and obj.dicType != ''" >
+         AND DIC_TYPE = #{obj.dicType,jdbcType=VARCHAR} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAll_Where_Clause" >    
+    <where >      
+      <if test="enabledFlag != null and enabledFlag != ''" >
+         AND ENABLED_FLAG = #{enabledFlag,jdbcType=INTEGER} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="SearchAllByPage_Where_Clause" >   
+    <where >      
+      <if test="obj.enabledFlag != null" >
+         AND ENABLED_FLAG = #{obj.enabledFlag,jdbcType=INTEGER} 
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >    
+    DIC_TYPE AS dicType,DIC_CODE AS dicCode, MEANING AS meaning, DESCRIPTION AS description, 
+    ENABLED_FLAG AS enabledFlag
+  </sql>
+  
+  <sql id="Base_Column_List_Ext" >    
+    dicv.DIC_TYPE AS dicType,dict.DESCRIPTION AS descs,dicv.DIC_CODE AS dicCode, dicv.MEANING AS meaning, 
+    dicv.DESCRIPTION AS description, dicv.ENABLED_FLAG AS enabledFlag
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.cloudwalk.ibis.model.system.DicValues" parameterType="com.cloudwalk.ibis.model.system.DicValues" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM FND_DIC_VALUES
+    WHERE DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.cloudwalk.ibis.model.system.DicValues" >
+    DELETE FROM FND_DIC_VALUES
+    WHERE DIC_TYPE = #{dicType,jdbcType=VARCHAR}
+      AND DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.system.DicValues" >
+    INSERT INTO FND_DIC_VALUES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dicType != null and dicType != ''" >
+        DIC_TYPE,
+      </if>
+      <if test="dicCode != null and dicCode !=''" >
+        DIC_CODE,
+      </if>
+      <if test="meaning != null and meaning !=''" >
+        MEANING,
+      </if>
+      <if test="description != null and description !=''" >
+        DESCRIPTION,
+      </if>
+      <if test="enabledFlag != null" >
+        ENABLED_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dicType != null and dicType != ''" >
+        #{dicType,jdbcType=DECIMAL},
+      </if>
+      <if test="dicCode != null and dicCode !=''" >
+        #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="meaning != null and meaning !=''" >
+        #{meaning,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null and description !=''" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="enabledFlag != null" >
+        #{enabledFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.system.DicValues" >
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Sat Aug 15 13:47:27 CST 2015.
+    -->
+    UPDATE FND_DIC_VALUES
+    <set >
+      <if test="meaning != null" >
+        MEANING = #{meaning,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="enabledFlag != null" >
+        ENABLED_FLAG = #{enabledFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    WHERE DIC_TYPE = #{dicType,jdbcType=VARCHAR}
+      AND DIC_CODE = #{dicCode,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" parameterType="com.cloudwalk.ibis.model.system.DicValues" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DIC_VALUES
+    <include refid="SelectAll_Where_Clause" />
+  </select>
+  
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List_Ext" />
+    FROM FND_DIC_VALUES dicv,FND_DIC_TYPES dict
+    WHERE dicv.DIC_TYPE = dict.DIC_TYPE
+    <include refid="SelectAllByPage_Where_Clause" />
+  </select>
+  
+  <select id="selectAllDicTypes" parameterType="map" resultType="com.cloudwalk.ibis.model.system.DicTypes" >
+    SELECT DIC_TYPE AS dicType,DESCRIPTION AS description,CUSTOMIZATION_LEVEL AS customizationLevel
+    FROM FND_DIC_TYPES
+  </select>
+  
+  <select id="selectAllByPageAndType" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DIC_VALUES
+    <include refid="SelectAllByPageAndType_Where_Clause" />
+  </select>
+  
+  <select id="searchAll" parameterType="com.cloudwalk.ibis.model.system.DicValues" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DIC_VALUES
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  <select id="searchAllByPage" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM FND_DIC_VALUES
+    <include refid="SearchAllByPage_Where_Clause" />
+  </select>
+  
+  <select id="selectCount" parameterType="com.cloudwalk.ibis.model.system.DicValues" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM FND_DIC_VALUES
+    <include refid="SearchAll_Where_Clause" />
+  </select>
+  
+  <!-- 根据dicType查询DicTypes是否存在 -->
+  <select id="selectDicTypesByKey" parameterType="string" resultType="com.cloudwalk.ibis.model.system.DicTypes" >
+    SELECT *
+    FROM FND_DIC_TYPES
+    WHERE DIC_TYPE = #{dicType}
+  </select>
+ 
+  <!-- 批量插入数据字典 
+  <insert id="insertBatch" parameterType="java.util.List" >
+    INSERT INTO FND_DIC_VALUES (DIC_TYPE,DIC_CODE, MEANING,DESCRIPTION,ENABLED_FLAG) 
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.dicType},#{item.dicCode},#{item.meaning},#{item.description},#{item.enabledFlag})
+    </foreach>
+  </insert>-->
+  
+  <!-- 批量插入数据字典 -->
+  <insert id="insertBatch" parameterType="java.util.List" >
+    INSERT INTO FND_DIC_VALUES (
+    	DIC_TYPE, 
+    	DIC_CODE, 
+    	MEANING, 
+    	DESCRIPTION, 
+    	ENABLED_FLAG
+    	) 
+    SELECT A.* FROM(
+	    <foreach collection="list" item="item" index="index" separator="union">
+	        SELECT
+	            #{item.dicType,jdbcType=VARCHAR},
+	            #{item.dicCode,jdbcType=VARCHAR},
+	          	#{item.meaning,jdbcType=VARCHAR},
+	          	#{item.description,jdbcType=VARCHAR},
+	          	#{item.enabledFlag,jdbcType=VARCHAR}
+	        FROM IBIS_TEMP
+	    </foreach>
+    	)A
+ </insert>
+ 
+</mapper>

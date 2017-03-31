@@ -1,0 +1,23 @@
+#left_face_box1{
+	float:left;
+	text-align:center;
+}
+#right_face_box2 img
+{
+
+}
+#btn_upload_face2{
+	margin-left:80px;
+}
+#similarity_compare_face{
+	float:left;
+	margin-top:90px;
+}
+#similar_result_face{
+	border:1px solid #99bbff;
+	height:200px;
+	text-align:left;
+	margin-left:80px;
+	width:400px;
+	vertical-align:center;
+}

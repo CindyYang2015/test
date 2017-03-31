@@ -1,0 +1,116 @@
+<div class="easyui-layout layout1" fit="true">
+	<div data-options="region:'west',split:true" class="west1">
+		<ul id="department_west_tree"></ul>
+	</div>
+	<div data-options="region:'center'">
+		<div class="easyui-layout" data-options="fit : true,border : false">
+			<div class="easyui-layout" data-options="fit : true,border : false">
+				  	<!-- 查询条件 -->
+				<div data-options="region:'north',border:false" class="formserach" style="padding: 5px; overflow: hidden;" align="left">
+			    	<form id="manage_user_searchform" onsubmit="return false">
+					    <input type="hidden" name="deptCode" id="deptCode"  field="deptCode" th:value="${deptCode}"/> 
+					    <input type="hidden" name="orgCodePath" id="orgCodePath"  field="orgCodePath" th:value="${orgCodePath}"/> 
+				      	<table class="tableForm">
+					        <tr>
+					          <td align="left">	
+					          	用户工号:
+					          	<input class="easyui-textbox" size="15" name="workCode"  validType="byteLength[1,64]" />	 
+					          </td>  
+					          <td align="left">	
+					          	用户姓名:
+					          	<input class="easyui-textbox" size="15" name="userName"  validType="byteLength[1,128]" />	 
+					          </td>    
+					          <td>   
+					          	<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-search" plian="false" resId="104103101" style="display:none"
+					          		onclick="$.acooly.framework.searchData('manage_user_searchform','manage_user_datagrid');">查询</a> 
+					          </td>
+					        </tr>
+				      	</table>
+					</form>
+				</div>
+				
+			  	<!-- 列表和工具栏 -->
+				<div data-options="region:'center',border:false">
+			    	<table id="manage_user_datagrid" class="easyui-datagrid"  toolbar="#manage_user_toolbar" rownumbers="true" fitColumns="true" fit="true" border="false"
+			      			pagination="true" idField="userId" pageSize="20" 
+			      				pageList="[ 10, 20, 30, 40, 50 ]" singleSelect="true" striped="true">
+			      		<thead>
+			        		<tr>
+			        			<th field="showCheckboxWithId" checkbox="true"
+									data-options="formatter:function(value, row, index){ return row.userId }">编号</th>
+								<th field="workCode"  halign="center" align="left"  width="50">用户工号</th>
+								<th field="userName"  halign="center" align="left"  width="50">用户姓名</th>
+					          	<th field="telephone" halign="center" align="left"  width="50">联系电话</th>
+					          	<th field="email"     halign="center" align="left"  width="50">邮件</th>
+					          	<th field="userRank"  halign="center" align="left"  width="50">职务</th>
+					          	<th field="roleName"  halign="center" align="left"  width="50">角色</th>
+					          	<th field="deptName"  halign="center" align="left"  width="50">部门</th>
+					          	
+					        </tr>
+			      		</thead>
+			    	</table>
+			    	
+			    	<!-- 每行的Action动作模板 -->
+			    	<div id="manage_user_action" class="hide">
+					</div>
+					
+				    <!-- 表格的工具栏 -->
+					<div id="manage_user_toolbar">
+						<a href="javascript:void(0);" onclick="addUser();" class="easyui-linkbutton" iconCls="icon-add" title="添加"
+							resId="104103102" style="display:none"
+							plain="true">添加</a>
+							
+						<a href="javascript:void(0);" onclick="editUser();" class="easyui-linkbutton" iconCls="icon-edit" title="编辑"
+							resId="104103103" style="display:none"
+							plain="true">编辑</a>
+							
+						<a href="javascript:void(0);" onclick="deleteUser();" class="easyui-linkbutton" iconCls="icon-remove" title="删除"
+						resId="104103104" style="display:none"
+						plain="true">删除</a> 							
+							
+						<a href="javascript:void(0);" onclick="setUserRole();" class="easyui-linkbutton" iconCls="icon-setting" title="设定角色"
+							resId="104103105" style="display:none"
+							plain="true">设定角色</a> 
+							
+						<a href="javascript:void(0);" onclick="resetUserPwd();" class="easyui-linkbutton" iconCls="icon-setting" title="设置密码"
+							resId="104103106" style="display:none"
+							plain="true">设置密码</a>
+									
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="setUserPwdWindow" class="easyui-window"
+	data-options="modal:true,closed:true,resizable:false,minimizable:false,maximizable:false,draggable:true,collapsible:false">
+	<form id="manage_user_setPwdform" action="../user/resetPwd" method="post">
+			<input type="hidden" id="manage_user_setPwdform_userId" name="userId"/>
+			<input type="hidden" id="manage_user_setPwdform_userPwd" name="userPwd"/>
+			<table class="tableForm" width="100%">				
+				<tr>
+					<th width="30%">新密码：</th>
+					<td>
+						<input type="password" id="user_newPassword" class="easyui-textbox" data-options="required:true" validType="byteLength[8,20]"/>
+					</td>
+				</tr>					
+				<tr>
+					<th width="30%">确认密码：</th>
+					<td>
+						<input type="password" id="user_confirmNewPassword" class="easyui-textbox" data-options="required:true" validType="byteLength[8,20]" />
+					</td>
+				</tr> 			
+			</table>		
+	</form>
+	<div data-options="region:'south',border:false" style="text-align:right;padding:5px 5px 5px;">
+         <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:setUserPwdBtn()" style="width:60px">提交</a>
+         <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:setUserPwdCancel()" style="width:60px">取消</a>
+     </div>
+</div>
+
+<script type="text/javascript" src="../js/system/user.js" charset="utf-8"></script>
+
+
+		
+

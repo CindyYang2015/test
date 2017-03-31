@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.RecognizeruleMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.Recognizerule" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="RECOGSTEP_ID" property="recogstepId" jdbcType="VARCHAR" />
+    <result column="ENGINE_CODE" property="engineCode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="SCORE" property="score" jdbcType="DECIMAL" />
+    <result column="RESULT" property="result" jdbcType="SMALLINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  
+  <sql id="Base_Column_List" >
+    ID, LEGAL_ORG_CODE, RECOGSTEP_ID, ENGINE_CODE, STATUS, SCORE, RESULT, REMARK, CREATOR, 
+    CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+  
+  <select id="selectRecognizerulePage" parameterType="map" resultMap="BaseResultMap">
+  	SELECT 
+  		(SELECT RECOGSTEP_NAME FROM CF_RECOGSTEP WHERE ID=CF_RECOGNIZERULE.RECOGSTEP_ID) RECOGSTEP_ID,
+  		(SELECT ENGINE_NAME FROM CF_ENGINE WHERE ENGINE_CODE=CF_RECOGNIZERULE.ENGINE_CODE) ENGINE_CODE, 
+  		STATUS, SCORE, ID, REMARK 
+  	FROM CF_RECOGNIZERULE 
+  	WHERE LEGAL_ORG_CODE LIKE CONCAT(#{obj.legalOrgCode,jdbcType=VARCHAR},'%') 
+  	
+	<if test="obj.recogstepId != null and obj.recogstepId != ''">
+		AND RECOGSTEP_ID = #{obj.recogstepId,jdbcType=VARCHAR}
+    </if>  
+	<if test="obj.engineCode != null and obj.engineCode != ''">
+		AND ENGINE_CODE = #{obj.engineCode,jdbcType=VARCHAR}
+    </if>  	 
+	<if test="obj.status != null ">
+		AND STATUS = #{obj.status,jdbcType=SMALLINT}
+    </if>  	   	
+  	
+  	ORDER BY CREATE_TIME DESC
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_RECOGNIZERULE
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_RECOGNIZERULE
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.Recognizerule" >
+    INSERT INTO CF_RECOGNIZERULE(
+    	ID, 
+    	LEGAL_ORG_CODE, 
+    	RECOGSTEP_ID, 
+      	ENGINE_CODE, 
+      	STATUS, 
+      	SCORE, 
+      	RESULT, 
+      	REMARK, 
+      	CREATOR, 
+      	CREATE_TIME, 
+      	UPDATOR, 
+      	UPDATE_TIME
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{legalOrgCode,jdbcType=VARCHAR}, 
+    	#{recogstepId,jdbcType=VARCHAR}, 
+      	#{engineCode,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{score,jdbcType=DECIMAL}, 
+      	#{result,jdbcType=SMALLINT}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{creator,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP}, 
+      	#{updator,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=TIMESTAMP}
+      	)
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.Recognizerule" >
+    UPDATE CF_RECOGNIZERULE 
+    SET 
+      	RECOGSTEP_ID = #{recogstepId,jdbcType=VARCHAR}, 
+      	ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}, 
+      	STATUS = #{status,jdbcType=SMALLINT}, 
+      	SCORE = #{score,jdbcType=DECIMAL}, 
+      	REMARK = #{remark,jdbcType=VARCHAR}, 
+      	UPDATOR = #{updator,jdbcType=VARCHAR}, 
+      	UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP} 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByUser"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	SELECT 
+  		ID, LEGAL_ORG_CODE, RECOGSTEP_ID, ENGINE_CODE, STATUS, SCORE, RESULT, 
+  		REMARK, CREATOR, CREATE_TIME, UPDATOR, UPDATE_TIME 
+    FROM CF_RECOGNIZERULE 
+    WHERE LEGAL_ORG_CODE LIKE '%#{orgcode,jdbcType=VARCHAR}%';
+  </select>
+  
+  <!-- 查询识别策略规则信息 -->
+  <select id="selectRecogsetpRule" resultMap="BaseResultMap" parameterType="com.cloudwalk.ibis.model.recogSet.Recognizerule" >
+  	SELECT 
+  		ID, LEGAL_ORG_CODE, RECOGSTEP_ID, ENGINE_CODE, STATUS, SCORE, RESULT 
+  	FROM CF_RECOGNIZERULE 
+  	WHERE STATUS = 1 
+	  	AND RECOGSTEP_ID = #{recogstepId,jdbcType=VARCHAR} 
+	  	AND ENGINE_CODE = #{engineCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,12 @@
+#face_main_frame{
+	border:1px solid #99bbff;
+	width: 600px;
+	align: center;
+	margin-top: 40px;
+	padding-bottom:10px;
+}
+#left_input_select{
+	float:left;
+	padding-left: 30px;
+	padding-top:0px;
+}

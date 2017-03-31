@@ -1,0 +1,69 @@
+<div align="center">
+	<form id="manage_resource_editform"
+		th:action="@{/resources/saveResources}" th:object="${resources}" method="post">
+			<input type="hidden" name="action"     th:attr="value=${action}" />
+			<input type="hidden" name="resourceId" th:field="*{resourceId}"/>
+			<input type="hidden" name="resourceParentId" th:field="*{resourceParentId}"/>
+			<input type="hidden" name="resourceImage" id="resourceImage" th:field="*{resourceImage}"/>
+			<table class="tableForm" width="100%">
+				<tr th:if="*{resourceParentName}">
+					<th width="30%">上级菜单：</th>
+					<td th:text="*{resourceParentName}"></td>
+				</tr>
+				<tr>
+					<th width="30%">资源名：</th>
+					<td>
+						<input class="easyui-textbox" name="resourceName" th:field="*{resourceName}"
+							   	data-options="required:true,validType:['byteLength[1,64]','untable']" />
+					</td>
+				</tr>
+				<tr>
+					<th width="30%">资源类型：</th>
+					<td>
+						<!--< select name="resourceType" th:field="*{resourceType}"
+									style="width: 150px;" panelHeight="auto" class="easyui-combobox" editable="false" data-options="onSelect:function(record){setResourceImage(record)}">
+									<option value="1" >菜单</option>
+									<option value="2" >按键</option>
+						</select> -->
+						<input  class="easyui-combobox" id="resourceType" name="resourceType" th:field="*{resourceType}" editable="false"  style="width:150px;"  required="required"
+              						panelHeight="auto"	data-options="valueField:'value',textField:'text',data:[{text:'菜单',value:'1'},{text:'按键',value:'2'}]"/>
+					</td>
+				</tr>
+				<tr>
+					<th width="30%">资源链接：</th>					
+					<td><textarea rows="3" cols="60" name="resourceUrl" th:field="*{resourceUrl}" class="easyui-validatebox" ></textarea></td>
+				</tr>	
+				<tr>
+					<th width="30%">是否可用：</th>
+					<td>
+					<!-- <select name="enabled" th:field="*{enabled}" style="width: 150px;" editable="false"
+						panelHeight="auto" class="easyui-combobox" >
+								<option value="1" >正常</option>
+								<option value="2" >暂停</option>
+					</select> -->
+					<input  class="easyui-combobox"  name="enabled" th:field="*{enabled}" editable="false" style="width:150px;"  required="required"
+              					panelHeight="auto" data-options="valueField:'value',textField:'text',data:[{text:'正常',value:'1'},{text:'暂停',value:'2'}]"/>
+					</td>
+				</tr>
+				
+				<div th:if="*{resourceType =='1'}">
+					<tr id="resourceImageTrId">
+						<th width="30%">资源图标：</th>
+						<td onclick="setResIcon();"><img th:attr="src='..'+*{resourceImage}" /></td>					
+					</tr>	
+				</div>
+				<div th:unless="*{resourceType == '1'}">
+				    <tr id="resourceImageTrId" style="display:none">
+						<th width="30%">资源图标：</th>
+						<td onclick="setResIcon();"><img th:attr="src='..'+*{resourceImage}" /></td><td><span>请设置图标</span></td>
+					</tr>	
+				</div>			
+									
+				<tr>
+					<th width="30%">资源描述：</th>
+					<td><textarea rows="3" cols="40" name="resourceDesc" th:field="*{resourceDesc}" class="easyui-validatebox" data-options="validType:['byteLength[1,255]','untable']"></textarea></td>
+				</tr>
+				
+			</table>
+	</form>
+</div>

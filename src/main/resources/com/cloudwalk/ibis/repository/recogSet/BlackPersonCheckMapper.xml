@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.BlackPersonCheckMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />    
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CTFTYPE" property="ctftype" jdbcType="VARCHAR" />
+    <result column="CTFNO" property="ctfno" jdbcType="VARCHAR" />
+    <result column="CTFNAME" property="ctfname" jdbcType="VARCHAR" />
+    <result column="BLACK_TYPE" property="blackType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="OPERATE_STATUS" property="operateStatus" jdbcType="SMALLINT" />
+    <result column="BLACK_ID" property="blackId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseResultSelectMap" type="com.cloudwalk.ibis.model.recogSet.vo.BlackPersonCheckQueryVo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CTFTYPE" property="ctftype" jdbcType="VARCHAR" />
+    <result column="CTFNO" property="ctfno" jdbcType="VARCHAR" />
+    <result column="CTFNAME" property="ctfname" jdbcType="VARCHAR" />
+    <result column="BLACK_TYPE" property="blackType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="OPERATE_STATUS" property="operateStatus" jdbcType="SMALLINT" />
+    <result column="BLACK_ID" property="blackId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+   <resultMap id="BaseResultSelect2Map" type="com.cloudwalk.ibis.model.recogSet.vo.BlackPersonVo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CTFTYPE" property="ctftype" jdbcType="VARCHAR" />
+    <result column="CTFNO" property="ctfno" jdbcType="VARCHAR" />
+    <result column="CTFNAME" property="ctfname" jdbcType="VARCHAR" />
+    <result column="BLACK_TYPE" property="blackType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="OPERATE_STATUS" property="operateStatus" jdbcType="SMALLINT" />
+    <result column="BLACK_ID" property="blackId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseResultSelectALLCheckMap" type="com.cloudwalk.ibis.model.recogSet.vo.BlackPersonCheckQueryVo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="LEGAL_ORG_CODE" property="legalOrgCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CTFTYPE" property="ctftype" jdbcType="VARCHAR" />
+    <result column="CTFNO" property="ctfno" jdbcType="VARCHAR" />
+    <result column="CTFNAME" property="ctfname" jdbcType="VARCHAR" />
+    <result column="BLACK_TYPE" property="blackType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="OPERATE_STATUS" property="operateStatus" jdbcType="SMALLINT" />
+    <result column="BLACK_ID" property="blackId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATOR" property="updator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  AND ${criterion.condition} 
+                </when>
+                <when test="criterion.singleValue" >
+                  AND ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  AND ${criterion.condition} #{criterion.value} 
+                  AND #{criterion.secondValue} 
+                </when>
+                <when test="criterion.listValue" >
+                  AND ${criterion.condition} 
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  AND ${criterion.condition} 
+                </when>
+                <when test="criterion.singleValue" >
+                  AND ${criterion.condition} #{criterion.value} 
+                </when>
+                <when test="criterion.betweenValue" >
+                  AND ${criterion.condition} #{criterion.value} 
+                  AND #{criterion.secondValue} 
+                </when>
+                <when test="criterion.listValue" >
+                  AND ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    ID, ORG_CODE,LEGAL_ORG_CODE,CUSTOMER_ID, CTFTYPE, CTFNO, CTFNAME, BLACK_TYPE, STATUS, OPERATE_STATUS, 
+    BLACK_ID, REMARK, CREATOR, CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+  
+  <!-- 已审核过的黑名单列表 -->
+  <sql id="blackp_Column_List" >
+    ID, ORG_CODE, CUSTOMER_ID, CTFTYPE, CTFNO, CTFNAME, BLACK_TYPE, REMARK, CREATOR, 
+    CREATE_TIME, UPDATOR, UPDATE_TIME
+  </sql>
+  
+ <select id="searchAllByPage" parameterType="map"  resultMap="BaseResultSelectMap">
+    SELECT 
+    	A.ID AS ID, A.ORG_CODE AS ORG_CODE, A.CUSTOMER_ID AS CUSTOMER_ID, A.CTFNO AS CTFNO, A.CTFNAME AS CTFNAME, B.STATUS AS STATUS, B.OPERATE_STATUS AS OPERATE_STATUS, 
+    	B.ID AS BLACK_ID, B.REMARK AS REMARK, A.CREATOR AS CREATOR, A.CREATE_TIME AS CREATE_TIME, A.UPDATOR AS UPDATOR, A.UPDATE_TIME AS UPDATE_TIME, 
+    	(SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=A.BLACK_TYPE AND DIC_TYPE=8) AS BLACK_TYPE, 
+    	(SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=A.CTFTYPE AND DIC_TYPE=2) AS CTFTYPE 
+    FROM CF_BLACK_PERSON A LEFT JOIN CF_BPERSON_CHECK B ON A.ID = B.BLACK_ID  
+    <include refid="searchAllByPage_WHERE_EX"/>
+    ORDER BY A.CREATE_TIME DESC 
+ </select>
+ 
+ <!-- 获取黑名单信息 -->
+ <select id="selectBlackPersonChecks" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck"  resultMap="BaseResultMap">
+    SELECT 
+   		T1.ID AS ID, T1.ORG_CODE AS ORG_CODE, T1.LEGAL_ORG_CODE AS LEGAL_ORG_CODE, T1.CUSTOMER_ID AS CUSTOMER_ID, 
+   		T1.CTFTYPE AS CTFTYPE,T1.CTFNO AS CTFNO,T1.CTFNAME AS CTFNAME, T2.CHANNEL AS CHANNEL, 
+   		T2. TRADING_CODE AS TRADING_CODE, T1.BLACK_TYPE AS BLACK_TYPE, T1.STATUS AS STATUS, 
+   		T1.OPERATE_STATUS AS OPERATE_STATUS,T1.BLACK_ID AS BLACK_ID, T1.REMARK AS REMARK, T1.CREATOR AS CREATOR, 
+   		T1.CREATE_TIME AS CREATE_TIME, T1.UPDATOR AS UPDATOR, T1.UPDATE_TIME AS UPDATE_TIME
+    FROM CF_BPERSON_CHECK T1, CF_BCHECK_CONTROL T2 
+    <include refid="select_WHERE"/>
+ </select>
+ 
+ <select id="searchBlackPersonCheckByPage" parameterType="map"  resultMap="BaseResultSelectALLCheckMap">
+    SELECT 
+	    ID, ORG_CODE, CUSTOMER_ID, CTFNO, CTFNAME, STATUS, OPERATE_STATUS, 
+	    BLACK_ID, REMARK, CREATOR, CREATE_TIME, UPDATOR, UPDATE_TIME, 
+	    (SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=BLACK_TYPE AND DIC_TYPE=8) BLACK_TYPE, 
+	    (SELECT MEANING FROM FND_DIC_VALUES WHERE DIC_CODE=CTFTYPE AND DIC_TYPE=2) CTFTYPE 
+    FROM CF_BPERSON_CHECK 
+    <include refid="searchAllByPage_WHERE"/>
+    ORDER BY STATUS DESC,CREATE_TIME DESC 
+ </select>
+ 
+ <sql id="searchAllByPage_WHERE">
+	 <where>
+	 	<if test="obj.legalOrgCode != null and obj.legalOrgCode != ''" >
+	         AND LEGAL_ORG_CODE LIKE '${obj.legalOrgCode}%' 
+	    </if>
+	    <if test="obj.orgCode != null and obj.orgCode != ''" >
+	         AND ORG_CODE LIKE '${obj.orgCode}%' 
+	    </if>
+	    <if test="obj.operateStatus != null" >
+	         AND OPERATE_STATUS = #{obj.operateStatus,jdbcType=SMALLINT} 
+	    </if>
+	    <if test="obj.ctftype != null and obj.ctftype != ''" >
+	         AND CTFTYPE = #{obj.ctftype,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="obj.ctfname != null and obj.ctfname != ''" >
+	         AND CTFNAME  = #{obj.ctfname,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.ctfno != null and obj.ctfno != ''" >
+	         AND CTFNO = #{obj.ctfno,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.blackType != null and obj.blackType != ''" >
+	         AND BLACK_TYPE = #{obj.blackType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.customerId != null and obj.customerId != ''" >
+	         AND CUSTOMER_ID = #{obj.customerId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.status != null" >
+	         AND STATUS = #{obj.status,jdbcType=SMALLINT}
+	    </if>
+	 </where>
+ </sql>
+ 
+ <sql id="searchAllByPage_WHERE_EX">
+	 <where>
+	 	<if test="obj.legalOrgCode != null and obj.legalOrgCode != ''" >
+	         AND A.LEGAL_ORG_CODE LIKE '${obj.legalOrgCode}%' 
+	    </if>
+	    <if test="obj.orgCode != null and obj.orgCode != ''" >
+	         AND A.ORG_CODE LIKE '${obj.orgCode}%' 
+	    </if>	    
+	    <if test="obj.ctftype != null and obj.ctftype != ''" >
+	         AND A.CTFTYPE = #{obj.ctftype,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="obj.ctfname != null and obj.ctfname != ''" >
+	         AND A.CTFNAME  = #{obj.ctfname,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.ctfno != null and obj.ctfno != ''" >
+	         AND A.CTFNO = #{obj.ctfno,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.blackType != null and obj.blackType != ''" >
+	         AND A.BLACK_TYPE = #{obj.blackType,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.customerId != null and obj.customerId != ''" >
+	         AND A.CUSTOMER_ID = #{obj.customerId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="obj.status != null" >
+	         AND B.STATUS = #{obj.status,jdbcType=SMALLINT}
+	    </if>
+	 </where>
+ </sql>
+ 
+ <sql id="select_WHERE">
+	 <where>
+	 	T1.ID=T2.BLACK_ID
+	 	<if test="legalOrgCode != null and legalOrgCode != ''" >
+	         AND T1.LEGAL_ORG_CODE LIKE '${legalOrgCode}%' 
+	    </if>
+	    <if test="orgCode != null and orgCode != ''" >
+	         AND T1.ORG_CODE LIKE '${orgCode}%' 
+	    </if>
+	    <if test="operateStatus != null" >
+	         AND T1.OPERATE_STATUS = #{operateStatus,jdbcType=SMALLINT} 
+	    </if>
+	    <if test="ctftype != null and ctftype != ''" >
+	         AND T1.CTFTYPE = #{ctftype,jdbcType=VARCHAR} 
+	    </if>
+	    <if test="ctfname != null and ctfname != ''" >
+	         AND T1.CTFNAME  = #{ctfname,jdbcType=VARCHAR}
+	    </if>
+	    <if test="ctfno != null and ctfno != ''" >
+	         AND T1.CTFNO = #{ctfno,jdbcType=VARCHAR}
+	    </if>
+	    <if test="blackType != null and blackType != ''" >
+	         AND T1.BLACK_TYPE = #{blackType,jdbcType=VARCHAR}
+	    </if>
+	     <if test="customerId != null and customerId != ''" >
+	         AND T1.CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="channel != null and channel != ''" >
+	         AND T2.CHANNEL = #{channel,jdbcType=VARCHAR}
+	    </if>
+	     <if test="tradingCode != null and tradingCode != ''" >
+	         AND T2.TRADING_CODE = #{tradingCode,jdbcType=VARCHAR}
+	    </if>
+	 </where>
+ </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_BPERSON_CHECK
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据已审核的黑名单ID查询审核的黑名单信息 -->
+  <select id="selectByBlackId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_BPERSON_CHECK
+    WHERE BLACK_ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询已审核过的黑名单信息 -->
+  <select id="selectBlackPersonVoByPrimaryKey" resultMap="BaseResultSelect2Map" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="blackp_Column_List" />
+    FROM CF_BLACK_PERSON
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_BPERSON_CHECK
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck" >
+    INSERT INTO CF_BPERSON_CHECK (
+    	ID, 
+    	ORG_CODE, 
+    	CUSTOMER_ID, 
+      	CTFTYPE, 
+      	CTFNO, 
+      	CTFNAME, 
+      	BLACK_TYPE, 
+      	STATUS, 
+      	OPERATE_STATUS, 
+      	BLACK_ID, 
+      	REMARK, 
+      	CREATOR, 
+      	CREATE_TIME, 
+      	UPDATOR, 
+      	UPDATE_TIME
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{orgCode,jdbcType=VARCHAR}, 
+    	#{customerId,jdbcType=VARCHAR}, 
+      	#{ctftype,jdbcType=VARCHAR}, 
+      	#{ctfno,jdbcType=VARCHAR}, 
+      	#{ctfname,jdbcType=VARCHAR}, 
+      	#{blackType,jdbcType=VARCHAR}, 
+      	#{status,jdbcType=SMALLINT}, 
+      	#{operateStatus,jdbcType=SMALLINT}, 
+      	#{blackId,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{creator,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=TIMESTAMP}, 
+      	#{updator,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=TIMESTAMP}
+      	)
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck" >
+    INSERT INTO CF_BPERSON_CHECK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orgCode != null" >
+        ORG_CODE,
+      </if>
+      <if test="legalOrgCode != null" >
+        LEGAL_ORG_CODE,
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID,
+      </if>
+      <if test="ctftype != null" >
+        CTFTYPE,
+      </if>
+      <if test="ctfno != null" >
+        CTFNO,
+      </if>
+      <if test="ctfname != null" >
+        CTFNAME,
+      </if>
+      <if test="blackType != null" >
+        BLACK_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="operateStatus != null" >
+        OPERATE_STATUS,
+      </if>
+      <if test="blackId != null" >
+        BLACK_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updator != null" >
+        UPDATOR,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalOrgCode != null" >
+        #{legalOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="ctftype != null" >
+        #{ctftype,jdbcType=VARCHAR},
+      </if>
+      <if test="ctfno != null" >
+        #{ctfno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctfname != null" >
+        #{ctfname,jdbcType=VARCHAR},
+      </if>
+      <if test="blackType != null" >
+        #{blackType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="operateStatus != null" >
+        #{operateStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="blackId != null" >
+        #{blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    UPDATE CF_BPERSON_CHECK
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerId != null" >
+        CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctftype != null" >
+        CTFTYPE = #{record.ctftype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctfno != null" >
+        CTFNO = #{record.ctfno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctfname != null" >
+        CTFNAME = #{record.ctfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blackType != null" >
+        BLACK_TYPE = #{record.blackType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.operateStatus != null" >
+        OPERATE_STATUS = #{record.operateStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.blackId != null" >
+        BLACK_ID = #{record.blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        CREATOR = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updator != null" >
+        UPDATOR = #{record.updator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByExample" parameterType="map" >
+    UPDATE CF_BPERSON_CHECK
+    SET 
+    	ID = #{record.id,jdbcType=VARCHAR}, 
+	    ORG_CODE = #{record.orgCode,jdbcType=VARCHAR}, 
+	    CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR}, 
+	    CTFTYPE = #{record.ctftype,jdbcType=VARCHAR}, 
+	    CTFNO = #{record.ctfno,jdbcType=VARCHAR}, 
+	    CTFNAME = #{record.ctfname,jdbcType=VARCHAR}, 
+	    BLACK_TYPE = #{record.blackType,jdbcType=VARCHAR}, 
+	    STATUS = #{record.status,jdbcType=SMALLINT}, 
+	    OPERATE_STATUS = #{record.operateStatus,jdbcType=SMALLINT}, 
+	    BLACK_ID = #{record.blackId,jdbcType=VARCHAR}, 
+	    REMARK = #{record.remark,jdbcType=VARCHAR}, 
+	    CREATOR = #{record.creator,jdbcType=VARCHAR}, 
+	    CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}, 
+	    UPDATOR = #{record.updator,jdbcType=VARCHAR}, 
+	    UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP} 
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck" >
+    UPDATE CF_BPERSON_CHECK
+    <set >
+      <if test="orgCode != null" >
+        ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="ctftype != null" >
+        CTFTYPE = #{ctftype,jdbcType=VARCHAR},
+      </if>
+      <if test="ctfno != null" >
+        CTFNO = #{ctfno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctfname != null" >
+        CTFNAME = #{ctfname,jdbcType=VARCHAR},
+      </if>
+      <if test="blackType != null" >
+        BLACK_TYPE = #{blackType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="operateStatus != null" >
+        OPERATE_STATUS = #{operateStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="blackId != null" >
+        BLACK_ID = #{blackId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        UPDATOR = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.BlackPersonCheck" >
+    UPDATE CF_BPERSON_CHECK
+    SET 
+    	ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+	    CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+	    CTFTYPE = #{ctftype,jdbcType=VARCHAR},
+	    CTFNO = #{ctfno,jdbcType=VARCHAR},
+	    CTFNAME = #{ctfname,jdbcType=VARCHAR},
+	    BLACK_TYPE = #{blackType,jdbcType=VARCHAR},
+	    STATUS = #{status,jdbcType=SMALLINT},
+	    OPERATE_STATUS = #{operateStatus,jdbcType=SMALLINT},
+	    BLACK_ID = #{blackId,jdbcType=VARCHAR},
+	    REMARK = #{remark,jdbcType=VARCHAR},
+	    CREATOR = #{creator,jdbcType=VARCHAR},
+	    CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+	    UPDATOR = #{updator,jdbcType=VARCHAR},
+	    UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

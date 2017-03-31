@@ -1,0 +1,66 @@
+<div align="center">
+	<form id="manage_department_editform"
+		th:action="@{/department/saveDepartment}" th:object="${department}"
+		method="post">
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<input type="hidden" name="orgCode" th:field="*{orgCode}"/>
+		<input type="hidden" name="orgName" th:field="*{orgName}"/>
+		<table class="tableForm edit" width="100%">		
+			<!-- <tr th:text="*{orgName}"></tr>			 -->			
+			<tr>
+				<th>所属机构：</th>
+			    <td th:text="*{orgName}"></td>
+				<div th:if="${action == 'edit'}">
+					<input type="hidden" name="deptCode" th:field="*{deptCode}" />
+				    <th>部门代码：</th>
+				    <td>
+				    	<input class="easyui-textbox" name="deptCode" th:field="*{deptCode}" missingMessage="请输入部门代码" disabled="disabled"
+						 	  	  data-options="required:true,validType:['byteLength[1,32]','isCode']" />
+				    </td>
+				</div>
+				<div th:unless="${action == 'edit'}">
+				   <th>部门代码：</th>
+				   <td>
+					   <input class="easyui-textbox" name="deptCode" th:field="*{deptCode}" missingMessage="请输入部门代码"
+						 	  	data-options="required:true,validType:['byteLength[1,8]','isCode']" />
+					</td>
+				</div>					
+			</tr>				
+			<tr>
+				 <th>部门名称：</th>
+				 <td>
+					<input class="easyui-textbox" name="deptName" th:field="*{deptName}" missingMessage="请输入部门名称"
+					 	   	 data-options="required:true,validType:['byteLength[1,255]','untable']" />
+				 </td>
+				 <th>负责人：</th>
+				 <td>
+					<input class="easyui-textbox" name="depatManageMan" th:field="*{depatManageMan}"
+						   	data-options="validType:['byteLength[1,128]','untable']" />
+				 </td>
+			</tr>				
+			<tr>
+				<th>联系电话：</th>
+				<td>
+					<input class="easyui-textbox" name="linkManTel" th:field="*{linkManTel}" validType="telephone" />
+				</td>
+				<th>联系人：</th>
+				<td>
+					<input class="easyui-textbox" name="linkManName" th:field="*{linkManName}"
+						   	data-options="validType:['byteLength[1,128]','untable']" />
+				</td>
+			</tr>	
+			<tr>
+				
+				<th>传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真：</th>
+				<td>
+					<input class="easyui-textbox" name="linkManFax" th:field="*{linkManFax}" validType="fax" />
+				</td>
+				<th>备&nbsp;&nbsp;&nbsp;注：</th>
+				<td>
+					<input class="easyui-textbox" name="remark" th:field="*{remark}"
+						data-options="validType:['byteLength[1,128]','untable']" />
+				</td>
+			</tr>				
+		</table>
+	</form>
+</div>

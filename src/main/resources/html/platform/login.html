@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>集成生物识别系统 - 登录</title>
+<!-- easyui控件 -->
+<link id="easyuiTheme" rel="stylesheet" href="../js/lib/jquery-easyui-1.4.2/themes/default/easyui.css" type="text/css"/>
+<link rel="stylesheet" href="../js/lib/jquery-easyui-1.4.2/themes/icon.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../css/basic.css" />
+<link rel="stylesheet" type="text/css" href="../css/login.css" />
+</head>
+<body>
+  <div id="user_login_loginDialog">
+    <div id="user_login_loginTab">
+      <div id="system_login">
+        <div>
+          <div class="logo" style="background-color: #060E13"> 
+          	<img src="../images/logo.png" />      	
+          </div>
+        </div>
+		<div>			
+		</div>
+        <div id="login_center" align="center" >
+          <form id="loginForm" action="../login/login" method="post">
+	            <table class="tableForm">
+	              <tr>
+	                <th>登录名</th>
+	                <td><input id="workCode" name="workCode" value="" placeholder="请输入登录名..." class="easyui-validatebox"  data-options="required:true" validType="byteLength[1,64]" missingMessage="请输入登录名" style="width: 150px;"/></td>
+	              </tr>
+	              <tr>
+	                <th>密&nbsp;码</th>
+	                <td><input id="userPwd" name="userPwd" type="password" autocomplete="off" value="" placeholder="请输入密码..." class="easyui-validatebox" data-options="required:true" validType="byteLength[6,64]" missingMessage="请输入密码" style="width: 150px;" /></td>
+	              </tr>	   
+	              <tr>
+	                <th>验证码</th>
+	                <td>
+	                <input id="randCheckCode" name="randCheckCode" value="" placeholder="请输入验证码..." class="easyui-validatebox"  style="width: 150px;" align="middle"/>
+	                </td>
+	                <td>
+	                <img src="../pictureCheckCode" id="createCheckCode" align="middle" title="点击刷新验证码" onclick="reloadRandCheckCode();"/>
+	                </td>
+	              </tr>	             
+	            </table>
+          </form>
+          <div style="text-align:center;padding:10px">
+            <span style="margin-right:10px;"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="login();" data-options="width:80,height:30">登录</a></span>
+             <span style="margin-left:10px;"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" data-options="width:80,height:30">重置</a></span>
+         </div>      
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="initPwdWindow" class="easyui-window"
+	data-options="modal:true,closed:true,resizable:false,minimizable:false,maximizable:false,draggable:true,collapsible:false">
+	<form id="manage_user_initPwdform" action="../user/initPwd" method="post">
+			<input type="hidden" id="manage_user_initPwdform_workCode" name="workCode"/>
+			<input type="hidden" id="manage_user_initPwdform_userPwd" name="userPwd"/>
+			<table class="tableForm" width="100%">				
+				<tr>
+					<th width="30%">新密码：</th>
+					<td>
+						<input type="password" id="user_newPassword" class="easyui-textbox" data-options="required:true" validType="byteLength[8,20]"/>
+					</td>
+				</tr>					
+				<tr>
+					<th width="30%">确认密码：</th>
+					<td>
+						<input type="password" id="user_confirmNewPassword" class="easyui-textbox" data-options="required:true" validType="byteLength[8,20]" />
+					</td>
+				</tr> 			
+			</table>		
+	</form>
+	<div data-options="region:'south',border:false" style="text-align:right;padding:5px 5px 5px;">
+         <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:initUserPwdBtn()" style="width:60px">提交</a>
+         <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:initUserPwdCancel()" style="width:60px">取消</a>
+    </div>
+  </div>   
+  
+</body>
+<script type="text/javascript" src="../js/lib/jquery/jquery-1.9.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/jquery.easyui.extend.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-plugin/jquery.form.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/lib/jquery.md5.js"></script>
+<script type="text/javascript" src="../js/login.js" charset="utf-8"></script>
+<script type="text/javascript" src="../js/main.js" charset="utf-8"></script>
+</html>

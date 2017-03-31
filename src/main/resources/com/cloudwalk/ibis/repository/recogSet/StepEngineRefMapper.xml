@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cloudwalk.ibis.repository.recogSet.StepEngineRefMapper" >
+  <resultMap id="BaseResultMap" type="com.cloudwalk.ibis.model.recogSet.StepEngineRef" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="STEP_ID" property="stepId" jdbcType="VARCHAR" />
+    <result column="ENGINE_ID" property="engineId" jdbcType="VARCHAR" />
+    <result column="ENGINEVER_ID" property="engineverId" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  
+  <sql id="Base_Column_List" >
+    ID, STEP_ID, ENGINE_ID, ENGINEVER_ID
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM CF_STEP_ENGINE_REF
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    DELETE FROM CF_STEP_ENGINE_REF
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByStepId" parameterType="java.lang.String">
+  	DELETE FROM CF_STEP_ENGINE_REF
+    WHERE STEP_ID = #{stepId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cloudwalk.ibis.model.recogSet.StepEngineRef" >
+    INSERT INTO CF_STEP_ENGINE_REF (
+    	ID, 
+    	STEP_ID, 
+    	ENGINE_ID, 
+      	ENGINEVER_ID
+      	)
+    VALUES (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{stepId,jdbcType=VARCHAR}, 
+    	#{engineId,jdbcType=VARCHAR}, 
+      	#{engineverId,jdbcType=SMALLINT}
+      	)
+  </insert>
+  
+  <select id="selectStepEngineByStepId" resultType="list" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT 
+  		ID, STEP_ID, ENGINE_ID, ENGINEVER_ID
+  	FROM CF_STEP_ENGINE_REF 
+  	WHERE STEP_ID =  #{stepid,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cloudwalk.ibis.model.recogSet.StepEngineRef" >
+    UPDATE CF_STEP_ENGINE_REF
+    SET 
+    	STEP_ID = #{stepId,jdbcType=VARCHAR}, 
+      	ENGINE_ID = #{engineId,jdbcType=VARCHAR}, 
+      	ENGINEVER_ID = #{engineverId,jdbcType=SMALLINT} 
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

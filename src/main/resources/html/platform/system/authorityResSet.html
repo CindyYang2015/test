@@ -1,0 +1,30 @@
+
+<div class="easyui-layout" data-options="fit : true,border : false">
+	
+	<!-- 列表和工具栏 -->
+	<div data-options="region:'center',border:false">
+		<table id="manage_authorityRes_datagrid" class="easyui-treegrid"
+			url="/bank/resourceList"
+			rownumbers="true" idField='id' treeField='resourceName'
+			fitColumns="true" fit="true"
+			border="false" sortName="sortNo" sortOrder="asc"
+			checkOnSelect="true" selectOnCheck="true">
+			<thead>
+				<tr>
+					<th field="showCheckboxWithId" checkbox="true"
+						data-options="formatter:function(value, row, index){ return row.id }">编号</th>
+					<th field="resourceName" width="70">名称</th>
+					<th field="resourceType" width="45"
+						data-options="formatter:function(value, row, index){ return value;}">资源类型</th>
+					<th field="resourceDesc" width="200">描述</th>
+					<th field="resourceUrl" width="80">资源链接</th>
+					<!-- <th field="priority" width="15">优先级</th>
+					<th field="enable" width="15">是否可用</th>
+					<th field="issys" width="15">是否超级资源</th>					
+					<th field="resourceImage" width="80">图片</th> -->
+					
+				</tr>
+			</thead>
+		</table>		
+	</div>
+</div>

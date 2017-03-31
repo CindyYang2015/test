@@ -1,0 +1,41 @@
+<div align="center">
+	<form id="manage_engineVer_editform" 
+		th:action="@{/engineVer/save}"  th:object="${engineVer}" 
+		method="post">
+					
+		<input type="hidden" name="action" th:attr="value=${action}" />
+		<input name="id" id="id" type="hidden" th:field="*{id}"/>	
+							
+		<table class="tableForm edit" width="100%">
+			<tr>
+				<th>算法引擎：</th>
+				<td>
+			    	<input class="easyui-combobox" disabled="true" id="engineCode"  name="engineCode"  th:field="*{engineCode}"	
+				    	data-options="valueField:'engineCode',textField:'engineName',url:'../engineVer/selectEngineCode'"/>
+				</td>
+				<th>引擎版本代码：</th>
+				<td>
+					<input class="easyui-textbox" disabled="true" id="verCode" name="verCode" th:field="*{verCode}"/>
+				</td>
+			</tr>				
+			<tr>
+				<th >引擎版本号：</th>
+				<td>
+					<input class="easyui-textbox"  disabled="true" id="verNo" name="verNo" th:field="*{verNo}"/>
+				</td>
+				<th >状态：</th>
+				<td>
+					<input class="easyui-combobox" id="status" name="status"  th:field="*{status}" editable="false" 
+			       		data-options="required:true,valueField:'value',textField:'label',data:[{label:'有效',value:'1'},{label:'无效',value:'0'}]" />
+				</td>
+			</tr>
+				
+			<tr>
+				<th >备注：</th>
+				<td>
+					<input class="easyui-textbox" name="remark"  th:field="*{remark}"  validType="byteLength[1,128]" />
+				</td>					
+			</tr>				
+		</table>
+	</form>
+</div>
