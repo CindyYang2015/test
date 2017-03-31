@@ -1103,7 +1103,7 @@
 		<repository>
 			<id>nexus</id>
 			<name>Team Nexus Repository</name>
-			<url>http://183.230.182.212:7002/nexus/content/groups/public</url>
+			<url>http://192.168.40.185:8081/nexus/content/groups/public</url>
 			<releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases> 
 			<snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots> 
 		</repository>
@@ -1112,7 +1112,7 @@
 		<pluginRepository>
 			<id>nexus</id>
 			<name>Team Nexus Repository</name>
-			<url>http://183.230.182.212:7002/nexus/content/groups/public</url>
+			<url>http://192.168.40.185:8081/nexus/content/groups/public</url>
 			<releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases> 
 			<snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots> 
 		</pluginRepository>
