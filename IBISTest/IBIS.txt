@@ -1,5 +1,4 @@
 ﻿*** Settings ***
-Library           ExcelLibrary
 Library           requests
 Library           RequestsLibrary
 Library           json
