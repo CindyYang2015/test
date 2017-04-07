@@ -1,0 +1,30 @@
+*** Settings ***
+Library           requests
+Library           RequestsLibrary
+Library           json
+Resource          mykeywords.txt
+Resource          变量.txt
+Library           Selenium2Library
+
+*** Test Cases ***
+注册接口
+    ${ctfno}    evaluate    random.randint(1, 299)    modules=random
+    ${tradingFlowNO}    evaluate    random.randint(300,999)    modules=random
+    创建链接    ${url}
+    post注册接口数据    reg    0300    xx    ${ctfno}    0200    cyface
+    ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    ${luyou1}
+    ...    成功
+
+脸脸比对http
+    ${ctfno}    evaluate    random.randint(1, 299)    modules=random
+    ${tradingFlowNO}    evaluate    random.randint(300,999)    modules=random
+    创建链接    ${url}
+    post注册接口数据    reg    0300    xx    ${ctfno}    0200    cyface
+    ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    ${luyou1}
+    ...    成功
+
+socket注册
+    ${ctfno}    evaluate    random.randint(1, 299)    modules=random
+    ${tradingFlowNO}    evaluate    random.randint(300,999)    modules=random
+    socket注册    reg    0300    tttt    ${ctfno}    0200    cyface
+    ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    成功
