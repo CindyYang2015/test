@@ -1,11 +1,10 @@
-*** Settings ***
+﻿*** Settings ***
 Library           ExcelLibrary
 Library           requests
 Library           RequestsLibrary
 Library           json
 Resource          mykeywords.txt
 Resource          变量.txt
-Library           ExcelLibrary
 Library           Selenium2Library
 
 *** Test Cases ***
