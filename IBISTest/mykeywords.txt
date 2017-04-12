@@ -3,6 +3,7 @@ Library           Selenium2Library
 Library           SudsLibrary
 Library           json
 Library           MyLibrary
+Library           CreatetimeLibrary
 
 *** Keywords ***
 创建链接
@@ -305,6 +306,6 @@ socket注册
     ${verCode}    set variable    ${verCode}
     ${regfileData}    set variable    ${regfileData}
     ${json}    To Json    {"buscode":"${buscode}","channel":"${channel}","ctfname":"${ctfname}","ctfno":"${ctfno}","ctftype":"${ctftype}","engineCode":"${engineCode}","orgCode":"${orgCode}","netCheckStatus":"${netCheckStatus}","tradingCode":"${tradingCode}","tradingFlowNO":"${tradingFlowNO}","verCode":"${verCode}","regfileData":"${regfileData}"}    false
-    ${resp}    send    192.168.10.65    8082    ${json}
+    ${resp}=    send    192.168.10.65    8082    ${json}
     ${statuscode}    set variable    ${statuscode}
     Should contain    ${resp}    ${statuscode}
