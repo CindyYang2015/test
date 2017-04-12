@@ -6,7 +6,6 @@ Resource          mykeywords.txt
 Resource          变量.txt
 Library           Selenium2Library
 Library           MyLibrary
-Library           CreatetimeLibrary
 Library           RadLibrary
 
 *** Test Cases ***
