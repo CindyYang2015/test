@@ -11,8 +11,8 @@ Library           DatabaseLibrary
 
 *** Test Cases ***
 注册接口
-    ${ctfno}    Stime
-    ${tradingFlowNO}    createnumber
+    ${ctfno}    createnumber
+    ${tradingFlowNO}    Stime
     创建链接    ${url}
     post注册接口数据    reg    0300    xx    ${ctfno}    0200    cyface
     ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    ${luyou1}
