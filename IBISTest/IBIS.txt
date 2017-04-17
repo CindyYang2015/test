@@ -1,0 +1,28 @@
+*** Settings ***
+Library           requests
+Library           RequestsLibrary
+Library           json
+Resource          mykeywords.txt
+Resource          变量.txt
+Library           Selenium2Library
+Library           MyLibrary
+Library           RadLibrary
+Library           DatabaseLibrary
+
+*** Test Cases ***
+注册接口
+    ${ctfno}    Stime
+    ${tradingFlowNO}    createnumber
+    创建链接    ${url}
+    post注册接口数据    reg    0300    xx    ${ctfno}    0200    cyface
+    ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    ${luyou1}
+    ...    成功
+
+socket注册
+    ${ctfno}    Stime
+    ${tradingFlowNO}    createnumber
+    socket注册    reg    0300    tttt    ${ctfno}    0200    cyface
+    ...    0000    0600    ${tradingFlowNO}    ver001    ${regfileData}    成功
+    Connect To Database Using Custom Params    pymysql    database='ibis12',user='root',password='123456',host='192.168.40.185',port=3306
+    Execute Sql String    delete FROM FR_PERSON WHERE CTFNO = ${ctfno}
+    Disconnect From Database
