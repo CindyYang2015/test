@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170428 10:58:49.290" generator="Robot 3.0.2 (Python 2.7.12 on win32)">
+<suite source="E:\RobotFramework_Project\secondtest\testRF.robot" id="s1" name="testRF">
+<test id="s1-t1" name="reg">
+<kw name="Stime" library="RadLibrary">
+<assign>
+<var>${time}</var>
+</assign>
+<msg timestamp="20170428 10:58:50.475" level="INFO">${time} = 20170428105850</msg>
+<status status="PASS" endtime="20170428 10:58:50.475" starttime="20170428 10:58:50.474"></status>
+</kw>
+<kw name="Createnumber" library="RadLibrary">
+<assign>
+<var>${number}</var>
+</assign>
+<msg timestamp="20170428 10:58:50.475" level="INFO">${number} = 2017042810585077</msg>
+<status status="PASS" endtime="20170428 10:58:50.475" starttime="20170428 10:58:50.475"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>http://192.168.10.125:8080/</arg>
+</arguments>
+<assign>
+<var>${url}</var>
+</assign>
+<msg timestamp="20170428 10:58:50.476" level="INFO">${url} = http://192.168.10.125:8080/</msg>
+<status status="PASS" endtime="20170428 10:58:50.476" starttime="20170428 10:58:50.475"></status>
+</kw>
+<kw name="Open Browser" library="Selenium2Library">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20170428 10:58:50.476" level="INFO">Opening browser 'chrome' to base url 'http://192.168.10.125:8080/'</msg>
+<status status="PASS" endtime="20170428 10:58:55.215" starttime="20170428 10:58:50.476"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>2</arg>
+</arguments>
+<msg timestamp="20170428 10:58:57.216" level="INFO">Slept 2 seconds</msg>
+<status status="PASS" endtime="20170428 10:58:57.216" starttime="20170428 10:58:55.216"></status>
+</kw>
+<kw name="Clear Element Text" library="Selenium2Library">
+<doc>Clears the text value of text entry element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=.//*[@id='wndMainLogin']/div/form/table/tbody/tr[1]/td[2]/span/input[1]</arg>
+</arguments>
+<status status="PASS" endtime="20170428 10:58:57.294" starttime="20170428 10:58:57.217"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20170428 10:59:02.294" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" endtime="20170428 10:59:02.294" starttime="20170428 10:58:57.294"></status>
+</kw>
+<kw name="input text by path" library="keyword">
+<arguments>
+<arg>.//*[@id='wndMainLogin']/div/form/table/tbody/tr[1]/td[2]/span/input[1]</arg>
+<arg>admin</arg>
+</arguments>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>xpath=${path}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20170428 10:59:02.296" level="INFO">Typing text 'admin' into text field 'xpath=.//*[@id='wndMainLogin']/div/form/table/tbody/tr[1]/td[2]/span/input[1]'</msg>
+<status status="PASS" endtime="20170428 10:59:02.358" starttime="20170428 10:59:02.295"></status>
+</kw>
+<status status="PASS" endtime="20170428 10:59:02.358" starttime="20170428 10:59:02.294"></status>
+</kw>
+<kw name="input text by id" library="keyword">
+<arguments>
+<arg>txtMainLoginPwd</arg>
+<arg>12345</arg>
+</arguments>
+<kw name="Input Text" library="Selenium2Library">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>id=${id}</arg>
+<arg>${text}</arg>
+</arguments>
+<msg timestamp="20170428 10:59:02.360" level="INFO">Typing text '12345' into text field 'id=txtMainLoginPwd'</msg>
+<status status="PASS" endtime="20170428 10:59:02.435" starttime="20170428 10:59:02.359"></status>
+</kw>
+<status status="PASS" endtime="20170428 10:59:02.435" starttime="20170428 10:59:02.359"></status>
+</kw>
+<kw name="Click Element" library="Selenium2Library">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=.//*[@id='btnMainLogin']/span/span</arg>
+</arguments>
+<msg timestamp="20170428 10:59:02.436" level="INFO">Clicking element 'xpath=.//*[@id='btnMainLogin']/span/span'.</msg>
+<status status="PASS" endtime="20170428 10:59:02.500" starttime="20170428 10:59:02.435"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20170428 10:59:05.501" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20170428 10:59:05.501" starttime="20170428 10:59:02.500"></status>
+</kw>
+<kw name="Comment" library="BuiltIn">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>close browser</arg>
+</arguments>
+<status status="PASS" endtime="20170428 10:59:05.502" starttime="20170428 10:59:05.501"></status>
+</kw>
+<status status="PASS" endtime="20170428 10:59:05.502" critical="yes" starttime="20170428 10:58:50.474"></status>
+</test>
+<status status="PASS" endtime="20170428 10:59:05.503" starttime="20170428 10:58:50.306"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="testRF" pass="1">testRF</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
