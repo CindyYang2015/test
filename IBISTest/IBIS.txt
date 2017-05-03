@@ -9,6 +9,7 @@ Library           MyLibrary
 Library           RadLibrary
 Library           DatabaseLibrary
 
+
 *** Test Cases ***
 注册接口
     ${ctfno}    createnumber
